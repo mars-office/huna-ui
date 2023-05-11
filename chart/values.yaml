@@ -36,10 +36,9 @@ service:
 
 podAnnotations:
   linkerd.io/inject: enabled
-  config.linkerd.io/skip-outbound-ports: "8081,8022,6001"
 
 ingress:
-  enabled: false
+  enabled: true
   className: ""
   annotations: 
     kubernetes.io/ingress.class: nginx
