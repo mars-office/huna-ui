@@ -40,7 +40,7 @@ ingress:
   className: ""
   annotations: {}
   hosts:
-    - host: template-deployable.local.marsconceptor.com
+    - host: huna-ui.local.marsconceptor.com
       paths:
         - path: /
           pathType: ImplementationSpecific
