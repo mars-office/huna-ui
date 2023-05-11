@@ -17,4 +17,4 @@ jobs:
     with:
       version: '0.0.${{ github.event.workflow_run.run_number}}'
       workingDirectory: 'chart'
-      umbrellaChartName: 'my-app'
+      umbrellaChartName: 'huna'
