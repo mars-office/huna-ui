@@ -4,12 +4,15 @@ COPY ./package.json ./package.json
 COPY ./package-lock.json ./package-lock.json
 RUN npm ci
 COPY . .
+ARG DEPLOYABLE_VERSION
+ENV VITE_DEPLOYABLE_VERSION $DEPLOYABLE_VERSION
 RUN npm run build
 
 FROM nginx:stable-alpine as production
 ENV NODE_ENV production
 COPY --from=builder /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+ENV VITE_DEPLOYABLE_VERSION $DEPLOYABLE_VERSION
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
