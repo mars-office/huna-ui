@@ -5,8 +5,7 @@ image:
   pullPolicy: IfNotPresent
   tag: ""
 
-imagePullSecrets:
-  - name: regcred
+imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
@@ -34,26 +33,18 @@ service:
   type: ClusterIP
   port: 80
 
-podAnnotations:
-  linkerd.io/inject: enabled
+podAnnotations: {}
 
 ingress:
-  enabled: true
+  enabled: false
   className: ""
-  annotations: 
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/service-upstream: "true"
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+  annotations: {}
   hosts:
-    - host: local.huna2.com
+    - host: template-deployable.local.marsconceptor.com
       paths:
         - path: /
           pathType: ImplementationSpecific
-  tls:
-    - secretName: huna-ingress-tls
-      hosts:
-        - local.huna2.com
+  tls: []
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
