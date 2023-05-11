@@ -19,9 +19,6 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations:
-  linkerd.io/inject: enabled
-
 podSecurityContext: {}
   # fsGroup: 2000
 
@@ -37,6 +34,9 @@ service:
   type: ClusterIP
   port: 80
 
+podAnnotations:
+  linkerd.io/inject: enabled
+
 ingress:
   enabled: false
   className: ""
@@ -46,14 +46,14 @@ ingress:
     nginx.ingress.kubernetes.io/service-upstream: "true"
     cert-manager.io/cluster-issuer: letsencrypt-prod
   hosts:
-    - host: huna-ui.marsconceptor.local
+    - host: local.huna2.com
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls:
-    - secretName: huna-ui-ingress-tls
+    - secretName: huna-ingress-tls
       hosts:
-        - huna-ui.marsconceptor.local
+        - local.huna2.com
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
