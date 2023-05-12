@@ -1,10 +1,20 @@
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
 import { FluentProvider, teamsDarkTheme } from '@fluentui/react-components';
-import './styles.scss'
+import {
+  RouterProvider,
+} from "react-router-dom";
+import { router } from './routes';
+
+
+
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <FluentProvider theme={teamsDarkTheme}>
-    <App />
+  <FluentProvider style={{
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column'
+  }} theme={teamsDarkTheme}>
+    <RouterProvider router={router} />
   </FluentProvider>,
 )
