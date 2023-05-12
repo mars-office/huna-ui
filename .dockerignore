@@ -13,6 +13,7 @@ intercept.sh
 stop.sh
 chart/
 .vscode/
+.github/
 node_modules
 dist
 dist-ssr
