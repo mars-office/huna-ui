@@ -1,10 +1,10 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
+import { FluentProvider, teamsDarkTheme } from '@fluentui/react-components';
 import './styles.scss'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
+  <FluentProvider theme={teamsDarkTheme}>
     <App />
-  </React.StrictMode>,
+  </FluentProvider>,
 )
