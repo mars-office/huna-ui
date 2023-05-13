@@ -6,6 +6,8 @@ RUN npm ci
 COPY . .
 ARG DEPLOYABLE_VERSION
 ENV VITE_DEPLOYABLE_VERSION $DEPLOYABLE_VERSION
+RUN npm run lint
+RUN npm run coverage
 RUN npm run build
 
 FROM nginx:stable-alpine as production
