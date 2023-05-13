@@ -70,3 +70,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+envFrom: []
+env: []
