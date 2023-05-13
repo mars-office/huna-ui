@@ -40,7 +40,7 @@ spec:
           env:
             {{- toYaml .Values.env | nindent 12 }}
           volumeMounts:
-            {{- toYaml .Values.env | nindent 12 }}
+            {{- toYaml .Values.volumeMounts | nindent 12 }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
