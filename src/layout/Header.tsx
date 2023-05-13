@@ -1,49 +1,69 @@
-
 import {
-    Toolbar,
-    ToolbarButton,
-    ToolbarDivider,
-    Menu,
-    MenuTrigger,
-    MenuPopover,
-    MenuList,
-    MenuItem,
-  } from "@fluentui/react-components";
-  import {
-    FontIncrease24Regular,
-    FontDecrease24Regular,
-    TextFont24Regular,
-    MoreHorizontal24Filled,
-  } from "@fluentui/react-icons";
+  Toolbar,
+  ToolbarButton,
+  Menu,
+  MenuTrigger,
+  MenuPopover,
+  MenuList,
+  MenuItem,
+  Image,
+  MenuDivider,
+  MenuGroup,
+  MenuGroupHeader,
+  Text,
+} from "@fluentui/react-components";
+import { MoreVertical28Regular, InprivateAccount28Regular } from "@fluentui/react-icons";
+import { AuthContextProps } from "oidc-react";
+import { useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-export const Header = () => {
-    return <Toolbar aria-label="Default">
-    <ToolbarButton
-      aria-label="Increase Font Size"
-      appearance="primary"
-      icon={<FontIncrease24Regular />}
-    />
-    <ToolbarButton
-      aria-label="Decrease Font Size"
-      icon={<FontDecrease24Regular />}
-    />
-    <ToolbarButton aria-label="Reset Font Size" icon={<TextFont24Regular />} />
-    <ToolbarDivider />
-    <Menu>
-      <MenuTrigger>
-        <ToolbarButton aria-label="More" icon={<MoreHorizontal24Filled />} />
-      </MenuTrigger>
-
-      <MenuPopover>
-        <MenuList>
-          <MenuItem>New </MenuItem>
-          <MenuItem>New Window</MenuItem>
-          <MenuItem disabled>Open File</MenuItem>
-          <MenuItem>Open Folder</MenuItem>
-        </MenuList>
-      </MenuPopover>
-    </Menu>
-  </Toolbar>
+export interface HeaderProps {
+  auth: AuthContextProps;
 }
+
+export const Header = (props: HeaderProps) => {
+  const navigate = useNavigate();
+
+  const logout = useCallback(async () => {
+    await props.auth.signOut();
+    navigate("/");
+  }, [props.auth, navigate]);
+
+  return (
+    <Toolbar
+      style={{
+        justifyContent: "space-between",
+      }}
+      aria-label="Default"
+    >
+      <Link to="/">
+        <Image width={42} height={42} src="/images/logo.png" />
+      </Link>
+
+      <Menu>
+        <MenuTrigger>
+          <ToolbarButton aria-label="More" icon={props.auth.userData?.profile ? <InprivateAccount28Regular/> : <MoreVertical28Regular />} />
+        </MenuTrigger>
+
+        <MenuPopover>
+          <MenuList>
+            <MenuGroup>
+              <MenuGroupHeader>
+                <Text size={200}>{props.auth.userData?.profile ? props.auth.userData.profile.name : 'Anonymous'}</Text>
+              </MenuGroupHeader>
+            </MenuGroup>
+            <MenuDivider />
+            {!props.auth.userData?.profile && (
+              <MenuItem onClick={() => navigate("/login")}> Login </MenuItem>
+            )}
+            {props.auth.userData?.profile && (
+              <MenuItem onClick={logout}> Logout </MenuItem>
+            )}
+          </MenuList>
+        </MenuPopover>
+      </Menu>
+    </Toolbar>
+  );
+};
 
 export default Header;
