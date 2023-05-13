@@ -73,3 +73,5 @@ affinity: {}
 
 envFrom: []
 env: []
+volumes: []
+volumeMounts: []
