@@ -11,9 +11,10 @@ on:
       - main
 
 jobs:
-  deploy:
+  update_umbrella_chart:
     uses: mars-office/.github/.github/workflows/update_umbrella_chart.yaml@main
     secrets: inherit
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     with:
       version: '0.0.${{ github.event.workflow_run.run_number}}'
       workingDirectory: 'chart'
