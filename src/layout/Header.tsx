@@ -35,11 +35,11 @@ export const Header = (props: HeaderProps) => {
     <Toolbar
       style={{
         justifyContent: "space-between",
+        paddingLeft: '0'
       }}
-      aria-label="Default"
     >
       <Link to="/">
-        <Image width={42} height={42} src="/images/logo.png" />
+        <Image width={42} height={42} src="/images/logo.svg" />
       </Link>
 
       <Menu>
