@@ -1,9 +1,8 @@
 import ReactDOM from "react-dom/client";
 import { FluentProvider, teamsDarkTheme } from "@fluentui/react-components";
-import { RouterProvider } from "react-router-dom";
-import { router } from "./routes";
 import { AuthProvider } from "oidc-react";
 import { authConfig } from "./auth";
+import Routing from "./Routing";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <AuthProvider {...authConfig}>
@@ -16,7 +15,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       }}
       theme={teamsDarkTheme}
     >
-      <RouterProvider router={router} />
+      <Routing />
     </FluentProvider>
   </AuthProvider>
 );

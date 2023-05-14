@@ -15,7 +15,7 @@ import {
 import { MoreVertical28Regular, InprivateAccount28Regular } from "@fluentui/react-icons";
 import { AuthContextProps } from "oidc-react";
 import { useCallback } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export interface HeaderProps {
   auth: AuthContextProps;
@@ -28,6 +28,8 @@ export const Header = (props: HeaderProps) => {
     await props.auth.signOut();
     navigate("/");
   }, [props.auth, navigate]);
+
+  const location = useLocation();
 
   return (
     <Toolbar
@@ -54,7 +56,7 @@ export const Header = (props: HeaderProps) => {
             </MenuGroup>
             <MenuDivider />
             {!props.auth.userData?.profile && (
-              <MenuItem onClick={() => navigate("/login")}> Login </MenuItem>
+              <MenuItem onClick={() => navigate("/login?returnTo=" + encodeURIComponent(location.pathname))}> Login </MenuItem>
             )}
             {props.auth.userData?.profile && (
               <MenuItem onClick={logout}> Logout </MenuItem>
