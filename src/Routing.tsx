@@ -1,45 +1,31 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Root from "./routes/Root";
-import RouterError from "./routes/RouterError";
+import { Route, Routes } from "react-router-dom";
 import Home from "./routes/Home";
 import Login from "./routes/Login";
-import { useMemo } from "react";
-import { useAuth } from "oidc-react";
-import ProtectedRoute from "./routes/ProtectedRoute";
 import Settings from "./routes/Settings";
+import NotFound from "./routes/NotFound";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import { AuthContextProps } from "oidc-react";
 
-export const Routing = () => {
-  const auth = useAuth();
+export interface RoutingProps {
+  auth: AuthContextProps;
+}
 
-  const router = useMemo(() => {
-    return createBrowserRouter([
-      {
-        path: "/",
-        element: <Root />,
-        errorElement: <RouterError />,
-        children: [
-          {
-            path: "",
-            element: <Home />,
-          },
-          {
-            path: "login",
-            element: <Login />,
-          },
-          {
-            path: "settings",
-            element: (
-              <ProtectedRoute auth={auth}>
-                <Settings />
-              </ProtectedRoute>
-            ),
-          },
-        ],
-      },
-    ]);
-  }, [auth]);
-
-  return <RouterProvider router={router} />;
+export const Routing = (props: RoutingProps) => {
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute auth={props.auth}>
+              <Settings />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
+  );
 };
-
-export default Routing;

@@ -9,7 +9,9 @@ export const Login = () => {
 
     const login = useCallback(async () => {
         await auth.signIn({
-            state: encodeURIComponent(searchParams.get('returnTo') || '/')
+            state: {
+                returnTo: searchParams.get('returnTo') || '/'
+            }
         });
     }, [auth, searchParams]);
 

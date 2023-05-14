@@ -7,13 +7,19 @@ export interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute = (props: ProtectedRouteProps) => {
-    const location = useLocation();
-
-  if (!props.auth.userData?.profile) {
-    return <Navigate to={"/login?returnTo=" + encodeURIComponent(location.pathname)}  replace />;
+  const location = useLocation();
+  if (!props.auth.isLoading && !props.auth.userData?.profile) {
+    return (
+      <Navigate
+        to={"/login?returnTo=" + encodeURIComponent(location.pathname)}
+        replace
+      />
+    );
   }
 
-  return props.children;
+  return (
+    <>{props.auth.isLoading ? <div>Please wait...</div> : props.children}</>
+  );
 };
 
 export default ProtectedRoute;
