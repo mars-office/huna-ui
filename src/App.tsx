@@ -16,9 +16,6 @@ export const App = () => {
       scope: "openid offline_access profile email",
       responseType: "code",
       onSignIn: (user) => {
-        // if (location.href.includes("?")) {
-        //   history.pushState({}, "", location.href.split("?")[0]);
-        // }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const state: any = user?.state;
         if (state.returnTo) {
