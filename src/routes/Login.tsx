@@ -7,8 +7,11 @@ export const Login = () => {
     const auth = useAuth();
     const [searchParams] = useSearchParams();
 
-    const login = useCallback(async () => {
+    const login = useCallback(async (provider: string) => {
         await auth.signIn({
+            extraQueryParams: {
+                connector_id: provider
+            },
             state: {
                 returnTo: searchParams.get('returnTo') || '/'
             }
@@ -21,7 +24,9 @@ export const Login = () => {
         gap: '1rem',
     }}>
         <Text as="h2" size={800}>Login</Text>
-        <Button onClick={login}>Login with Dex</Button>
+        <Button onClick={() => login('google')}>Login with Google</Button>
+        <Button onClick={() => login('facebook')}>Login with Facebook</Button>
+        <Button onClick={() => login('microsoft')}>Login with Microsoft</Button>
     </div>
 }
 
