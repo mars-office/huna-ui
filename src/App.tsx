@@ -22,6 +22,10 @@ export const App = () => {
           navigate(state.returnTo, {
             replace: true
           });
+        } else {
+          navigate("/", {
+            replace: true
+          });
         }
       },
     };
