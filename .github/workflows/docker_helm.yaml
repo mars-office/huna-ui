@@ -17,7 +17,7 @@ jobs:
     uses: mars-office/.github/.github/workflows/docker.yaml@main
     secrets: inherit
     with:
-      version: '0.0.${{ github.run_number }}'
+      version: 'v0.0.${{ github.run_number }}'
   helm_build_push:
     uses: mars-office/.github/.github/workflows/helm.yaml@main
     secrets: inherit
