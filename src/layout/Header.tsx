@@ -39,27 +39,27 @@ export const Header = (props: HeaderProps) => {
       }}
     >
       <Link to="/">
-        <Image width={42} height={42} src="/images/logo.svg" />
+        <Image data-testid="logo" width={42} height={42} src="/images/logo.svg" />
       </Link>
 
       <Menu>
         <MenuTrigger>
-          <ToolbarButton aria-label="More" icon={props.auth.userData?.profile ? <InprivateAccount28Regular/> : <MoreVertical28Regular />} />
+          <ToolbarButton data-testid="usermenu" aria-label="More" icon={props.auth.userData?.profile ? <InprivateAccount28Regular/> : <MoreVertical28Regular />} />
         </MenuTrigger>
 
         <MenuPopover>
           <MenuList>
             <MenuGroup>
               <MenuGroupHeader>
-                <Text size={200}>{props.auth.userData?.profile ? props.auth.userData.profile.name : 'Anonymous'}</Text>
+                <Text data-testid="userName" size={200}>{props.auth.userData?.profile ? props.auth.userData.profile.name : 'Anonymous'}</Text>
               </MenuGroupHeader>
             </MenuGroup>
             <MenuDivider />
             {!props.auth.userData?.profile && (
-              <MenuItem onClick={() => navigate("/login?returnTo=" + encodeURIComponent(location.pathname))}> Login </MenuItem>
+              <MenuItem data-testid="loginButton" onClick={() => navigate("/login?returnTo=" + encodeURIComponent(location.pathname))}> Login </MenuItem>
             )}
             {props.auth.userData?.profile && (
-              <MenuItem onClick={logout}> Logout </MenuItem>
+              <MenuItem data-testid="logoutButton" onClick={logout}> Logout </MenuItem>
             )}
           </MenuList>
         </MenuPopover>
