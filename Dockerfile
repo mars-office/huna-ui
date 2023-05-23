@@ -1,4 +1,4 @@
-FROM node:lts-alpine as builder-amd64
+FROM node:lts-alpine@sha256:44aaf1ccc80eaed6572a0f2ef7d6b5a2982d54481e4255480041ac92221e2f11 as builder-amd64
 WORKDIR /app
 COPY ./package.json ./package.json
 COPY ./package-lock.json ./package-lock.json
