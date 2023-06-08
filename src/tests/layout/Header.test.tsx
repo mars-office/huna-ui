@@ -42,11 +42,7 @@ describe("Header", () => {
       </BrowserRouter>
     );
     const userMenuButton = screen.getByTestId("usermenu");
-
-    
     fireEvent.click(userMenuButton);
-    
-
     const loginButton = screen.queryByTestId("loginButton");
     expect(loginButton).not.toBeNull()
     expect(loginButton).toBeVisible();
@@ -91,6 +87,37 @@ describe("Header", () => {
     const logoutButton = screen.queryByTestId("logoutButton");
     expect(logoutButton).not.toBeNull();
     expect(logoutButton).toBeVisible();
+  });
+
+  it("Should logout user when user logged in and logout button is clicked", async () => {
+    let mockAuthContext = {
+      userData: {
+        profile: {
+          email: 'asd@asd.com',
+          name: 'Test'
+        }
+      }
+    } as AuthContextProps;
+    mockAuthContext.signOut = async () => {
+      mockAuthContext = {...mockAuthContext, userData: null}
+    }
+    const {rerender} = render(
+      <BrowserRouter>
+        <Header auth={mockAuthContext} />
+      </BrowserRouter>
+    );
+    const userMenuButton = screen.getByTestId("usermenu");
+    fireEvent.click(userMenuButton);
+    const logoutButton = screen.getByTestId("logoutButton");
+    fireEvent.click(logoutButton);
+    rerender(
+      <BrowserRouter>
+        <Header auth={mockAuthContext} />
+      </BrowserRouter>
+    );
+    fireEvent.click(userMenuButton);
+    const userNameText = screen.getByTestId("userName");
+    expect(userNameText.textContent).toBe('Anonymous');
   });
 
   it("Should show Anonymous when user not logged in", async () => {
