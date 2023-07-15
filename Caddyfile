@@ -1,6 +1,6 @@
 :80 {
   tracing {
-		span huna-ui
+		span {path}
 	}
 	root * /srv
 	encode gzip
