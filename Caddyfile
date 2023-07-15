@@ -1,7 +1,4 @@
 :80 {
-  tracing {
-		span {path}
-	}
 	root * /srv
 	encode gzip
 	try_files {path} /index.html
