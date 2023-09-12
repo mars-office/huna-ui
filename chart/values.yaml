@@ -31,7 +31,8 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  exposedPort: 80
+  containerPort: 80
 
 podAnnotations: {}
 podLabels: {}
