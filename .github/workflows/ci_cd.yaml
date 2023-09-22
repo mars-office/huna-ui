@@ -1,4 +1,4 @@
-name: 'Docker/Helm build and push'
+name: 'CI/CD'
 
 run-name: '0.0.${{ github.run_number }} - ${{ github.workflow }}'
 
@@ -25,3 +25,14 @@ jobs:
     with:
       version: '0.0.${{ github.run_number }}'
       workingDirectory: 'chart'
+  snyk:
+    uses: mars-office/.github/.github/workflows/snyk.yaml@main
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+      packages: read
+    secrets: inherit
+    needs: [docker_build_push]
+    with:
+      version: '0.0.${{ github.run_number }}'
