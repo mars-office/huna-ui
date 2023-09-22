@@ -25,23 +25,3 @@ jobs:
     with:
       version: '0.0.${{ github.run_number }}'
       workingDirectory: 'chart'
-  snyk_container:
-    uses: mars-office/.github/.github/workflows/snyk_container.yaml@main
-    permissions:
-      contents: read
-      security-events: write
-      actions: read
-      packages: read
-    secrets: inherit
-    needs: [docker_build_push]
-    with:
-      version: 'v0.0.${{ github.run_number }}'
-  snyk_iac_helm:
-    uses: mars-office/.github/.github/workflows/snyk_iac_helm.yaml@main
-    permissions:
-      contents: read
-      security-events: write
-      actions: read
-      packages: read
-    secrets: inherit
-    needs: []
