@@ -38,5 +38,10 @@ jobs:
       version: 'v0.0.${{ github.run_number }}'
   snyk_iac:
     uses: mars-office/.github/.github/workflows/snyk_iac.yaml@main
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+      packages: read
     secrets: inherit
     needs: []
