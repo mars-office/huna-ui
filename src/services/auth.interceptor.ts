@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 export const enableAuthInterceptor = (token: string | undefined) => {
-  axios.interceptors.request.clear();
   axios.interceptors.request.use(
     (request) => {
       if (token) {
