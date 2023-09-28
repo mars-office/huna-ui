@@ -117,7 +117,7 @@ describe("Header", () => {
     );
     fireEvent.click(userMenuButton);
     const userNameText = screen.getByTestId("userName");
-    expect(userNameText.textContent).toBe('Anonymous');
+    expect(userNameText.textContent).toBe('ui.header.anonymous');
   });
 
   it("Should show Anonymous when user not logged in", async () => {
@@ -135,7 +135,7 @@ describe("Header", () => {
     fireEvent.click(userMenuButton);
     
     const userNameText = screen.getByTestId("userName");
-    expect(userNameText.textContent).toBe('Anonymous');
+    expect(userNameText.textContent).toBe('ui.header.anonymous');
   });
 
   it("Should show user name when user logged in", async () => {

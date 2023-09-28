@@ -1,8 +1,9 @@
-import { AuthProvider, AuthProviderProps, UserManager } from "oidc-react";
-import { useMemo } from "react";
-import Layout from "./Layout";
-import { WebStorageStateStore } from "oidc-client-ts";
-import { useNavigate } from "react-router-dom";
+import { AuthProvider, AuthProviderProps, UserManager } from 'oidc-react';
+import { Suspense, useMemo } from 'react';
+import Layout from './Layout';
+import { WebStorageStateStore } from 'oidc-client-ts';
+import { useNavigate } from 'react-router-dom';
+import Loading from './layout/Loading';
 
 export const App = () => {
   const navigate = useNavigate();
@@ -10,12 +11,11 @@ export const App = () => {
   const authConfig: AuthProviderProps = useMemo(() => {
     return {
       userManager: new UserManager({
-        authority:
-          window.location.protocol + "//dex." + window.location.hostname,
-        client_id: "ui",
-        redirect_uri: window.location.origin + "/",
-        scope: "openid offline_access profile email",
-        response_type: "code",
+        authority: window.location.protocol + '//dex.' + window.location.hostname,
+        client_id: 'ui',
+        redirect_uri: window.location.origin + '/',
+        scope: 'openid offline_access profile email',
+        response_type: 'code',
         stateStore: new WebStorageStateStore({ store: localStorage }),
         userStore: new WebStorageStateStore({ store: localStorage }),
       }),
@@ -29,7 +29,7 @@ export const App = () => {
             replace: true,
           });
         } else {
-          navigate("/", {
+          navigate('/', {
             replace: true,
           });
         }
@@ -39,7 +39,9 @@ export const App = () => {
 
   return (
     <AuthProvider {...authConfig}>
-      <Layout />
+      <Suspense fallback={<Loading />}>
+        <Layout />
+      </Suspense>
     </AuthProvider>
   );
 };
