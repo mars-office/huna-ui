@@ -1,11 +1,13 @@
 import { Button, Text } from "@fluentui/react-components";
 import { useAuth } from "oidc-react";
 import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 
 export const Login = () => {
     const auth = useAuth();
     const [searchParams] = useSearchParams();
+    const {t} = useTranslation();
 
     const login = useCallback(async (provider: string) => {
         await auth.signIn({
@@ -23,10 +25,10 @@ export const Login = () => {
         flexDirection: 'column',
         gap: '1rem',
     }}>
-        <Text as="h2" size={800}>Login</Text>
-        <Button onClick={() => login('google')}>Login with Google</Button>
-        <Button onClick={() => login('facebook')}>Login with Facebook</Button>
-        <Button onClick={() => login('microsoft')}>Login with Microsoft</Button>
+        <Text as="h2" size={800}>{t('ui.login.login')} </Text>
+        <Button onClick={() => login('google')}>{t('ui.login.loginWith')} Google</Button>
+        <Button onClick={() => login('facebook')}>{t('ui.login.loginWith')}  Facebook</Button>
+        <Button onClick={() => login('microsoft')}>{t('ui.login.loginWith')}  Microsoft</Button>
     </div>
 }
 
