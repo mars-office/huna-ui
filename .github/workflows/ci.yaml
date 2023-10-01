@@ -1,0 +1,20 @@
+name: 'CI'
+
+run-name: '0.0.${{ github.run_number }} - ${{ github.workflow }}'
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+jobs:
+  ci_cd:
+    uses: mars-office/.github/.github/workflows/ci.yaml@main
+    secrets: inherit
+    with:
+      version: 'v0.0.${{ github.run_number }}'
