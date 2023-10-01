@@ -19,6 +19,7 @@ jobs:
       actions: read
       contents: read
       packages: write
+      id-token: write
     uses: mars-office/.github/.github/workflows/ci.yaml@main
     secrets: inherit
     with:
