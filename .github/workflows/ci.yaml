@@ -18,3 +18,4 @@ jobs:
     secrets: inherit
     with:
       version: 'v0.0.${{ github.run_number }}'
+      umbrellaChartName: 'huna'
