@@ -1,3 +1,6 @@
+declare var hunaVersion: string;
+
 export const environment = {
-  production: true
+  production: true,
+  version: hunaVersion
 };

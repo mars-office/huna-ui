@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { LoginComponent } from './login/login.component';
@@ -13,6 +13,9 @@ import { HomeComponent } from './home/home.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { SettingsComponent } from './settings/settings.component';
+import { AuthConfigModule } from './auth-config.module';
+import { AuthInterceptor } from 'angular-auth-oidc-client';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     LoginComponent,
     NotFoundComponent,
     HomeComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,8 +36,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
+    AuthConfigModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
