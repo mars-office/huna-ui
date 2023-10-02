@@ -4,7 +4,8 @@
       "language": "Limbă",
       "version": "Versiune",
       "logout": "Deconectare",
-      "login": "Conectare"
+      "login": "Conectare",
+      "settings": "Setări"
     }
   }
 }

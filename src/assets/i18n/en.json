@@ -4,7 +4,8 @@
       "language": "Language",
       "version": "Version",
       "logout": "Logout",
-      "login": "Login"
+      "login": "Login",
+      "settings": "Settings"
     }
   }
 }
