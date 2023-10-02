@@ -1,5 +1,11 @@
 <div class="mat-app-background" id="wrapper">
-  <app-header [user]="user" (logoutClicked)="onLogoutClicked()"></app-header>
+  <app-header
+    [currentLanguage]="currentLanguage"
+    (languageSelected)="changeLanguage($event)"
+    [user]="user"
+    (logoutClicked)="onLogoutClicked()"
+    (loginClicked)="onLoginClicked()"
+  ></app-header>
   <div id="content">
     <router-outlet></router-outlet>
   </div>

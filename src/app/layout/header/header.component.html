@@ -1,6 +1,24 @@
 <mat-toolbar color="primary">
   <span>HUNA2</span>
-  <button mat-icon-button color="accent">
-    <mat-icon fontIcon="more_vert"></mat-icon>
+  <button [matMenuTriggerFor]="userMenu" mat-icon-button>
+    <mat-icon [fontIcon]="user ? 'person' : 'more_vert'"></mat-icon>
   </button>
 </mat-toolbar>
+
+<mat-menu #userMenu="matMenu">
+  <button mat-menu-item [matMenuTriggerFor]="langMenu"><mat-icon fontIcon="language"></mat-icon><span>{{ 'ui.header.language' | translate }}</span></button>
+  <button mat-menu-item *ngIf="!user" (click)="loginClicked.emit()"><mat-icon fontIcon="login"></mat-icon><span>{{ 'ui.header.login' | translate }}</span></button>
+  <button mat-menu-item *ngIf="user" (click)="logoutClicked.emit()"><mat-icon fontIcon="logout"></mat-icon><span>{{ 'ui.header.logout' | translate }}</span></button>
+  <button mat-menu-item [disabled]="true"><mat-icon fontIcon="info"></mat-icon><span>{{ 'ui.header.version' | translate }}: {{ appVersion }}</span></button>
+</mat-menu>
+
+<mat-menu #langMenu="matMenu">
+  <button (click)="languageSelected.emit(lang.code)" mat-menu-item *ngFor="let lang of languages">
+    <mat-icon
+      fontIcon="done"
+      [style.visibility]="currentLanguage === lang.code ? 'visible' : 'hidden'"
+      ></mat-icon
+    >
+    <span>{{ lang.name }}</span>
+  </button>
+</mat-menu>

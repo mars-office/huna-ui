@@ -3,37 +3,79 @@ import { TranslateService } from '@ngx-translate/core';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { Subscription } from 'rxjs';
 import { UserClaims } from './models/user-claims';
+import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
   user: UserClaims | undefined;
   private _subs: Subscription[] = [];
+  currentLanguage = environment.languages.find((x) => x.default)!.code;
 
-  constructor(private translateService: TranslateService, private oidcSecurityService: OidcSecurityService) {
-
-  }
+  constructor(
+    private translateService: TranslateService,
+    private oidcSecurityService: OidcSecurityService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this._subs.push(this.oidcSecurityService.checkAuth().subscribe(() => {
-      this._subs.push(this.oidcSecurityService.getUserData().subscribe(u => {
-        this.user = u;
-      }));
-    }));
+    this._subs.push(
+      this.oidcSecurityService.checkAuth().subscribe(() => {
+        this._subs.push(
+          this.oidcSecurityService.userData$.subscribe((u) => {
+            this.user = u.userData;
+          })
+        );
+      })
+    );
 
-    this.translateService.setDefaultLang('en');
+    this.initLanguage();
+  }
+
+  private initLanguage() {
+    this.translateService.addLangs(environment.languages.map((x) => x.code));
+    this.translateService.setDefaultLang(
+      environment.languages.find((x) => x.default)!.code
+    );
+    let lang = environment.languages.find((x) => x.default)!.code;
+    const lsLang = localStorage.getItem('lang');
+    if (lsLang) {
+      lang = lsLang;
+    } else {
+      const browserLang = this.translateService.getBrowserLang();
+      if (browserLang) {
+        lang = browserLang;
+      }
+    }
+    this.translateService.use(lang).subscribe();
+
+    this._subs.push(
+      this.translateService.onLangChange.subscribe((lce) => {
+        this.currentLanguage = lce.lang;
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this._subs.forEach(s => s.unsubscribe());
+    this._subs.forEach((s) => s.unsubscribe());
   }
 
   onLogoutClicked() {
-    this.oidcSecurityService.logoff().subscribe(() => {
+    this.oidcSecurityService.logoffLocal();
+  }
 
+  onLoginClicked() {
+    this.oidcSecurityService.authorize(undefined, {
+      redirectUrl: window.location.origin + this.router.url,
     });
+  }
+
+  changeLanguage(lang: string) {
+    localStorage.setItem('lang', lang);
+    this.translateService.use(lang).subscribe();
   }
 }

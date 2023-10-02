@@ -1,3 +1,10 @@
 {
-
+  "ui": {
+    "header": {
+      "language": "Limbă",
+      "version": "Versiune",
+      "logout": "Deconectare",
+      "login": "Conectare"
+    }
+  }
 }
