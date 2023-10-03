@@ -9,6 +9,8 @@ export class TestService {
   constructor(private http: HttpClient) { }
 
   test() {
-    return this.http.get<string>(`/api/gpt/test`);
+    return this.http.get(`/api/gpt/test`, {
+      responseType: 'text'
+    });
   }
 }
