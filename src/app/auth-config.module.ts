@@ -17,7 +17,7 @@ import { OidcLocalStorage } from './services/oidc-local-storage';
               useRefreshToken: true,
               renewTimeBeforeTokenExpiresInSeconds: 30,
               logLevel: environment.production ? LogLevel.Warn : LogLevel.Debug,
-              secureRoutes: [window.location.origin + '/api'],
+              secureRoutes: ['/api'],
           }
       })],
     exports: [AuthModule],
