@@ -66,12 +66,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onLogoutClicked() {
     this.oidcSecurityService.logoffLocal();
+    this.router.navigateByUrl('/');
   }
 
   onLoginClicked() {
-    this.oidcSecurityService.authorize(undefined, {
-      redirectUrl: window.location.origin + this.router.url,
-    });
+    this.oidcSecurityService.authorize();
   }
 
   changeLanguage(lang: string) {

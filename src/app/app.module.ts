@@ -11,7 +11,6 @@ import {
 } from '@angular/common/http';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
-import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,7 +32,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    LoginComponent,
     NotFoundComponent,
     HomeComponent,
     SettingsComponent,
