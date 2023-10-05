@@ -18,7 +18,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SettingsComponent } from './settings/settings.component';
-import { AuthConfigModule } from './auth-config.module';
 import { AbstractSecurityStorage, AuthInterceptor, AuthModule, LogLevel } from 'angular-auth-oidc-client';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
