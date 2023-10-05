@@ -19,9 +19,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SettingsComponent } from './settings/settings.component';
 import { AuthConfigModule } from './auth-config.module';
-import { AuthInterceptor } from 'angular-auth-oidc-client';
+import { AbstractSecurityStorage, AuthInterceptor, AuthModule, LogLevel } from 'angular-auth-oidc-client';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { environment } from 'src/environments/environment';
+import { OidcLocalStorage } from './services/oidc-local-storage';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -48,14 +50,29 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient],
       },
     }),
+    AuthModule.forRoot({
+      config: {
+            authority: window.location.protocol + '//dex.' + window.location.hostname,
+            redirectUrl: window.location.origin + '/',
+            postLogoutRedirectUri: window.location.origin + '/',
+            clientId: 'ui',
+            scope: 'openid offline_access profile email',
+            responseType: 'code',
+            silentRenew: true,
+            useRefreshToken: true,
+            renewTimeBeforeTokenExpiresInSeconds: 30,
+            logLevel: environment.production ? LogLevel.Warn : LogLevel.Debug,
+            secureRoutes: ['/api'],
+        }
+    }),
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
-    AuthConfigModule,
     MatMenuModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: AbstractSecurityStorage, useClass: OidcLocalStorage }
   ],
   bootstrap: [AppComponent],
 })
