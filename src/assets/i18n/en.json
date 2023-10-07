@@ -5,7 +5,11 @@
       "version": "Version",
       "logout": "Logout",
       "login": "Login",
-      "settings": "Settings"
+      "settings": "Settings",
+      "versionDetails": {
+        "versionDetails": "Version details",
+        "close": "Close"
+      }
     }
   }
 }

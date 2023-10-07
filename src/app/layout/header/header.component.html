@@ -10,7 +10,7 @@
   <button mat-menu-item *ngIf="!user" (click)="loginClicked.emit()"><mat-icon fontIcon="login"></mat-icon><span>{{ 'ui.header.login' | translate }}</span></button>
   <button mat-menu-item *ngIf="user" routerLink="/settings"><mat-icon fontIcon="settings"></mat-icon><span>{{ 'ui.header.settings' | translate }}</span></button>
   <button mat-menu-item *ngIf="user" (click)="logoutClicked.emit()"><mat-icon fontIcon="logout"></mat-icon><span>{{ 'ui.header.logout' | translate }}</span></button>
-  <button mat-menu-item [disabled]="true"><mat-icon fontIcon="info"></mat-icon><span>{{ 'ui.header.version' | translate }}: {{ appVersion }}</span></button>
+  <button mat-menu-item (click)="openVersionDetails()"><mat-icon fontIcon="info"></mat-icon><span>{{ 'ui.header.version' | translate }}: {{ appVersion }}</span></button>
 </mat-menu>
 
 <mat-menu #langMenu="matMenu">

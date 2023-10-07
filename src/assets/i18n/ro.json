@@ -5,7 +5,11 @@
       "version": "Versiune",
       "logout": "Deconectare",
       "login": "Conectare",
-      "settings": "Setări"
+      "settings": "Setări",
+      "versionDetails": {
+        "versionDetails": "Detalii versiune",
+        "close": "Închide"
+      }
     }
   }
 }

@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { UserClaims } from 'src/app/models/user-claims';
 import { environment } from 'src/environments/environment';
+import { VersionDetailsComponent } from './version-details/version-details.component';
 
 @Component({
   selector: 'app-header',
@@ -29,7 +31,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   appVersion = environment.version;
   appEnv = environment.env;
 
-  constructor() {
+  constructor(private matDialog: MatDialog) {
 
   }
 
@@ -39,5 +41,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
 
+  }
+
+  openVersionDetails() {
+    this.matDialog.open(VersionDetailsComponent);
   }
 }
