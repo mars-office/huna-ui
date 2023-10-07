@@ -1,1 +1,2 @@
-window.hunaVersion = 'local';
+window.hunaVersion = 'debug';
+window.hunaEnv = 'local';

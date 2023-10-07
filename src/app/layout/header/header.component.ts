@@ -27,6 +27,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   appVersion = environment.version;
+  appEnv = environment.env;
 
   constructor() {
 

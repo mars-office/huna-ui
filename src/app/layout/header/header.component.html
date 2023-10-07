@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <span class="cp" routerLink="/">HUNA2</span>
+  <span class="cp" routerLink="/">HUNA2 <i *ngIf="appEnv !== 'prod'">{{ appEnv }}</i></span>
   <button [matMenuTriggerFor]="userMenu" mat-icon-button>
     <mat-icon [fontIcon]="user ? 'person' : 'more_vert'"></mat-icon>
   </button>
