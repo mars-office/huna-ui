@@ -8,4 +8,5 @@ import { environment } from 'src/environments/environment';
 })
 export class VersionDetailsComponent {
   versionDetails = environment.versionDetails;
+  version = environment.version;
 }
