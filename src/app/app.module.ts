@@ -25,6 +25,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { environment } from 'src/environments/environment';
 import { OidcLocalStorage } from './services/oidc-local-storage';
 import { VersionDetailsComponent } from './layout/header/version-details/version-details.component';
+import { LoginComponent } from './login/login.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -39,6 +41,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     HomeComponent,
     SettingsComponent,
     VersionDetailsComponent,
+    LoginComponent,
+    UnauthorizedComponent,
   ],
   imports: [
     BrowserModule,

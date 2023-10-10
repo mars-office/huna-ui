@@ -10,6 +10,9 @@
         "versionDetails": "Version details",
         "close": "Close"
       }
+    },
+    "login": {
+      "loginWith": "Login with"
     }
   }
 }

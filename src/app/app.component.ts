@@ -70,7 +70,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onLoginClicked() {
-    this.oidcSecurityService.authorize();
+    this.router.navigateByUrl('/login?returnTo=' + this.router.url);
   }
 
   changeLanguage(lang: string) {

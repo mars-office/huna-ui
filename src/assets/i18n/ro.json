@@ -10,6 +10,9 @@
         "versionDetails": "Detalii versiune",
         "close": "Închide"
       }
+    },
+    "login": {
+      "loginWith": "Conectare cu"
     }
   }
 }

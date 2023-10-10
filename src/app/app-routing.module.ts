@@ -3,7 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { SettingsComponent } from './settings/settings.component';
-import {AutoLoginPartialRoutesGuard} from 'angular-auth-oidc-client';
+import { LoginComponent } from './login/login.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { authGuard } from './services/auth.guard';
 
 const routes: Routes = [
   {
@@ -11,9 +13,17 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
     path: 'settings',
     component: SettingsComponent,
-    canActivate: [AutoLoginPartialRoutesGuard]
+    canActivate: [authGuard]
+  },
+  {
+    path: 'unauthorized',
+    component: UnauthorizedComponent
   },
   {
     path: '**',
