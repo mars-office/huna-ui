@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login(provider: string) {
+    localStorage.setItem('post_login_redirect', this.returnTo);
     this.oidcSecurityService.authorize(undefined, {
       customParams: {
         provider: provider

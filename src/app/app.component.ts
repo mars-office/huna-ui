@@ -24,7 +24,15 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._subs.push(
-      this.oidcSecurityService.checkAuth().subscribe(() => {
+      this.oidcSecurityService.checkAuth().subscribe(authResponse => {
+        if (authResponse.isAuthenticated) {
+          const postLoginRedirect = localStorage.getItem('post_login_redirect');
+          if (postLoginRedirect) {
+            localStorage.removeItem('post_login_redirect');
+            this.router.navigateByUrl(postLoginRedirect);
+            return;
+          }
+        }
         this._subs.push(
           this.oidcSecurityService.userData$.subscribe((u) => {
             this.user = u.userData;
