@@ -23,6 +23,12 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.initAuth();
+
+    this.initLanguage();
+  }
+
+  private initAuth() {
     this._subs.push(
       this.oidcSecurityService.checkAuth().subscribe(authResponse => {
         if (authResponse.isAuthenticated) {
@@ -33,15 +39,13 @@ export class AppComponent implements OnInit, OnDestroy {
             return;
           }
         }
-        this._subs.push(
-          this.oidcSecurityService.userData$.subscribe((u) => {
-            this.user = u.userData;
-          })
-        );
       })
     );
-
-    this.initLanguage();
+    this._subs.push(
+      this.oidcSecurityService.userData$.subscribe((u) => {
+        this.user = u.userData;
+      })
+    );
   }
 
   private initLanguage() {
@@ -78,7 +82,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onLoginClicked() {
-    this.router.navigateByUrl('/login?returnTo=' + this.router.url);
+    this.router.navigateByUrl('/login?returnTo=' + encodeURIComponent(this.router.url));
   }
 
   changeLanguage(lang: string) {
