@@ -46,4 +46,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   openVersionDetails() {
     this.matDialog.open(VersionDetailsComponent);
   }
+
+  get userInitials() {
+    if (!this.user?.name) {
+      return undefined;
+    }
+    return this.user.name.split(' ').slice(0, 2).map(x => x[0].toUpperCase())
+      .join('');
+  }
 }

@@ -1,11 +1,16 @@
 <mat-toolbar color="primary">
-  <span class="cp" routerLink="/">HUNA2 <i *ngIf="appEnv !== 'prod'">{{ appEnv }}</i></span>
-  <button [matMenuTriggerFor]="userMenu" mat-icon-button>
-    <mat-icon [fontIcon]="user ? 'person' : 'more_vert'"></mat-icon>
+  <span class="cp" routerLink="/">huna2<small *ngIf="appEnv !== 'prod'"> {{ appEnv }}</small></span>
+  <button [matMenuTriggerFor]="userMenu" *ngIf="!user" mat-icon-button>
+    <mat-icon fontIcon="more_vert"></mat-icon>
   </button>
+  <button [matMenuTriggerFor]="userMenu" *ngIf="user" mat-mini-fab color="primary">
+    <small *ngIf="user">{{ userInitials }}</small>
+  </button>
+
 </mat-toolbar>
 
 <mat-menu #userMenu="matMenu">
+  <button mat-menu-item *ngIf="user" disabled><mat-icon>person</mat-icon><span>{{ user.name }}</span></button>
   <button mat-menu-item [matMenuTriggerFor]="langMenu"><mat-icon fontIcon="language"></mat-icon><span>{{ 'ui.header.language' | translate }}</span></button>
   <button mat-menu-item *ngIf="!user" (click)="loginClicked.emit()"><mat-icon fontIcon="login"></mat-icon><span>{{ 'ui.header.login' | translate }}</span></button>
   <button mat-menu-item *ngIf="user" routerLink="/settings"><mat-icon fontIcon="settings"></mat-icon><span>{{ 'ui.header.settings' | translate }}</span></button>
