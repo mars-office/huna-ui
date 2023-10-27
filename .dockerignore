@@ -1,6 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/windows,linux,git,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,linux,git,visualstudiocode
 # Logs
+Dockerfile
 logs
 *.log
 npm-debug.log*
