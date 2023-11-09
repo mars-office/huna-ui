@@ -71,14 +71,14 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "huna-ui:build:production"
+              "buildTarget": "huna-ui:build:production"
             },
             "development": {
-              "browserTarget": "huna-ui:build:development",
               "hmr": true,
               "port": 3000,
               "host": "0.0.0.0",
-              "disableHostCheck": true
+              "disableHostCheck": true,
+              "buildTarget": "huna-ui:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -86,7 +86,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "huna-ui:build"
+            "buildTarget": "huna-ui:build"
           }
         },
         "test": {
