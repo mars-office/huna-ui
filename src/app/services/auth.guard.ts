@@ -8,7 +8,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   const oidcSecurityService = inject(OidcSecurityService);
   return oidcSecurityService.isAuthenticated$.pipe(
     tap(ar => {
-      console.log(ar);
       if (!ar.isAuthenticated) {
         router.navigateByUrl('/login?returnTo=' + encodeURIComponent(state.url))
       }
