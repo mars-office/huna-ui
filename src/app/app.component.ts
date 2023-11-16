@@ -30,7 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private initAuth() {
     this._subs.push(
-      this.oidcSecurityService.checkAuth().subscribe(authResponse => {
+      this.oidcSecurityService.checkAuth().subscribe((authResponse) => {
         if (authResponse.isAuthenticated) {
           const postLoginRedirect = localStorage.getItem('post_login_redirect');
           if (postLoginRedirect) {
@@ -82,11 +82,15 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onLoginClicked() {
-    this.router.navigateByUrl('/login?returnTo=' + encodeURIComponent(this.router.url));
+    this.router.navigateByUrl(
+      '/login?returnTo=' + encodeURIComponent(this.router.url)
+    );
   }
 
   changeLanguage(lang: string) {
-    localStorage.setItem('lang', lang);
-    this.translateService.use(lang).subscribe();
+    setTimeout(() => {
+      localStorage.setItem('lang', lang);
+      this.translateService.use(lang).subscribe();
+    }, 200);
   }
 }
