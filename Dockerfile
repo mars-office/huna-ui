@@ -8,6 +8,7 @@ COPY ./package.json ./package.json
 COPY ./package-lock.json ./package-lock.json
 RUN npm install -f
 COPY . .
+RUN npm run test-ci
 RUN npm run build
 
 FROM caddy:2.7.5-alpine as production
