@@ -1,5 +1,9 @@
 FROM node:alpine as builder
 WORKDIR /app
+
+RUN apk add chromium
+ENV CHROME_BIN=/usr/bin/chromium-browser
+
 COPY ./package.json ./package.json
 COPY ./package-lock.json ./package-lock.json
 RUN npm install -f

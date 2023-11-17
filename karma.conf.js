@@ -4,6 +4,9 @@
 module.exports = function (config) {
   config.set({
     basePath: "",
+    files: [
+      'test-globals.js'
+    ],
     frameworks: ["jasmine", "@angular-devkit/build-angular"],
     plugins: [
       require("karma-jasmine"),
@@ -34,7 +37,7 @@ module.exports = function (config) {
     customLaunchers: {
       ChromeHeadlessCI: {
         base: "ChromeHeadless",
-        flags: ["--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage", "--headless"],
+        flags: ["--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage", "--headless", "--remote-debugging-port=9222"],
       },
     },
     restartOnFileChange: true,
