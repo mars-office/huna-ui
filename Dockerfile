@@ -6,7 +6,7 @@ ENV CHROME_BIN=/usr/bin/chromium-browser
 
 COPY ./package.json ./package.json
 COPY ./package-lock.json ./package-lock.json
-RUN npm install -f
+RUN npm install
 COPY . .
 RUN npm run test-ci
 RUN npm run build
