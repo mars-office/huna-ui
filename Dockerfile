@@ -10,8 +10,8 @@ RUN npm install
 COPY . .
 ARG TARGETPLATFORM
 RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
-  npm run test-ci \
-fi
+    npm run test-ci \
+  fi
 RUN npm run build
 
 FROM caddy:2.7.5-alpine as production
