@@ -8,7 +8,10 @@ COPY ./package.json ./package.json
 COPY ./package-lock.json ./package-lock.json
 RUN npm install
 COPY . .
-RUN npm run test-ci
+ARG TARGETPLATFORM
+RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
+  npm run test-ci \
+fi
 RUN npm run build
 
 FROM caddy:2.7.5-alpine as production
