@@ -9,9 +9,7 @@ COPY ./package-lock.json ./package-lock.json
 RUN npm install
 COPY . .
 ARG TARGETPLATFORM
-RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
-    npm run test-ci \
-  fi
+RUN [ "$TARGETPLATFORM" = "linux/amd64" ] && npm run test-ci || echo "Skipping tests on ARM64"
 RUN npm run build
 
 FROM caddy:2.7.5-alpine as production
