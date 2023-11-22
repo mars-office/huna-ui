@@ -5,7 +5,11 @@
   <title>huna2</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <script src="/assets/config/version.js?cb=$APPVERSION"></script>
+  <script>
+    window.hunaVersion = "{{HUNA_VERSION}}";
+    window.hunaVersionDetails = "{{HUNA_VERSION_DETAILS}}";
+    window.hunaEnv = "{{HUNA_ENV}}";
+  </script>
   <script src="/assets/newrelic.js"></script>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>

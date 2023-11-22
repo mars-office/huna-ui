@@ -13,8 +13,6 @@ RUN [ "$TARGETPLATFORM" = "linux/amd64" ] && npm run test-ci || echo "Skipping t
 RUN npm run build
 
 FROM caddy:2.7.5-alpine as production
-RUN apk add gettext
 COPY --from=builder /app/dist /srv
 COPY ./Caddyfile /etc/caddy/Caddyfile
 LABEL org.opencontainers.image.source=https://github.com/mars-office/huna-ui
-CMD envsubst < /srv/index.html > /srv/index.html && caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
