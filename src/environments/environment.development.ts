@@ -1,12 +1,8 @@
-declare var hunaVersion: string;
-declare var hunaEnv: string;
-declare var hunaVersionDetails: string;
-
 export const environment = {
   production: false,
-  version: hunaVersion,
-  env: hunaEnv,
-  versionDetails: hunaVersionDetails,
+  version: 'debug',
+  env: 'local',
+  versionDetails: 'debug',
   languages: [
     {
       code: 'en',
