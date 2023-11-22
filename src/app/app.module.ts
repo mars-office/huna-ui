@@ -27,9 +27,10 @@ import { OidcLocalStorage } from './services/oidc-local-storage';
 import { VersionDetailsComponent } from './layout/header/version-details/version-details.component';
 import { LoginComponent } from './login/login.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { getUiVersion } from './helpers/version.helper';
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json?cb=' + getUiVersion());
 }
 
 @NgModule({
