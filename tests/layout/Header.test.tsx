@@ -98,7 +98,7 @@ describe("Header", () => {
         }
       }
     } as AuthContextProps;
-    mockAuthContext.signoutSilent = async () => {
+    mockAuthContext.signoutRedirect = async () => {
       mockAuthContext = {...mockAuthContext, user: null}
     }
     const {rerender} = render(
