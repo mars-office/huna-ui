@@ -1,9 +1,11 @@
-import { AuthProvider, AuthProviderProps, UserManager } from 'oidc-react';
-import { Suspense, useMemo } from 'react';
+import { AuthProvider, AuthProviderProps, User, UserManager } from 'oidc-react';
+import { Suspense, useCallback, useMemo } from 'react';
 import Layout from './Layout';
 import { WebStorageStateStore } from 'oidc-client-ts';
 import { useNavigate } from 'react-router-dom';
 import Loading from './layout/Loading';
+import { useStore } from './hooks/use-store';
+import { userStore } from './stores/user-store';
 
 export const App = () => {
   const navigate = useNavigate();
@@ -37,8 +39,18 @@ export const App = () => {
     };
   }, [navigate]);
 
+  const [getUserStoreUser, setUserStoreUser] = useStore(userStore);
+
+  const onSignIn = useCallback(async (user: User | null) => {
+    setUserStoreUser(user != null ? user : undefined);
+  }, [setUserStoreUser]);
+
+  const onSignOut = useCallback(() => {
+    setUserStoreUser(undefined);
+  }, [setUserStoreUser])
+
   return (
-    <AuthProvider {...authConfig}>
+    <AuthProvider onSignIn={onSignIn} onSignOut={onSignOut} {...authConfig}>
       <Suspense fallback={<Loading />}>
         <Layout />
       </Suspense>
