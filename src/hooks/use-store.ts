@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { BehaviourSubject } from '../helpers/behaviour-subject';
 
-export const useStore = <T>(store: BehaviourSubject<T>) => {
+export const useStore = <T>(store: BehaviourSubject<T>): [T, (nv: T) => void] => {
   const [storeState, _setStoreState] = useState<T>(store.value);
 
   useEffect(() => {
