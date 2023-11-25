@@ -133,6 +133,14 @@ export const Header = (props: HeaderProps) => {
               </MenuGroup>
               <MenuDivider />
               <LanguageMenu />
+              {props.auth.userData?.profile && (
+                <MenuItem data-testid="settingsButton" onClick={() => navigate('/settings')}>
+                  {t('ui.header.settings')}
+                </MenuItem>
+              )}
+              <MenuItem data-testid="versionButton" onClick={() => setVersionDetailsOpen(true)}>
+                {t('ui.header.version')}
+              </MenuItem>
               {!props.auth.userData?.profile && (
                 <MenuItem
                   data-testid="loginButton"
@@ -140,17 +148,12 @@ export const Header = (props: HeaderProps) => {
                     navigate('/login?returnTo=' + encodeURIComponent(location.pathname))
                   }
                 >
-                  {' '}
-                  {t('ui.header.login')}{' '}
+                  {t('ui.header.login')}
                 </MenuItem>
               )}
-              <MenuItem onClick={() => setVersionDetailsOpen(true)}>
-                {t('ui.header.version')}
-              </MenuItem>
               {props.auth.userData?.profile && (
                 <MenuItem data-testid="logoutButton" onClick={logout}>
-                  {' '}
-                  {t('ui.header.logout')}{' '}
+                  {t('ui.header.logout')}
                 </MenuItem>
               )}
             </MenuList>

@@ -5,7 +5,8 @@
       "login": "Conectare",
       "logout": "Deconectare",
       "anonymous": "Anonim",
-      "version": "Versiune"
+      "version": "Versiune",
+      "settings": "Setări"
     },
     "login": {
       "login": "Conectare",

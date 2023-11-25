@@ -4,6 +4,9 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 
 import './i18n';
+import enableAuthInterceptor from "./services/auth.interceptor";
+
+enableAuthInterceptor();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <FluentProvider
