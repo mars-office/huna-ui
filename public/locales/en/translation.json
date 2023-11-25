@@ -1,0 +1,19 @@
+{
+  "ui": {
+    "header": {
+      "language": "Language",
+      "login": "Login",
+      "logout": "Logout",
+      "anonymous": "Anonymous",
+      "version": "Version"
+    },
+    "login": {
+      "login": "Login",
+      "loginWith": "Login with"
+    },
+    "versionDetails": {
+      "close": "Close",
+      "versionDetails": "Version details"
+    }
+  }
+}

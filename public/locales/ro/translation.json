@@ -1,0 +1,19 @@
+{
+  "ui": {
+    "header": {
+      "language": "Limbă",
+      "login": "Conectare",
+      "logout": "Deconectare",
+      "anonymous": "Anonim",
+      "version": "Versiune"
+    },
+    "login": {
+      "login": "Conectare",
+      "loginWith": "Conectare cu"
+    },
+    "versionDetails": {
+      "close": "Închide",
+      "versionDetails": "Detalii versiune"
+    }
+  }
+}

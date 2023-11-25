@@ -1,0 +1,7 @@
+coverage/*
+node_modules/*
+build/*
+.eslintrc.js
+dist/*
+chart/*
+.github/*
