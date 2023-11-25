@@ -10,8 +10,19 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
+    detection: {
+      convertDetectedLanguage: (lng) => {
+        lng = lng.replace("-", "_");
+        if (lng.indexOf('_') === -1) {
+          return lng;
+        }
+        return lng.substring(0, lng.indexOf("_"));
+      }
+    },
     fallbackLng: environment.i18n.languages.find((x) => x.default === true)!.code,
     debug: false,
+    supportedLngs: environment.i18n.languages.map(x => x.code),
+    load: 'languageOnly',
     backend: {
       loadPath: '/locales/{{lng}}/{{ns}}.json?cb=' + getHunaUiVersion(),
     },

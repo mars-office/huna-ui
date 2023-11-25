@@ -4,7 +4,6 @@ import { userStore } from '../stores/user-store';
 export const enableAuthInterceptor = () => {
   axios.interceptors.request.use(
     (request) => {
-      console.log(userStore);
       const token = userStore.value?.access_token;
       if (token) {
         request.headers['Authorization'] = `Bearer ${token}`;
