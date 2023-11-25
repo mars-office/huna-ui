@@ -17,7 +17,7 @@ import {
   MenuCheckedValueChangeData,
 } from '@fluentui/react-components';
 import { MoreVertical28Regular, InprivateAccount28Regular } from '@fluentui/react-icons';
-import { AuthContextProps } from 'oidc-react';
+import { AuthContextProps } from 'react-oidc-context';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -32,7 +32,7 @@ export const Header = (props: HeaderProps) => {
   const navigate = useNavigate();
 
   const logout = useCallback(async () => {
-    await props.auth.signOut();
+    await props.auth.signoutRedirect();
     navigate('/');
   }, [props.auth, navigate]);
 
@@ -111,7 +111,7 @@ export const Header = (props: HeaderProps) => {
               data-testid="usermenu"
               aria-label="More"
               icon={
-                props.auth.userData?.profile ? (
+                props.auth.user?.profile ? (
                   <InprivateAccount28Regular />
                 ) : (
                   <MoreVertical28Regular />
@@ -125,15 +125,15 @@ export const Header = (props: HeaderProps) => {
               <MenuGroup>
                 <MenuGroupHeader>
                   <Text data-testid="userName" size={200}>
-                    {props.auth.userData?.profile
-                      ? props.auth.userData.profile.name
+                    {props.auth.user?.profile
+                      ? props.auth.user.profile.name
                       : t('ui.header.anonymous')}
                   </Text>
                 </MenuGroupHeader>
               </MenuGroup>
               <MenuDivider />
               <LanguageMenu />
-              {props.auth.userData?.profile && (
+              {props.auth.user?.profile && (
                 <MenuItem data-testid="settingsButton" onClick={() => navigate('/settings')}>
                   {t('ui.header.settings')}
                 </MenuItem>
@@ -141,7 +141,7 @@ export const Header = (props: HeaderProps) => {
               <MenuItem data-testid="versionButton" onClick={() => setVersionDetailsOpen(true)}>
                 {t('ui.header.version')}
               </MenuItem>
-              {!props.auth.userData?.profile && (
+              {!props.auth.user?.profile && (
                 <MenuItem
                   data-testid="loginButton"
                   onClick={() =>
@@ -151,7 +151,7 @@ export const Header = (props: HeaderProps) => {
                   {t('ui.header.login')}
                 </MenuItem>
               )}
-              {props.auth.userData?.profile && (
+              {props.auth.user?.profile && (
                 <MenuItem data-testid="logoutButton" onClick={logout}>
                   {t('ui.header.logout')}
                 </MenuItem>

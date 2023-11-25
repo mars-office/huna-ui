@@ -4,7 +4,7 @@ import Login from "./routes/Login";
 import Settings from "./routes/Settings";
 import NotFound from "./routes/NotFound";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import { AuthContextProps } from "oidc-react";
+import { AuthContextProps } from "react-oidc-context";
 
 export interface RoutingProps {
   auth: AuthContextProps;

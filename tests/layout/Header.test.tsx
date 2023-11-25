@@ -1,13 +1,13 @@
 import { describe, it, expect } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import Header from "../../src/layout/Header";
-import { AuthContextProps } from "oidc-react";
+import { AuthContextProps } from "react-oidc-context";
 import { BrowserRouter } from "react-router-dom";
 
 describe("Header", () => {
   it("Should show logo", () => {
     const mockAuthContext = {
-      userData: {},
+      user: {},
     } as AuthContextProps;
     render(
       <BrowserRouter>
@@ -21,7 +21,7 @@ describe("Header", () => {
 
   it("Should show user menu button", async () => {
     const mockAuthContext = {
-      userData: {},
+      user: {},
     } as AuthContextProps;
     render(
       <BrowserRouter>
@@ -34,7 +34,7 @@ describe("Header", () => {
 
   it("Should show login button when user not logged in", async () => {
     const mockAuthContext = {
-      userData: {},
+      user: {},
     } as AuthContextProps;
     render(
       <BrowserRouter>
@@ -50,7 +50,7 @@ describe("Header", () => {
 
   it("Should not show login button when user logged in", async () => {
     const mockAuthContext = {
-      userData: {
+      user: {
         profile: {
           email: 'asd@asd.com'
         }
@@ -70,7 +70,7 @@ describe("Header", () => {
 
   it("Should show logout button when user logged in", async () => {
     const mockAuthContext = {
-      userData: {
+      user: {
         profile: {
           email: 'asd@asd.com'
         }
@@ -91,15 +91,15 @@ describe("Header", () => {
 
   it("Should logout user when user logged in and logout button is clicked", async () => {
     let mockAuthContext = {
-      userData: {
+      user: {
         profile: {
           email: 'asd@asd.com',
           name: 'Test'
         }
       }
     } as AuthContextProps;
-    mockAuthContext.signOut = async () => {
-      mockAuthContext = {...mockAuthContext, userData: null}
+    mockAuthContext.signoutSilent = async () => {
+      mockAuthContext = {...mockAuthContext, user: null}
     }
     const {rerender} = render(
       <BrowserRouter>
@@ -122,7 +122,7 @@ describe("Header", () => {
 
   it("Should show Anonymous when user not logged in", async () => {
     const mockAuthContext = {
-      userData: {
+      user: {
       },
     } as AuthContextProps;
     render(
@@ -140,7 +140,7 @@ describe("Header", () => {
 
   it("Should show user name when user logged in", async () => {
     const mockAuthContext = {
-      userData: {
+      user: {
         profile: {
           email: 'asd@asd.com',
           name: 'Test'

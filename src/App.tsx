@@ -1,4 +1,4 @@
-import { AuthProvider, AuthProviderProps, UserManager } from 'oidc-react';
+import { AuthProvider, AuthProviderProps } from 'react-oidc-context';
 import { Suspense, useMemo } from 'react';
 import Layout from './Layout';
 import { WebStorageStateStore } from 'oidc-client-ts';
@@ -10,32 +10,35 @@ export const App = () => {
 
   const authConfig: AuthProviderProps = useMemo(() => {
     return {
-      userManager: new UserManager({
-        authority: window.location.protocol + '//dex.' + window.location.hostname,
-        client_id: 'ui',
-        redirect_uri: window.location.origin + '/',
-        scope: 'openid offline_access profile email',
-        response_type: 'code',
-        stateStore: new WebStorageStateStore({ store: localStorage }),
-        userStore: new WebStorageStateStore({ store: localStorage }),
-      }),
+      authority: window.location.protocol + '//dex.' + window.location.hostname,
+      client_id: 'ui',
+      redirect_uri: window.location.origin + '/',
+      scope: 'openid offline_access profile email',
+      response_type: 'code',
+      stateStore: new WebStorageStateStore({ store: localStorage }),
+      userStore: new WebStorageStateStore({ store: localStorage }),
+      automaticSilentRenew: true,
+      loadUserInfo: true,
       autoSignIn: false,
       autoSignOut: false,
-      onSignIn: (user) => {
+      onSigninCallback: (user) => {
+        window.history.replaceState({}, document.title, window.location.pathname);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const state: any = user?.state;
-        if (state.returnTo) {
-          navigate(state.returnTo, {
-            replace: true,
-          });
-        } else {
-          navigate('/', {
-            replace: true,
-          });
+        if (user) {
+          const state: any = user?.state;
+          if (state.returnTo) {
+            navigate(state.returnTo, {
+              replace: true,
+            });
+          } else {
+            navigate('/', {
+              replace: true,
+            });
+          }
         }
       },
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

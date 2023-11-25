@@ -1,5 +1,5 @@
 import { Button, Text } from "@fluentui/react-components";
-import { useAuth } from "oidc-react";
+import { useAuth } from "react-oidc-context";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
@@ -10,7 +10,7 @@ export const Login = () => {
     const {t} = useTranslation();
 
     const login = useCallback(async (provider: string) => {
-        await auth.signIn({
+        await auth.signinRedirect({
             extraQueryParams: {
                 connector_id: provider
             },
