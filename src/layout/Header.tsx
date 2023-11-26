@@ -111,7 +111,7 @@ export const Header = (props: HeaderProps) => {
               data-testid="usermenu"
               aria-label="More"
               icon={
-                props.auth.user?.profile ? (
+                props.auth.isAuthenticated ? (
                   <InprivateAccount28Regular />
                 ) : (
                   <MoreVertical28Regular />
@@ -125,15 +125,15 @@ export const Header = (props: HeaderProps) => {
               <MenuGroup>
                 <MenuGroupHeader>
                   <Text data-testid="userName" size={200}>
-                    {props.auth.user?.profile
-                      ? props.auth.user.profile.name
+                    {props.auth.isAuthenticated
+                      ? props.auth.user?.profile.name
                       : t('ui.header.anonymous')}
                   </Text>
                 </MenuGroupHeader>
               </MenuGroup>
               <MenuDivider />
               <LanguageMenu />
-              {props.auth.user?.profile && (
+              {props.auth.isAuthenticated && (
                 <MenuItem data-testid="settingsButton" onClick={() => navigate('/settings')}>
                   {t('ui.header.settings')}
                 </MenuItem>
@@ -141,7 +141,7 @@ export const Header = (props: HeaderProps) => {
               <MenuItem data-testid="versionButton" onClick={() => setVersionDetailsOpen(true)}>
                 {t('ui.header.version')}
               </MenuItem>
-              {!props.auth.user?.profile && (
+              {!props.auth.isAuthenticated && (
                 <MenuItem
                   data-testid="loginButton"
                   onClick={() =>
@@ -151,7 +151,7 @@ export const Header = (props: HeaderProps) => {
                   {t('ui.header.login')}
                 </MenuItem>
               )}
-              {props.auth.user?.profile && (
+              {props.auth.isAuthenticated && (
                 <MenuItem data-testid="logoutButton" onClick={logout}>
                   {t('ui.header.logout')}
                 </MenuItem>
