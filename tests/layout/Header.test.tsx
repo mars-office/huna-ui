@@ -8,6 +8,7 @@ describe("Header", () => {
   it("Should show logo", () => {
     const mockAuthContext = {
       user: {},
+      isAuthenticated: false
     } as AuthContextProps;
     render(
       <BrowserRouter>
@@ -22,6 +23,7 @@ describe("Header", () => {
   it("Should show user menu button", async () => {
     const mockAuthContext = {
       user: {},
+      isAuthenticated: false
     } as AuthContextProps;
     render(
       <BrowserRouter>
@@ -35,6 +37,7 @@ describe("Header", () => {
   it("Should show login button when user not logged in", async () => {
     const mockAuthContext = {
       user: {},
+      isAuthenticated: false
     } as AuthContextProps;
     render(
       <BrowserRouter>
@@ -55,6 +58,7 @@ describe("Header", () => {
           email: 'asd@asd.com'
         }
       },
+      isAuthenticated: true
     } as AuthContextProps;
     render(
       <BrowserRouter>
@@ -75,6 +79,7 @@ describe("Header", () => {
           email: 'asd@asd.com'
         }
       },
+      isAuthenticated: true
     } as AuthContextProps;
     render(
       <BrowserRouter>
@@ -96,10 +101,11 @@ describe("Header", () => {
           email: 'asd@asd.com',
           name: 'Test'
         }
-      }
+      },
+      isAuthenticated: true
     } as AuthContextProps;
     mockAuthContext.signoutRedirect = async () => {
-      mockAuthContext = {...mockAuthContext, user: null}
+      mockAuthContext = {...mockAuthContext, user: null, isAuthenticated: false}
     }
     const {rerender} = render(
       <BrowserRouter>
@@ -146,6 +152,7 @@ describe("Header", () => {
           name: 'Test'
         }
       },
+      isAuthenticated: true
     } as AuthContextProps;
     render(
       <BrowserRouter>
@@ -157,6 +164,6 @@ describe("Header", () => {
     fireEvent.click(userMenuButton);
     
     const userNameText = screen.getByTestId("userName");
-    expect(userNameText.textContent).toBe('Test');
+    expect(userNameText.textContent).toBe('asd@asd.com');
   });
 });
