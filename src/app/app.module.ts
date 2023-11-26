@@ -19,7 +19,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SettingsComponent } from './settings/settings.component';
-import { AbstractSecurityStorage, AuthInterceptor, AuthModule, LogLevel } from 'angular-auth-oidc-client';
+import {
+  AbstractSecurityStorage,
+  AuthInterceptor,
+  AuthModule,
+  LogLevel,
+} from 'angular-auth-oidc-client';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { environment } from 'src/environments/environment';
@@ -30,7 +35,11 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { getUiVersion } from './helpers/version.helper';
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json?cb=' + getUiVersion());
+  return new TranslateHttpLoader(
+    http,
+    './assets/i18n/',
+    '.json?cb=' + getUiVersion()
+  );
 }
 
 @NgModule({
@@ -59,35 +68,32 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     AuthModule.forRoot({
       config: {
-            authority: window.location.protocol + '//dex.' + window.location.hostname,
-            redirectUrl: window.location.origin + '/',
-            postLogoutRedirectUri: window.location.origin + '/',
-            clientId: 'ui',
-            scope: 'openid offline_access profile email',
-            responseType: 'code',
-            silentRenew: true,
-            useRefreshToken: true,
-            renewTimeBeforeTokenExpiresInSeconds: 30,
-            logLevel: environment.production ? LogLevel.Warn : LogLevel.Debug,
-            secureRoutes: ['/api'],
-            ignoreNonceAfterRefresh: true, // this is required if the id_token is not returned
-            renewUserInfoAfterTokenRenew: true,
-            triggerRefreshWhenIdTokenExpired: true,
-            customParamsRefreshTokenRequest: {
-              scope: 'openid profile email offline_access'
-            }
-
-        }
+        authority:
+          window.location.protocol + '//dex.' + window.location.hostname,
+        redirectUrl: window.location.origin + '/',
+        postLogoutRedirectUri: window.location.origin + '/',
+        clientId: 'ui',
+        scope: 'openid offline_access profile email',
+        responseType: 'code',
+        silentRenew: true,
+        useRefreshToken: true,
+        renewTimeBeforeTokenExpiresInSeconds: 30,
+        logLevel: environment.production ? LogLevel.Warn : LogLevel.Debug,
+        secureRoutes: ['/api'],
+        ignoreNonceAfterRefresh: true,
+        renewUserInfoAfterTokenRenew: false,
+        triggerRefreshWhenIdTokenExpired: true,
+      },
     }),
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
     MatMenuModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: AbstractSecurityStorage, useClass: OidcLocalStorage }
+    { provide: AbstractSecurityStorage, useClass: OidcLocalStorage },
   ],
   bootstrap: [AppComponent],
 })
