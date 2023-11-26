@@ -70,6 +70,13 @@ export function HttpLoaderFactory(http: HttpClient) {
             renewTimeBeforeTokenExpiresInSeconds: 30,
             logLevel: environment.production ? LogLevel.Warn : LogLevel.Debug,
             secureRoutes: ['/api'],
+            ignoreNonceAfterRefresh: true, // this is required if the id_token is not returned
+            renewUserInfoAfterTokenRenew: true,
+            triggerRefreshWhenIdTokenExpired: true,
+            customParamsRefreshTokenRequest: {
+              scope: 'openid profile email offline_access'
+            }
+
         }
     }),
     MatIconModule,

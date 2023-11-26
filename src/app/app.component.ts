@@ -30,7 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private initAuth() {
     this._subs.push(
-      this.oidcSecurityService.checkAuth().subscribe((authResponse) => {
+      this.oidcSecurityService.checkAuthIncludingServer().subscribe((authResponse) => {
         if (authResponse.isAuthenticated) {
           const postLoginRedirect = localStorage.getItem('post_login_redirect');
           if (postLoginRedirect) {
