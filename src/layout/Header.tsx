@@ -126,7 +126,7 @@ export const Header = (props: HeaderProps) => {
                 <MenuGroupHeader>
                   <Text data-testid="userName" size={200}>
                     {props.auth.isAuthenticated
-                      ? props.auth.user?.profile.name
+                      ? props.auth.user?.profile.email
                       : t('ui.header.anonymous')}
                   </Text>
                 </MenuGroupHeader>
