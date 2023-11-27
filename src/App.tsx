@@ -19,6 +19,9 @@ export const App = () => {
       userStore: new WebStorageStateStore({ store: localStorage }),
       automaticSilentRenew: true,
       loadUserInfo: true,
+      accessTokenExpiringNotificationTimeInSeconds: 30,
+      refreshTokenAllowedScope: 'openid offline_access profile email',
+      includeIdTokenInSilentRenew: true,
       autoSignIn: false,
       autoSignOut: false,
       onSigninCallback: (user) => {
