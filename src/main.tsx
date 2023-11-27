@@ -18,7 +18,7 @@ const authConfig: AuthProviderProps = {
   userStore: new WebStorageStateStore({ store: localStorage }),
   automaticSilentRenew: true,
   loadUserInfo: true,
-  accessTokenExpiringNotificationTimeInSeconds: 1,
+  accessTokenExpiringNotificationTimeInSeconds: 30,
   refreshTokenAllowedScope: 'openid offline_access profile email',
   includeIdTokenInSilentRenew: true,
   onSigninCallback: () => {
