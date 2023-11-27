@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { userStore } from '../stores/user-store';
+import { userStore } from '../stores/user.store';
 
 export const enableAuthInterceptor = () => {
   axios.interceptors.request.use(

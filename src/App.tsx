@@ -8,6 +8,8 @@ import Login from './routes/Login';
 import Settings from './routes/Settings';
 import NotFound from './routes/NotFound';
 import ProtectedRoute from './routes/ProtectedRoute';
+import { useStore } from './hooks/use-store';
+import { userStore } from './stores/user.store';
 
 export const App = () => {
   const auth = useAuth();
@@ -26,6 +28,13 @@ export const App = () => {
       auth.signinSilent();
     }
   }, [auth, hasTriedSignin]);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setUserStoreUser] = useStore(userStore);
+
+  useEffect(() => {
+    setUserStoreUser(!auth.user ? undefined : auth.user);
+  }, [auth.user, setUserStoreUser]);
 
   return (
     <>
