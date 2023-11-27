@@ -29,7 +29,7 @@ export const Header = () => {
   const auth = useAuth();
 
   const logout = useCallback(async () => {
-    await auth.removeUser();
+    await auth.signoutRedirect();
     navigate('/');
   }, [auth, navigate]);
 
