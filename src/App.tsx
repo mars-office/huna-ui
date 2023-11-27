@@ -44,7 +44,7 @@ export const App = () => {
           <Route
             path="/settings"
             element={
-              <ProtectedRoute auth={auth}>
+              <ProtectedRoute>
                 <Settings />
               </ProtectedRoute>
             }
