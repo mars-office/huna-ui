@@ -32,7 +32,7 @@ export const Header = (props: HeaderProps) => {
   const navigate = useNavigate();
 
   const logout = useCallback(async () => {
-    await props.auth.signoutRedirect();
+    await props.auth.removeUser();
     navigate('/');
   }, [props.auth, navigate]);
 
@@ -126,7 +126,7 @@ export const Header = (props: HeaderProps) => {
                 <MenuGroupHeader>
                   <Text data-testid="userName" size={200}>
                     {props.auth.isAuthenticated
-                      ? props.auth.user?.profile.email
+                      ? props.auth.user?.profile.name
                       : t('ui.header.anonymous')}
                   </Text>
                 </MenuGroupHeader>

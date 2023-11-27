@@ -15,6 +15,12 @@
     "versionDetails": {
       "close": "Închide",
       "versionDetails": "Detalii versiune"
+    },
+    "protectedRoute": {
+      "pleaseWait": "Vă rugăm așteptați"
+    },
+    "loading": {
+      "loading": "Se încarcă"
     }
   }
 }

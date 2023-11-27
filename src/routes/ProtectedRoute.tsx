@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { AuthContextProps } from "react-oidc-context";
 import { Navigate, useLocation } from "react-router-dom";
 
@@ -8,7 +9,9 @@ export interface ProtectedRouteProps {
 
 export const ProtectedRoute = (props: ProtectedRouteProps) => {
   const location = useLocation();
-  if (!props.auth.isLoading && !props.auth.user?.profile) {
+  const {t} = useTranslation();
+
+  if (!props.auth.isLoading && !props.auth.isAuthenticated) {
     return (
       <Navigate
         to={"/login?returnTo=" + encodeURIComponent(location.pathname)}
@@ -18,7 +21,7 @@ export const ProtectedRoute = (props: ProtectedRouteProps) => {
   }
 
   return (
-    <>{props.auth.isLoading ? <div>Please wait...</div> : props.children}</>
+    <>{props.auth.isLoading ? <div>{t('ui.protectedRoute.pleaseWait')}...</div> : props.children}</>
   );
 };
 

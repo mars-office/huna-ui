@@ -15,6 +15,12 @@
     "versionDetails": {
       "close": "Close",
       "versionDetails": "Version details"
+    },
+    "protectedRoute": {
+      "pleaseWait": "Please wait"
+    },
+    "loading": {
+      "loading": "Loading"
     }
   }
 }

@@ -1,5 +1,8 @@
+import { useTranslation } from "react-i18next";
+
 const Loading = () => {
-    return <div>Loading...</div>
+    const {t} = useTranslation();
+    return <div>{t('ui.loading.loading')}...</div>
 }
 
 export default Loading;
