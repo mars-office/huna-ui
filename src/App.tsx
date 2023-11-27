@@ -1,7 +1,7 @@
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 import { hasAuthParams, useAuth } from 'react-oidc-context';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import Home from './routes/Home';
 import Login from './routes/Login';
@@ -55,6 +55,14 @@ export const App = () => {
     };
   }, [auth, userLoadedCallback]);
 
+  const canDisplayContent = useMemo(() => {
+    return (
+      (!auth.user && !auth.isAuthenticated) ||
+      (auth.user && !auth.isAuthenticated && hasTriedSignin) ||
+      auth.isAuthenticated
+    );
+  }, [auth, hasTriedSignin]);
+
   return (
     <>
       <Header />
@@ -66,19 +74,21 @@ export const App = () => {
           padding: '1rem',
         }}
       >
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/settings"
-            element={
-              <ProtectedRoute>
-                <Settings />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        {canDisplayContent && (
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute>
+                  <Settings />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        )}
       </div>
       <Footer />
     </>
