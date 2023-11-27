@@ -22,7 +22,6 @@ const authConfig: AuthProviderProps = {
   refreshTokenAllowedScope: 'openid offline_access profile email',
   includeIdTokenInSilentRenew: true,
   onSigninCallback: () => {
-    console.log('Signed in.');
     window.history.replaceState({}, document.title, window.location.pathname);
   },
 };

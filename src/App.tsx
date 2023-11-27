@@ -1,8 +1,8 @@
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 import { hasAuthParams, useAuth } from 'react-oidc-context';
-import { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import Home from './routes/Home';
 import Login from './routes/Login';
 import Settings from './routes/Settings';
@@ -10,9 +10,11 @@ import NotFound from './routes/NotFound';
 import ProtectedRoute from './routes/ProtectedRoute';
 import { useStore } from './hooks/use-store';
 import { userStore } from './stores/user.store';
+import { User } from 'oidc-client-ts';
 
 export const App = () => {
   const auth = useAuth();
+  const navigate = useNavigate();
   const [hasTriedSignin, setHasTriedSignin] = useState(false);
 
   useEffect(() => {
@@ -36,9 +38,26 @@ export const App = () => {
     setUserStoreUser(!auth.user ? undefined : auth.user);
   }, [auth.user, setUserStoreUser]);
 
+  const userLoadedCallback = useCallback(
+    (u: User) => {
+      const state: any = u?.state;
+      if (state?.returnTo) {
+        navigate(state.returnTo);
+      }
+    },
+    [navigate],
+  );
+
+  useEffect(() => {
+    auth.events.addUserLoaded(userLoadedCallback);
+    return () => {
+      auth.events.removeUserLoaded(userLoadedCallback);
+    };
+  }, [auth, userLoadedCallback]);
+
   return (
     <>
-      <Header auth={auth} />
+      <Header />
       <div
         style={{
           flex: '1 1 auto',
