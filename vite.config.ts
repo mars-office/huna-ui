@@ -12,7 +12,7 @@ export default defineConfig({
       registerType: 'prompt',
       injectRegister: 'auto',
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,ttf,otf,woff,woff2,jsx,tsx,ts}']
+        globPatterns: ['**/*.{js,mjs,css,html,ico,png,svg,ttf,otf,woff,woff2,jsx,tsx,ts}']
       },
       manifest: {
         name: 'huna2',
