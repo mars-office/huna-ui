@@ -23,7 +23,8 @@ export const App = () => {
       !auth.isAuthenticated &&
       !auth.activeNavigator &&
       !auth.isLoading &&
-      !auth.error &&
+      auth.user &&
+      auth.user != null &&
       !hasTriedSignin
     ) {
       setHasTriedSignin(true);
