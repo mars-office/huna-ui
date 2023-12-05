@@ -3,7 +3,6 @@ import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import environment from './environment';
-import { getHunaUiVersion } from './helpers/version.helper';
 
 i18n
   .use(Backend)
@@ -23,9 +22,6 @@ i18n
     debug: false,
     supportedLngs: environment.i18n.languages.map(x => x.code),
     load: 'languageOnly',
-    backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json?cb=' + getHunaUiVersion(),
-    },
     interpolation: {
       escapeValue: false,
     },
