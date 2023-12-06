@@ -5,16 +5,11 @@
       "login": "Login",
       "logout": "Logout",
       "anonymous": "Anonymous",
-      "version": "Version",
       "settings": "Settings"
     },
     "login": {
       "login": "Login",
       "loginWith": "Login with"
-    },
-    "versionDetails": {
-      "close": "Close",
-      "versionDetails": "Version details"
     },
     "protectedRoute": {
       "pleaseWait": "Please wait"

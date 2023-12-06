@@ -5,16 +5,11 @@
       "login": "Conectare",
       "logout": "Deconectare",
       "anonymous": "Anonim",
-      "version": "Versiune",
       "settings": "Setări"
     },
     "login": {
       "login": "Conectare",
       "loginWith": "Conectare cu"
-    },
-    "versionDetails": {
-      "close": "Închide",
-      "versionDetails": "Detalii versiune"
     },
     "protectedRoute": {
       "pleaseWait": "Vă rugăm așteptați"

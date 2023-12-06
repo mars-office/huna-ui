@@ -96,7 +96,6 @@ export const Header = () => {
           <Link to="/">
             <Image data-testid="logo" width={42} height={42} src="/images/logo.svg" />
           </Link>
-          {environment.hunaEnv !== 'prod' && <small>{environment.hunaEnv}</small>}
         </div>
 
         <Menu>
@@ -141,9 +140,6 @@ export const Header = () => {
                   {t('ui.header.logout')}
                 </MenuItem>
               )}
-              <MenuItem disabled={true} data-testid="versionButton">
-                {t('ui.header.version')}: {environment.hunaVersion}
-              </MenuItem>
             </MenuList>
           </MenuPopover>
         </Menu>
