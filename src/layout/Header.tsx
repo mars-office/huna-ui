@@ -18,11 +18,10 @@ import {
 } from '@fluentui/react-components';
 import { MoreVertical28Regular, InprivateAccount28Regular } from '@fluentui/react-icons';
 import { useAuth } from 'react-oidc-context';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import environment from '../environment';
-import VersionDetails from './VersionDetails';
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -36,8 +35,6 @@ export const Header = () => {
   const location = useLocation();
 
   const { t, i18n } = useTranslation();
-
-  const [versionDetailsOpen, setVersionDetailsOpen] = useState(false);
 
   const checkedLanguages: Record<string, string[]> = useMemo(() => {
     return {
@@ -108,11 +105,7 @@ export const Header = () => {
               data-testid="usermenu"
               aria-label="More"
               icon={
-                auth.isAuthenticated ? (
-                  <InprivateAccount28Regular />
-                ) : (
-                  <MoreVertical28Regular />
-                )
+                auth.isAuthenticated ? <InprivateAccount28Regular /> : <MoreVertical28Regular />
               }
             />
           </MenuTrigger>
@@ -122,9 +115,7 @@ export const Header = () => {
               <MenuGroup>
                 <MenuGroupHeader>
                   <Text data-testid="userName" size={200}>
-                    {auth.isAuthenticated
-                      ? auth.user?.profile.email
-                      : t('ui.header.anonymous')}
+                    {auth.isAuthenticated ? auth.user?.profile.email : t('ui.header.anonymous')}
                   </Text>
                 </MenuGroupHeader>
               </MenuGroup>
@@ -135,9 +126,6 @@ export const Header = () => {
                   {t('ui.header.settings')}
                 </MenuItem>
               )}
-              <MenuItem data-testid="versionButton" onClick={() => setVersionDetailsOpen(true)}>
-                {t('ui.header.version')}
-              </MenuItem>
               {!auth.isAuthenticated && (
                 <MenuItem
                   data-testid="loginButton"
@@ -153,12 +141,13 @@ export const Header = () => {
                   {t('ui.header.logout')}
                 </MenuItem>
               )}
+              <MenuItem disabled={true} data-testid="versionButton">
+                {t('ui.header.version')}: {environment.hunaVersion}
+              </MenuItem>
             </MenuList>
           </MenuPopover>
         </Menu>
       </Toolbar>
-
-      <VersionDetails open={versionDetailsOpen} setOpen={setVersionDetailsOpen}></VersionDetails>
     </>
   );
 };

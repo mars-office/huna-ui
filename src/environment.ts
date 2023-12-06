@@ -12,9 +12,8 @@ export const environment = {
       }
     ]
   },
-  hunaVersion: import.meta.env.DEV ? "debug" : (window as any).hunaVersion as string,
   hunaEnv: import.meta.env.DEV ? "local" : (window as any).hunaEnv as string,
-  hunaVersionDetails: import.meta.env.DEV ? "debug" : (window as any).hunaVersionDetails as string,
+  hunaVersion: import.meta.env.DEV ? "local" : (window as any).hunaVersion
 };
 
 export default environment;

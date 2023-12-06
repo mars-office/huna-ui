@@ -13,9 +13,8 @@
     <link rel="mask-icon" href="/images/logo.svg" color="#FFFFFF">
     <meta name="theme-color" content="#ffffff">
     <script>
-      window.hunaVersion = '{{env "HUNA_VERSION"}}';
-      window.hunaVersionDetails = '{{env "HUNA_VERSION_DETAILS"}}';
       window.hunaEnv = '{{env "HUNA_ENV"}}';
+      window.hunaVersion = '${DEPLOYABLE_VERSION}';
     </script>
     <script src="/lib/newrelic.js"></script>
   </head>

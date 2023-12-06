@@ -1,10 +1,14 @@
 FROM node:alpine as builder
 WORKDIR /app
 
+RUN apk add gettext
 COPY ./package.json ./package.json
 COPY ./package-lock.json ./package-lock.json
 RUN npm install
 COPY . .
+ARG DEPLOYABLE_VERSION
+ENV DEPLOYABLE_VERSION=${DEPLOYABLE_VERSION}
+RUN envsubst < ./index.html
 ARG TARGETPLATFORM
 RUN [ "$TARGETPLATFORM" = "linux/amd64" ] && npm run coverage || echo "Skipping tests on ARM64"
 RUN npm run build
