@@ -6,6 +6,7 @@ COPY ./package-lock.json ./package-lock.json
 RUN npm install
 COPY . .
 ARG DEPLOYABLE_VERSION
+RUN echo "export const VERSION = '${DEPLOYABLE_VERSION}'" > ./src/version.ts
 ARG TARGETPLATFORM
 RUN [ "$TARGETPLATFORM" = "linux/amd64" ] && npm run coverage || echo "Skipping tests on ARM64"
 RUN npm run build

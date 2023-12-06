@@ -22,6 +22,7 @@ import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import environment from '../environment';
+import { VERSION } from '../version';
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -140,6 +141,9 @@ export const Header = () => {
                   {t('ui.header.logout')}
                 </MenuItem>
               )}
+              <MenuItem data-testid="versionButton" disabled={true}>
+                {VERSION}
+              </MenuItem>
             </MenuList>
           </MenuPopover>
         </Menu>
