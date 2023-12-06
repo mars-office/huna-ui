@@ -1,18 +1,8 @@
 import { Button } from "@fluentui/react-components";
-import { useCallback, useEffect } from "react";
-import { gptService } from "../services/gpt.service";
+import { useCallback } from "react";
 
 export const Settings = () => {
     const test = useCallback(async () => {
-        const reply = await gptService.test();
-        alert(reply);
-    }, []);
-
-    useEffect(() => {
-        (async () => {
-            const x = await gptService.test();
-            console.log(x);
-        })();
     }, []);
 
     return <div>
