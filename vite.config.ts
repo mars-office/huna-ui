@@ -13,8 +13,7 @@ export default defineConfig({
       injectRegister: 'auto',
       workbox: {
         globPatterns: ['**/*.{js,mjs,css,html,ico,png,svg,ttf,otf,woff,woff2,jsx,tsx,ts,json,dll,jpg,jpeg,gif,bmp,webp,webm,tiff,avi,mp4,mp3,aac}'],
-        navigateFallbackDenylist: [/^\/api/],
-        navigateFallback: "/"
+        navigateFallbackDenylist: [/^\/api/]
       },
       manifest: {
         name: 'huna2',
