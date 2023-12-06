@@ -8,7 +8,7 @@ RUN npm install
 COPY . .
 ARG DEPLOYABLE_VERSION
 ENV DEPLOYABLE_VERSION=${DEPLOYABLE_VERSION}
-RUN envsubst < ./index.html
+RUN envsubst < ./index.html > ./index.html
 ARG TARGETPLATFORM
 RUN [ "$TARGETPLATFORM" = "linux/amd64" ] && npm run coverage || echo "Skipping tests on ARM64"
 RUN npm run build
