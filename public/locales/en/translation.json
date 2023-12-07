@@ -3,7 +3,9 @@
     "sidebar": {
       "menu": "Menu",
       "home": "Home",
-      "admin": "Admin"
+      "admin": "Admin",
+      "app": "App",
+      "parkingLots": "Parking lots"
     },
     "header": {
       "language": "Language",

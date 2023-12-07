@@ -3,7 +3,9 @@
     "sidebar": {
       "menu": "Meniu",
       "home": "Acasă",
-      "admin": "Admin"
+      "admin": "Admin",
+      "app": "App",
+      "parkingLots": "Parcări"
     },
     "header": {
       "language": "Limbă",

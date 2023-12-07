@@ -3,11 +3,14 @@ import {
   DrawerBody,
   DrawerHeader,
   DrawerHeaderTitle,
+  MenuDivider,
+  MenuGroup,
+  MenuGroupHeader,
   MenuItem,
   MenuList,
   OverlayDrawer,
 } from '@fluentui/react-components';
-import { Dismiss24Regular, HomeFilled, SettingsFilled } from '@fluentui/react-icons';
+import { Dismiss24Regular, HomeFilled, VehicleCarParkingFilled } from '@fluentui/react-icons';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
@@ -56,22 +59,33 @@ export const Sidebar = (props: SidebarProps) => {
 
       <DrawerBody>
         <MenuList hasIcons={true}>
-          <NavLink
-            onClick={onCloseClick}
-            to="/"
-            end
-            className={({ isActive }) => (isActive ? 'active' : undefined)}
-          >
-            <MenuItem icon={<HomeFilled />}>{t('ui.sidebar.home')}</MenuItem>
-          </NavLink>
-          {userProfile?.isAdmin && (
+          <MenuGroup>
+            <MenuGroupHeader>{t('ui.sidebar.app')}</MenuGroupHeader>
             <NavLink
               onClick={onCloseClick}
-              to="/admin"
+              to="/"
+              end
               className={({ isActive }) => (isActive ? 'active' : undefined)}
             >
-              <MenuItem icon={<SettingsFilled />}>{t('ui.sidebar.admin')}</MenuItem>
+              <MenuItem icon={<HomeFilled />}>{t('ui.sidebar.home')}</MenuItem>
             </NavLink>
+          </MenuGroup>
+
+          {userProfile?.isAdmin && (
+            <>
+              <MenuDivider />
+              <MenuGroup>
+                <MenuGroupHeader>{t('ui.sidebar.admin')}</MenuGroupHeader>
+                <NavLink
+                  onClick={onCloseClick}
+                  end
+                  to="/admin/parkinglots"
+                  className={({ isActive }) => (isActive ? 'active' : undefined)}
+                >
+                  <MenuItem icon={<VehicleCarParkingFilled />}>{t('ui.sidebar.parkingLots')}</MenuItem>
+                </NavLink>
+              </MenuGroup>
+            </>
           )}
         </MenuList>
       </DrawerBody>
