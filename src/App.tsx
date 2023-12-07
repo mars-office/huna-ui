@@ -13,11 +13,13 @@ import { userStore } from './stores/user.store';
 import { User } from 'oidc-client-ts';
 import { userProfileStore } from './stores/user-profile.store';
 import usersService from './services/users.service';
+import Sidebar from './layout/Sidebar';
 
 export const App = () => {
   const auth = useAuth();
   const navigate = useNavigate();
   const [hasTriedSignin, setHasTriedSignin] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (
@@ -79,7 +81,8 @@ export const App = () => {
 
   return (
     <>
-      <Header />
+      <Sidebar dismissed={() => setSidebarOpen(false)} open={sidebarOpen} />
+      <Header menuClick={() => setSidebarOpen(s => !s)} />
       <div
         style={{
           flex: '1 1 auto',

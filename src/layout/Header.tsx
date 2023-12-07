@@ -15,8 +15,13 @@ import {
   MenuProps,
   MenuCheckedValueChangeEvent,
   MenuCheckedValueChangeData,
+  Button,
 } from '@fluentui/react-components';
-import { MoreVertical28Regular, InprivateAccount28Regular } from '@fluentui/react-icons';
+import {
+  MoreVertical28Regular,
+  InprivateAccount28Regular,
+  NavigationRegular,
+} from '@fluentui/react-icons';
 import { useAuth } from 'react-oidc-context';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -26,7 +31,11 @@ import { VERSION } from '../version';
 import { useStore } from '../hooks/use-store';
 import { userProfileStore } from '../stores/user-profile.store';
 
-export const Header = () => {
+export interface HeaderProps {
+  menuClick?: () => void;
+}
+
+export const Header = (props: HeaderProps) => {
   const navigate = useNavigate();
   const auth = useAuth();
 
@@ -47,6 +56,12 @@ export const Header = () => {
       language: [i18n.language],
     };
   }, [i18n.language]);
+
+  const onMenuClicked = useCallback(() => {
+    if (props.menuClick) {
+      props.menuClick();
+    }
+  }, [props]);
 
   const onLanguageChange: MenuProps['onCheckedValueChange'] = useCallback(
     (_: MenuCheckedValueChangeEvent, data: MenuCheckedValueChangeData) => {
@@ -96,9 +111,9 @@ export const Header = () => {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '1rem',
           }}
         >
+          <Button onClick={onMenuClicked} appearance="transparent" icon={<NavigationRegular />} />
           <Link to="/">
             <Image data-testid="logo" width={42} height={42} src="/images/logo.svg" />
           </Link>
@@ -120,7 +135,9 @@ export const Header = () => {
               <MenuGroup>
                 <MenuGroupHeader>
                   <Text data-testid="userName" size={200}>
-                    {auth.isAuthenticated ? (auth.user?.profile.email + (userProfile?.isAdmin ? ' (admin)' : '')) : t('ui.header.anonymous')}
+                    {auth.isAuthenticated
+                      ? auth.user?.profile.email + (userProfile?.isAdmin ? ' (admin)' : '')
+                      : t('ui.header.anonymous')}
                   </Text>
                 </MenuGroupHeader>
               </MenuGroup>

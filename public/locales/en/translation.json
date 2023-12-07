@@ -1,5 +1,10 @@
 {
   "ui": {
+    "sidebar": {
+      "menu": "Menu",
+      "home": "Home",
+      "admin": "Admin"
+    },
     "header": {
       "language": "Language",
       "login": "Login",

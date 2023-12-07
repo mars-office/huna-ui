@@ -1,0 +1,24 @@
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:active {
+  text-decoration: none;
+}
+
+a {
+  &.active {
+    .fui-MenuItem {
+      background-color: var(--colorNeutralBackground1Hover);
+      color: var(--colorNeutralForeground2Hover);
+    }
+  }
+}

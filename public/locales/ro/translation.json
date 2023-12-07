@@ -1,5 +1,10 @@
 {
   "ui": {
+    "sidebar": {
+      "menu": "Meniu",
+      "home": "Acasă",
+      "admin": "Admin"
+    },
     "header": {
       "language": "Limbă",
       "login": "Conectare",
