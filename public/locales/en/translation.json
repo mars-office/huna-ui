@@ -22,7 +22,8 @@
     "validation": {
       "invalidField": "Invalid field",
       "requiredField": "Required field",
-      "notFound": "Not found"
+      "notFound": "Not found",
+      "fatalError": "Fatal error"
     }
   }
 }

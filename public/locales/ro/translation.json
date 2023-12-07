@@ -22,7 +22,8 @@
     "validation": {
       "invalidField": "Câmp invalid",
       "requiredField": "Câmp obligatoriu",
-      "notFound": "Negăsit"
+      "notFound": "Negăsit",
+      "fatalError": "Eroare fatală"
     }
   }
 }
