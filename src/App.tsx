@@ -11,6 +11,8 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import { useStore } from './hooks/use-store';
 import { userStore } from './stores/user.store';
 import { User } from 'oidc-client-ts';
+import { userProfileStore } from './stores/user-profile.store';
+import usersService from './services/users.service';
 
 export const App = () => {
   const auth = useAuth();
@@ -34,9 +36,21 @@ export const App = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setUserStoreUser] = useStore(userStore);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [__, setUserProfile] = useStore(userProfileStore);
+
   useEffect(() => {
     setUserStoreUser(!auth.user ? undefined : auth.user);
   }, [auth.user, setUserStoreUser]);
+
+  useEffect(() => {
+    (async () => {
+      if (auth.isAuthenticated && auth.user) {
+        const userProfileResult = await usersService.myProfile();
+        setUserProfile(userProfileResult);
+      }
+    })();
+  }, [auth, setUserProfile]);
 
   const userLoadedCallback = useCallback(
     (u: User) => {

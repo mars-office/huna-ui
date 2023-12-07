@@ -23,10 +23,14 @@ import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import environment from '../environment';
 import { VERSION } from '../version';
+import { useStore } from '../hooks/use-store';
+import { userProfileStore } from '../stores/user-profile.store';
 
 export const Header = () => {
   const navigate = useNavigate();
   const auth = useAuth();
+
+  const [userProfile, _] = useStore(userProfileStore);
 
   const logout = useCallback(async () => {
     await auth.signoutRedirect();
@@ -115,7 +119,7 @@ export const Header = () => {
               <MenuGroup>
                 <MenuGroupHeader>
                   <Text data-testid="userName" size={200}>
-                    {auth.isAuthenticated ? auth.user?.profile.email : t('ui.header.anonymous')}
+                    {auth.isAuthenticated ? (auth.user?.profile.email + (userProfile?.isAdmin ? ' (admin)' : '')) : t('ui.header.anonymous')}
                   </Text>
                 </MenuGroupHeader>
               </MenuGroup>
