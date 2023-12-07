@@ -30,6 +30,7 @@ export const Header = () => {
   const navigate = useNavigate();
   const auth = useAuth();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [userProfile, _] = useStore(userProfileStore);
 
   const logout = useCallback(async () => {
