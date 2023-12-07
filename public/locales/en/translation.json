@@ -17,5 +17,12 @@
     "loading": {
       "loading": "Loading"
     }
+  },
+  "api": {
+    "validation": {
+      "invalidField": "Invalid field",
+      "requiredField": "Required field",
+      "notFound": "Not found"
+    }
   }
 }

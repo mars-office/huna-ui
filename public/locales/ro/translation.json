@@ -17,5 +17,12 @@
     "loading": {
       "loading": "Se încarcă"
     }
+  },
+  "api": {
+    "validation": {
+      "invalidField": "Câmp invalid",
+      "requiredField": "Câmp obligatoriu",
+      "notFound": "Negăsit"
+    }
   }
 }
