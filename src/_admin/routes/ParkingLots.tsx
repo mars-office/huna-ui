@@ -11,7 +11,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { ParkingLotDto } from '../dto/parkinglot.dto';
 import parkingLotsService from '../services/parkinglots.service';
 import { useToast } from '../../hooks/use-toast';
-import { downloadStringAsFile } from '../../helpers/download.helper';
+import zipService from '../../services/zip.service';
+import downloadService from '../../services/download.service';
 
 export const ParkingLots = () => {
   const { t } = useTranslation();
@@ -32,9 +33,12 @@ export const ParkingLots = () => {
   const downloadCertificates = useCallback(async (_id: string) => {
     try {
       const result = await parkingLotsService.getCertificate(_id);
-      downloadStringAsFile(result.caCrt, 'ca.crt');
-      downloadStringAsFile(result.clientCertificateCrt, 'client.crt');
-      downloadStringAsFile(result.clientCertificateKey, 'client.key');
+      const zipBlob = await zipService.zipFiles({
+        'ca.crt': result.caCrt,
+        'client.crt': result.clientCertificateCrt,
+        'client.key': result.clientCertificateKey
+      });
+      downloadService.downloadBlob(zipBlob, _id + '_certificate.zip');
     } catch (err) {
       fromError(err);
     }
