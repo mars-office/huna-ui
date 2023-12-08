@@ -1,8 +1,15 @@
 {
   "ui": {
+    "components": {
+      "confirmationButton": {
+        "areYouSure": "Sunteți sigur?"
+      }
+    },
     "admin": {
       "parkingLots": {
-        "parkingLots": "Parcări"
+        "parkingLots": "Parcări",
+        "delete": "Ștergere",
+        "edit": "Editare"
       }
     },
     "sidebar": {

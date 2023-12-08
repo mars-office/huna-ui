@@ -1,8 +1,15 @@
 {
   "ui": {
+    "components": {
+      "confirmationButton": {
+        "areYouSure": "Are you sure?"
+      }
+    },
     "admin": {
       "parkingLots": {
-        "parkingLots": "Parking lots"
+        "parkingLots": "Parking lots",
+        "delete": "Delete",
+        "edit": "Edit"
       }
     },
     "sidebar": {
