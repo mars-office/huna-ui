@@ -1,12 +1,4 @@
-import {
-  Body1,
-  Button,
-  Card,
-  CardFooter,
-  CardHeader,
-  CardPreview,
-  Text,
-} from '@fluentui/react-components';
+import { Body1, Button, Card, CardFooter, CardHeader, Text } from '@fluentui/react-components';
 import {
   ArrowDownloadRegular,
   ArrowSyncRegular,
@@ -76,29 +68,27 @@ export const ParkingLots = () => {
               }
               description={
                 <small>
-                  {pl.lat} - {pl.lng}
+                  {pl._id}, {pl.lat} - {pl.lng}
                 </small>
               }
             ></CardHeader>
-            <CardPreview>{pl._id}</CardPreview>
-            <CardFooter>
-              <Button appearance="subtle" icon={<ArrowDownloadRegular />}>
-                {t('ui.admin.parkingLots.downloadCertificate')}
-              </Button>
-              <ConfirmationButton appearance="subtle" icon={<ArrowSyncRegular />}>
-                {t('ui.admin.parkingLots.regenerateCertificate')}
-              </ConfirmationButton>
-              <Button appearance="subtle" icon={<EditRegular />}>
-                {t('ui.admin.parkingLots.edit')}
-              </Button>
-              <ConfirmationButton
-                onClick={() => deleteParkingLot(pl._id, i)}
-                appearance="subtle"
-                icon={<DeleteRegular />}
-              >
-                {t('ui.admin.parkingLots.delete')}
-              </ConfirmationButton>
-            </CardFooter>
+            <CardFooter
+              action={
+                <>
+                  <Button appearance="subtle" icon={<ArrowDownloadRegular />}></Button>
+                  <ConfirmationButton
+                    appearance="subtle"
+                    icon={<ArrowSyncRegular />}
+                  ></ConfirmationButton>
+                  <Button appearance="subtle" icon={<EditRegular />}></Button>
+                  <ConfirmationButton
+                    onClick={() => deleteParkingLot(pl._id, i)}
+                    appearance="subtle"
+                    icon={<DeleteRegular />}
+                  ></ConfirmationButton>
+                </>
+              }
+            ></CardFooter>
           </Card>
         ))}
       </div>

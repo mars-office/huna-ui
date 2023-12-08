@@ -14,10 +14,6 @@
     "admin": {
       "parkingLots": {
         "parkingLots": "Parking lots",
-        "delete": "Delete",
-        "edit": "Edit",
-        "downloadCertificate": "Download crt.",
-        "regenerateCertificate": "Regen. crt.",
         "deletedSuccessfully": "Deleted successfully"
       }
     },

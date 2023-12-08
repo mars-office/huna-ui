@@ -14,10 +14,6 @@
     "admin": {
       "parkingLots": {
         "parkingLots": "Parcări",
-        "delete": "Ștergere",
-        "edit": "Editare",
-        "downloadCertificate": "Download crt.",
-        "regenerateCertificate": "Regen. crt.",
         "deletedSuccessfully": "Ștergere reușită"
       }
     },
