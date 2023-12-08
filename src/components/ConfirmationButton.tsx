@@ -34,11 +34,11 @@ export const ConfirmationButton = (props: ButtonProps) => {
   return (
     <>
       {clicked && (
-        <Button {...props} onClick={onClick} autoFocus={true} onBlur={onBlur} icon={<QuestionCircleRegular />}>
+        <Button {...props}  onClick={onClick} autoFocus={true} onBlur={onBlur} icon={<QuestionCircleRegular />}>
           {t('ui.components.confirmationButton.areYouSure')}
         </Button>
       )}
-      {!clicked && <Button {...props} onFocus={onFocus} />}
+      {!clicked && <Button {...props} onTouchStart={onFocus} onFocus={onFocus} />}
     </>
   );
 };
