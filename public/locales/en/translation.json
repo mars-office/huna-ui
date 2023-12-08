@@ -1,5 +1,11 @@
 {
   "ui": {
+    "toast": {
+      "success": "Success",
+      "error": "Error",
+      "warn": "Warning",
+      "info": "Info"
+    },
     "components": {
       "confirmationButton": {
         "areYouSure": "Are you sure?"
@@ -11,7 +17,8 @@
         "delete": "Delete",
         "edit": "Edit",
         "downloadCertificate": "Download crt.",
-        "regenerateCertificate": "Regen. crt."
+        "regenerateCertificate": "Regen. crt.",
+        "deletedSuccessfully": "Deleted successfully"
       }
     },
     "sidebar": {

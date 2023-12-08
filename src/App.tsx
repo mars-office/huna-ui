@@ -16,6 +16,7 @@ import usersService from './services/users.service';
 import Sidebar from './layout/Sidebar';
 import Loading from './layout/Loading';
 import AdminRoute from './routes/AdminRoute';
+import { Toaster } from '@fluentui/react-components';
 
 // Lazy loading
 const Admin = lazy(() => import('./_admin/routes/Admin'));
@@ -86,6 +87,7 @@ export const App = () => {
 
   return (
     <>
+      <Toaster toasterId='toaster' />
       <Sidebar dismissed={() => setSidebarOpen(false)} open={sidebarOpen} />
       <Header menuClick={() => setSidebarOpen((s) => !s)} />
       <div

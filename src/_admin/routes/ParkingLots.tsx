@@ -18,30 +18,40 @@ import ConfirmationButton from '../../components/ConfirmationButton';
 import { useCallback, useEffect, useState } from 'react';
 import { ParkingLotDto } from '../dto/parkinglot.dto';
 import parkingLotsService from '../services/parkinglots.service';
+import { useToast } from '../../hooks/use-toast';
 
 export const ParkingLots = () => {
   const { t } = useTranslation();
   const [parkingLots, setParkingLots] = useState<ParkingLotDto[]>([]);
+  const { fromError, toast } = useToast();
 
   useEffect(() => {
     (async () => {
-      const lots = await parkingLotsService.getParkingLots();
-      setParkingLots(lots);
+      try {
+        const lots = await parkingLotsService.getParkingLots();
+        setParkingLots(lots);
+      } catch (err) {
+        fromError(err);
+      }
     })();
   }, []);
 
-  const deleteParkingLot = useCallback((_id: string, i: number) => {
-    (async () => {
-      try {
-        await parkingLotsService.deleteParkingLot(_id);
-        const newParkingLots = [...parkingLots];
-        newParkingLots.splice(i, 1);
-        setParkingLots(newParkingLots);
-      } catch (err) {
-        console.error(err);
-      }
-    })();
-  }, [setParkingLots, parkingLots]);
+  const deleteParkingLot = useCallback(
+    (_id: string, i: number) => {
+      (async () => {
+        try {
+          await parkingLotsService.deleteParkingLot(_id);
+          const newParkingLots = [...parkingLots];
+          newParkingLots.splice(i, 1);
+          setParkingLots(newParkingLots);
+          toast('success', t('ui.admin.parkingLots.deletedSuccessfully'));
+        } catch (err: any) {
+          fromError(err);
+        }
+      })();
+    },
+    [setParkingLots, parkingLots, t, fromError, toast],
+  );
 
   return (
     <div style={{ display: 'flex', height: '100%', flexDirection: 'column', gap: '1rem' }}>

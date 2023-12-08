@@ -11,6 +11,9 @@ export const environment = {
         default: true
       }
     ]
+  },
+  toast: {
+    timeout: 5000
   }
 };
 
