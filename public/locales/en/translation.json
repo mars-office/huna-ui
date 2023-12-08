@@ -21,6 +21,9 @@
     "protectedRoute": {
       "pleaseWait": "Please wait"
     },
+    "adminRoute": {
+      "pleaseWait": "Please wait"
+    },
     "loading": {
       "loading": "Loading"
     }

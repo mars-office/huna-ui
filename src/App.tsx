@@ -1,7 +1,7 @@
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 import { hasAuthParams, useAuth } from 'react-oidc-context';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, lazy, Suspense } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import Home from './routes/Home';
 import Login from './routes/Login';
@@ -14,6 +14,11 @@ import { User } from 'oidc-client-ts';
 import { userProfileStore } from './stores/user-profile.store';
 import usersService from './services/users.service';
 import Sidebar from './layout/Sidebar';
+import Loading from './layout/Loading';
+import AdminRoute from './routes/AdminRoute';
+
+// Lazy loading
+const Admin = lazy(() => import('./_admin/routes/Admin'));
 
 export const App = () => {
   const auth = useAuth();
@@ -82,7 +87,7 @@ export const App = () => {
   return (
     <>
       <Sidebar dismissed={() => setSidebarOpen(false)} open={sidebarOpen} />
-      <Header menuClick={() => setSidebarOpen(s => !s)} />
+      <Header menuClick={() => setSidebarOpen((s) => !s)} />
       <div
         style={{
           flex: '1 1 auto',
@@ -94,12 +99,24 @@ export const App = () => {
         {canDisplayContent && (
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="login" element={<Login />} />
             <Route
-              path="/settings"
+              path="settings"
               element={
                 <ProtectedRoute>
                   <Settings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="admin/*"
+              element={
+                <ProtectedRoute>
+                  <AdminRoute>
+                    <Suspense fallback={<Loading />}>
+                      <Admin />
+                    </Suspense>
+                  </AdminRoute>
                 </ProtectedRoute>
               }
             />
