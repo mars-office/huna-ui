@@ -11,6 +11,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { ParkingLotDto } from '../dto/parkinglot.dto';
 import parkingLotsService from '../services/parkinglots.service';
 import { useToast } from '../../hooks/use-toast';
+import { downloadStringAsFile } from '../../helpers/download.helper';
 
 export const ParkingLots = () => {
   const { t } = useTranslation();
@@ -28,21 +29,42 @@ export const ParkingLots = () => {
     })();
   }, []);
 
+  const downloadCertificates = useCallback(async (_id: string) => {
+    try {
+      const result = await parkingLotsService.getCertificate(_id);
+      downloadStringAsFile(result.caCrt, 'ca.crt');
+      downloadStringAsFile(result.clientCertificateCrt, 'client.crt');
+      downloadStringAsFile(result.clientCertificateKey, 'client.key');
+    } catch (err) {
+      fromError(err);
+    }
+  }, [fromError]);
+
   const deleteParkingLot = useCallback(
-    (_id: string, i: number) => {
-      (async () => {
-        try {
-          await parkingLotsService.deleteParkingLot(_id);
-          const newParkingLots = [...parkingLots];
-          newParkingLots.splice(i, 1);
-          setParkingLots(newParkingLots);
-          toast('success', t('ui.admin.parkingLots.deletedSuccessfully'));
-        } catch (err: any) {
-          fromError(err);
-        }
-      })();
+    async (_id: string, i: number) => {
+      try {
+        await parkingLotsService.deleteParkingLot(_id);
+        const newParkingLots = [...parkingLots];
+        newParkingLots.splice(i, 1);
+        setParkingLots(newParkingLots);
+        toast('success', t('ui.admin.parkingLots.deletedSuccessfully'));
+      } catch (err: any) {
+        fromError(err);
+      }
     },
     [setParkingLots, parkingLots, t, fromError, toast],
+  );
+
+  const regenerateCertificate = useCallback(
+    async (_id: string) => {
+      try {
+        await parkingLotsService.regenerateCertificate(_id);
+        toast('success', t('ui.admin.parkingLots.regeneratedSuccessfully'));
+      } catch (err: any) {
+        fromError(err);
+      }
+    },
+    [t, fromError, toast],
   );
 
   return (
@@ -75,9 +97,14 @@ export const ParkingLots = () => {
             <CardFooter
               action={
                 <>
-                  <Button appearance="subtle" icon={<ArrowDownloadRegular />}></Button>
+                  <Button
+                    onClick={() => downloadCertificates(pl._id)}
+                    appearance="subtle"
+                    icon={<ArrowDownloadRegular />}
+                  ></Button>
                   <ConfirmationButton
                     appearance="subtle"
+                    onClick={() => regenerateCertificate(pl._id)}
                     icon={<ArrowSyncRegular />}
                   ></ConfirmationButton>
                   <Button appearance="subtle" icon={<EditRegular />}></Button>

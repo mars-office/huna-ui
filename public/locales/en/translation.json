@@ -14,7 +14,8 @@
     "admin": {
       "parkingLots": {
         "parkingLots": "Parking lots",
-        "deletedSuccessfully": "Deleted successfully"
+        "deletedSuccessfully": "Deleted successfully",
+        "regeneratedSuccessfully": "Certificate regenerated successfully"
       }
     },
     "sidebar": {

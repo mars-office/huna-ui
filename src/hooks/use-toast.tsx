@@ -31,7 +31,7 @@ export const useToast = () => {
       {
         intent: toastType,
         timeout: environment.toast.timeout,
-        position: 'top-end',
+        position: 'bottom-end',
         pauseOnWindowBlur: true,
         pauseOnHover: true,
       },

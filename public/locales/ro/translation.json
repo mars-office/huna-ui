@@ -14,7 +14,8 @@
     "admin": {
       "parkingLots": {
         "parkingLots": "Parcări",
-        "deletedSuccessfully": "Ștergere reușită"
+        "deletedSuccessfully": "Ștergere reușită",
+        "regeneratedSuccessfully": "Certificat regenerat cu succes"
       }
     },
     "sidebar": {
