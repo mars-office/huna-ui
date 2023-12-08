@@ -1,5 +1,10 @@
 {
   "ui": {
+    "admin": {
+      "parkingLots": {
+        "parkingLots": "Parcări"
+      }
+    },
     "sidebar": {
       "menu": "Meniu",
       "home": "Acasă",
