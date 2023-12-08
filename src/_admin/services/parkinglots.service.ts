@@ -3,10 +3,10 @@ import { ParkingLotDto } from '../dto/parkinglot.dto';
 import { DownloadCertificateBundleResponseDto } from '../dto/download-certificate-bundle-response.dto';
 
 export const parkingLotsService = {
-  getParkingLots: async (page: number, elements: number) => {
+  getParkingLots: async () => {
     return (
       await axios.get<ParkingLotDto[]>(
-        `/api/parkinglots/admin/parkinglots?page=${page}&elements=${elements}`,
+        `/api/parkinglots/admin/parkinglots`,
       )
     ).data;
   },

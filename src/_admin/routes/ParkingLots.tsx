@@ -25,7 +25,7 @@ export const ParkingLots = () => {
 
   useEffect(() => {
     (async () => {
-      const lots = await parkingLotsService.getParkingLots(1, 10);
+      const lots = await parkingLotsService.getParkingLots();
       setParkingLots(lots);
     })();
   }, []);
