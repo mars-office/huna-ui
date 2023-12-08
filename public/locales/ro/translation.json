@@ -35,15 +35,6 @@
     "login": {
       "login": "Conectare",
       "loginWith": "Conectare cu"
-    },
-    "protectedRoute": {
-      "pleaseWait": "Vă rugăm așteptați"
-    },
-    "adminRoute": {
-      "pleaseWait": "Vă rugăm așteptați"
-    },
-    "loading": {
-      "loading": "Se încarcă"
     }
   },
   "api": {

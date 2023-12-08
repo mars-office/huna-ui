@@ -35,15 +35,6 @@
     "login": {
       "login": "Login",
       "loginWith": "Login with"
-    },
-    "protectedRoute": {
-      "pleaseWait": "Please wait"
-    },
-    "adminRoute": {
-      "pleaseWait": "Please wait"
-    },
-    "loading": {
-      "loading": "Loading"
     }
   },
   "api": {
