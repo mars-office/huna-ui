@@ -15,7 +15,19 @@
       "parkingLots": {
         "parkingLots": "Parking lots",
         "deletedSuccessfully": "Deleted successfully",
-        "regeneratedSuccessfully": "Certificate regenerated successfully"
+        "regeneratedSuccessfully": "Certificate regenerated successfully",
+        "addedSuccessfully": "Added successfully",
+        "editedSuccessfully": "Edited successfully",
+        "noItems": "No items"
+      },
+      "addEditParkingLotDialog": {
+        "addParkingLot": "Add parking lot",
+        "editParkingLot": "Edit parking lot",
+        "name": "Name",
+        "latitude": "Latitude",
+        "longitude": "Longitude",
+        "close": "Close",
+        "save": "Save"
       }
     },
     "sidebar": {

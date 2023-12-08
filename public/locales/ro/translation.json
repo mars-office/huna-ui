@@ -15,7 +15,19 @@
       "parkingLots": {
         "parkingLots": "Parcări",
         "deletedSuccessfully": "Ștergere reușită",
-        "regeneratedSuccessfully": "Certificat regenerat cu succes"
+        "regeneratedSuccessfully": "Certificat regenerat cu succes",
+        "addedSuccessfully": "Adăugat cu succes",
+        "editedSuccessfully": "Editat cu succes",
+        "noItems": "Niciun element"
+      },
+      "addEditParkingLotDialog": {
+        "addParkingLot": "Adăugare parcare",
+        "editParkingLot": "Editare parcare",
+        "name": "Nume",
+        "latitude": "Latitudine",
+        "longitude": "Longitudine",
+        "close": "Închidere",
+        "save": "Salvare"
       }
     },
     "sidebar": {
