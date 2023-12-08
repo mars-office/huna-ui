@@ -16,6 +16,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import parkingLotsService from '../services/parkinglots.service';
 import { useToast } from '../../hooks/use-toast';
+import MapInput from '../../components/MapInput';
 
 export interface AddEditParkingLotDialogProps {
   editedItem?: ParkingLotDto;
@@ -116,6 +117,10 @@ export const AddEditParkingLotDialog = (props: AddEditParkingLotDialogProps) => 
                   type="text"
                   onChange={(e) => setClone((s) => ({ ...s, name: e.target.value }))}
                   placeholder={t('ui.admin.addEditParkingLotDialog.name')}
+                />
+                <MapInput
+                  valueChanged={(v) => setClone((s) => ({ ...s, lat: v[0], lng: v[1] }))}
+                  value={[clone.lat, clone.lng]}
                 />
                 <Input
                   id="lat"

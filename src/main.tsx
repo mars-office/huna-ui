@@ -1,6 +1,6 @@
+import './styles.scss';
 import ReactDOM from 'react-dom/client';
 import { FluentProvider, teamsDarkTheme } from '@fluentui/react-components';
-import './styles.scss';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 
