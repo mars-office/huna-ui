@@ -25,7 +25,7 @@ export const ParkingLots = () => {
   const [addEditOpen, setAddEditOpen] = useState(false);
   const [editedItem, setEditedItem] = useState<ParkingLotDto | undefined>(undefined);
   const [loading, setLoading] = useState(false);
-  const parkingLotsListDiv = useRef<HTMLDivElement | undefined>(undefined);
+  const parkingLotsListDiv = useRef<HTMLDivElement>(null);
 
   const loadParkingLots = useCallback(async () => {
     try {
