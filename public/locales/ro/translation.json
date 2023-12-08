@@ -9,7 +9,9 @@
       "parkingLots": {
         "parkingLots": "Parcări",
         "delete": "Ștergere",
-        "edit": "Editare"
+        "edit": "Editare",
+        "downloadCertificate": "Download crt.",
+        "regenerateCertificate": "Regen. crt."
       }
     },
     "sidebar": {
