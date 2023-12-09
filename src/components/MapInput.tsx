@@ -1,6 +1,7 @@
-import { Map } from 'leaflet';
+import { Map, icon } from 'leaflet';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { MapContainer, Marker, TileLayer, useMapEvent } from 'react-leaflet';
+
 
 export interface MapInputProps {
   height?: number;
@@ -14,6 +15,11 @@ export interface LocationMarkerProps {
   value: number[];
   valueChanged?: (value: number[]) => void;
 }
+
+const markerIcon = icon({
+  iconUrl: "/images/map_marker.svg",
+  iconSize: [32, 32],
+});
 
 const LocationMarker = (props: LocationMarkerProps) => {
   const [value, setValue] = useState(props.value);
@@ -29,7 +35,7 @@ const LocationMarker = (props: LocationMarkerProps) => {
       props.valueChanged(v);
     }
   });
-  return <Marker position={[value[0], value[1]]}></Marker>;
+  return <Marker icon={markerIcon} position={[value[0], value[1]]}></Marker>;
 }
 
 export const MapInput = (props: MapInputProps) => {
