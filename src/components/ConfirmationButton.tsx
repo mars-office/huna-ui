@@ -23,6 +23,8 @@ export const ConfirmationButton = (props: ButtonProps) => {
 
   const onClick = useCallback(
     (e: any) => {
+      e.preventDefault();
+      e.stopPropagation();
       setClicked(false);
       if (props.onClick) {
         props.onClick(e);
@@ -34,7 +36,7 @@ export const ConfirmationButton = (props: ButtonProps) => {
   return (
     <>
       {clicked && (
-        <Button {...props}  onClick={onClick} autoFocus={true} onBlur={onBlur} icon={<QuestionCircleRegular />}>
+        <Button {...props} onClick={onClick} onTouchStart={onClick} autoFocus={true} onBlur={onBlur} icon={<QuestionCircleRegular />}>
           {t('ui.components.confirmationButton.areYouSure')}
         </Button>
       )}
