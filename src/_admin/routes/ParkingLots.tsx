@@ -58,6 +58,11 @@ export const ParkingLots = () => {
           'ca.crt': result.caCrt,
           'client.crt': result.clientCertificateCrt,
           'client.key': result.clientCertificateKey,
+          'config.json': JSON.stringify({
+            id: result._id,
+            serverUrl: window.location.origin,
+            otaServerUrl: window.location.origin.replace('https://', 'https://ota.')
+          })
         });
         downloadService.downloadBlob(zipBlob, _id + '_certificate.zip');
       } catch (err) {
