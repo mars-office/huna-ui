@@ -61,7 +61,8 @@ export const ParkingLots = () => {
           'config.json': JSON.stringify({
             id: result._id,
             serverUrl: window.location.origin,
-            otaServerUrl: window.location.origin.replace('https://', 'https://ota.')
+            otaServerUrl: window.location.origin.replace('https://', 'https://ota.'),
+            emqxServer: window.location.origin.replace('https://', 'emqx.')
           })
         });
         downloadService.downloadBlob(zipBlob, _id + '_certificate.zip');
