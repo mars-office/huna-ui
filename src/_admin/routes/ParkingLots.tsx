@@ -62,7 +62,8 @@ export const ParkingLots = () => {
             id: result._id,
             serverUrl: window.location.origin,
             otaServerUrl: window.location.origin.replace('https://', 'https://ota.'),
-            emqxServer: window.location.origin.replace('https://', 'emqx.')
+            mqttServer: window.location.origin.replace('https://', 'emqx.'),
+            mqttPort: 8883
           })
         });
         downloadService.downloadBlob(zipBlob, _id + '_certificate.zip');
