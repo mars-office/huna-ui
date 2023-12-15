@@ -37,9 +37,14 @@ export const App = () => {
       !hasTriedSignin
     ) {
       setHasTriedSignin(true);
-      auth.signinSilent();
+      auth.signoutRedirect().catch(e => {
+        console.error(e);
+        auth.signoutRedirect().then(() => {
+          navigate('/login');
+        });
+      });
     }
-  }, [auth, hasTriedSignin]);
+  }, [auth, hasTriedSignin, navigate]);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setUserStoreUser] = useStore(userStore);
@@ -76,23 +81,6 @@ export const App = () => {
       auth.events.removeUserLoaded(userLoadedCallback);
     };
   }, [auth, userLoadedCallback]);
-
-  const silentRenewErrorCallback = useCallback(async (e: Error) => {
-    console.error(e);
-    try {
-      await auth.signoutRedirect();
-    } catch (err) {
-      // ignored
-    }
-    navigate('/login');
-  }, [navigate, auth]);
-
-  useEffect(() => {
-    auth.events.addSilentRenewError(silentRenewErrorCallback);
-    return () => {
-      auth.events.removeSilentRenewError(silentRenewErrorCallback);
-    };
-  }, [auth, silentRenewErrorCallback]);
 
   const canDisplayContent = useMemo(() => {
     return (
