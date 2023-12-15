@@ -77,6 +77,23 @@ export const App = () => {
     };
   }, [auth, userLoadedCallback]);
 
+  const silentRenewErrorCallback = useCallback(async (e: Error) => {
+    console.error(e);
+    try {
+      await auth.signoutRedirect();
+    } catch (err) {
+      // ignored
+    }
+    navigate('/login');
+  }, [navigate, auth]);
+
+  useEffect(() => {
+    auth.events.addSilentRenewError(silentRenewErrorCallback);
+    return () => {
+      auth.events.removeSilentRenewError(silentRenewErrorCallback);
+    };
+  }, [auth, silentRenewErrorCallback]);
+
   const canDisplayContent = useMemo(() => {
     return (
       (!auth.user && !auth.isAuthenticated) ||
@@ -87,7 +104,7 @@ export const App = () => {
 
   return (
     <>
-      <Toaster toasterId='toaster' />
+      <Toaster toasterId="toaster" />
       <Sidebar dismissed={() => setSidebarOpen(false)} open={sidebarOpen} />
       <Header menuClick={() => setSidebarOpen((s) => !s)} />
       <div
