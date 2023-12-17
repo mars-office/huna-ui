@@ -61,8 +61,8 @@ export const ParkingLots = () => {
           'config.json': JSON.stringify({
             id: result._id,
             detectionServer: window.location.origin.replace('https://', 'detection.'),
-            detectionServerPort: +window.location.port,
-            otaServerPort: +window.location.port,
+            detectionServerPort: 443,
+            otaServerPort: 443,
             otaServer: window.location.origin.replace('https://', 'ota.'),
             mqttServer: window.location.origin.replace('https://', 'emqx.'),
             mqttPort: 8883
