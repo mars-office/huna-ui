@@ -60,8 +60,10 @@ export const ParkingLots = () => {
           'client.key': result.clientCertificateKey,
           'config.json': JSON.stringify({
             id: result._id,
-            serverUrl: window.location.origin,
-            otaServerUrl: window.location.origin.replace('https://', 'https://ota.'),
+            server: window.location.origin.replace('https://', ''),
+            serverPort: +window.location.port,
+            otaServerPort: +window.location.port,
+            otaServer: window.location.origin.replace('https://', 'ota.'),
             mqttServer: window.location.origin.replace('https://', 'emqx.'),
             mqttPort: 8883
           })
