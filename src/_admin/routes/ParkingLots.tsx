@@ -58,6 +58,7 @@ export const ParkingLots = () => {
           'ca.crt': result.caCrt,
           'client.crt': result.clientCertificateCrt,
           'client.key': result.clientCertificateKey,
+          'le_ca.crt': result.letsencryptCaCrt,
           'config.json': JSON.stringify({
             id: result._id,
             server: window.location.origin.replace('https://', ''),
