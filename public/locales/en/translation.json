@@ -18,7 +18,13 @@
         "regeneratedSuccessfully": "Certificate regenerated successfully",
         "addedSuccessfully": "Added successfully",
         "editedSuccessfully": "Edited successfully",
-        "noItems": "No items"
+        "noItems": "No items",
+        "online": "Online",
+        "offline": "Offline",
+        "status": "Status",
+        "triggerOtaCheck": "OTA update check",
+        "reboot": "Reboot",
+        "commandSentSuccessfully": "Command sent successfully"
       },
       "addEditParkingLotDialog": {
         "addParkingLot": "Add parking lot",

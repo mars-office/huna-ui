@@ -18,7 +18,13 @@
         "regeneratedSuccessfully": "Certificat regenerat cu succes",
         "addedSuccessfully": "Adăugat cu succes",
         "editedSuccessfully": "Editat cu succes",
-        "noItems": "Niciun element"
+        "noItems": "Niciun element",
+        "online": "Online",
+        "offline": "Offline",
+        "status": "Stare",
+        "triggerOtaCheck": "Verificare actualizare OTA",
+        "reboot": "Repornire",
+        "commandSentSuccessfully": "Comandă trimisă cu succes"
       },
       "addEditParkingLotDialog": {
         "addParkingLot": "Adăugare parcare",

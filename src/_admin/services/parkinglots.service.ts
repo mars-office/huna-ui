@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { ParkingLotDto } from '../dto/parkinglot.dto';
 import { DownloadCertificateBundleResponseDto } from '../dto/download-certificate-bundle-response.dto';
+import { SendCommandRequestDto } from '../dto/send-command-request.dto';
+import { SendCommandResponseDto } from '../dto/send-command-response.dto';
 
 export const parkingLotsService = {
   getParkingLots: async () => {
@@ -21,6 +23,14 @@ export const parkingLotsService = {
     return (
       await axios.post<ParkingLotDto>(
         `/api/parkinglots/admin/parkinglots`,
+        dto
+      )
+    ).data;
+  },
+  sendCommand: async (_id: string, dto: SendCommandRequestDto) => {
+    return (
+      await axios.post<SendCommandResponseDto>(
+        `/api/parkinglots/admin/parkinglots/${_id}/command`,
         dto
       )
     ).data;

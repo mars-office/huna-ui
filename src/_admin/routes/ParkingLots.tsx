@@ -1,4 +1,20 @@
-import { Body1, Button, Card, CardFooter, CardHeader, Text } from '@fluentui/react-components';
+import {
+  Accordion,
+  AccordionHeader,
+  AccordionItem,
+  AccordionPanel,
+  Body1,
+  Button,
+  Card,
+  CardFooter,
+  CardHeader,
+  Menu,
+  MenuItem,
+  MenuList,
+  MenuPopover,
+  MenuTrigger,
+  Text,
+} from '@fluentui/react-components';
 import {
   AddRegular,
   ArrowDownloadRegular,
@@ -6,6 +22,7 @@ import {
   ArrowSyncRegular,
   DeleteRegular,
   EditRegular,
+  MoreVerticalRegular,
 } from '@fluentui/react-icons';
 import { useTranslation } from 'react-i18next';
 import ConfirmationButton from '../../components/ConfirmationButton';
@@ -17,8 +34,15 @@ import zipService from '../../services/zip.service';
 import downloadService from '../../services/download.service';
 import AddEditParkingLotDialog from './AddEditParkingLotDialog';
 import Loading from '../../layout/Loading';
+import { StatusDto } from '../dto/status.dto';
+
+const extractStatusFields = (dto?: StatusDto) => {
+  return Object.keys(dto || {}).map((x) => ({ key: x, value: (dto as any)[x] }));
+};
 
 export const ParkingLots = () => {
+  const currentTimestamp = new Date().getTime();
+
   const { t } = useTranslation();
   const [parkingLots, setParkingLots] = useState<ParkingLotDto[]>([]);
   const { fromError, toast } = useToast();
@@ -27,28 +51,48 @@ export const ParkingLots = () => {
   const [loading, setLoading] = useState(false);
   const parkingLotsListDiv = useRef<HTMLDivElement>(null);
 
-  const loadParkingLots = useCallback(async () => {
-    try {
-      setLoading(true);
-      const lots = await parkingLotsService.getParkingLots();
-      setParkingLots(lots);
-      setLoading(false);
-    } catch (err) {
-      fromError(err);
-      setLoading(false);
-    }
-  }, [setLoading, fromError, setParkingLots]);
+  const loadParkingLots = useCallback(
+    async (setLoadingOn = true) => {
+      try {
+        if (setLoadingOn) {
+          setLoading(true);
+        }
+        const lots = await parkingLotsService.getParkingLots();
+        setParkingLots(lots);
+        if (setLoadingOn) {
+          setLoading(false);
+        }
+      } catch (err) {
+        fromError(err);
+        if (setLoadingOn) {
+          setLoading(false);
+        }
+      }
+    },
+    [setLoading, fromError, setParkingLots],
+  );
 
   useEffect(() => {
     (async () => {
       await loadParkingLots();
     })();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    parkingLotsListDiv.current?.scrollTo({ top: 0 });
-  }, [parkingLots]);
+    const interval = setInterval(() => {
+      (async () => {
+        await loadParkingLots(false);
+      })();
+    }, 5000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [loadParkingLots]);
+
+  // useEffect(() => {
+  //   parkingLotsListDiv.current?.scrollTo({ top: 0 });
+  // }, [parkingLots]);
 
   const downloadCertificates = useCallback(
     async (_id: string) => {
@@ -65,8 +109,8 @@ export const ParkingLots = () => {
             otaServerPort: 443,
             otaServer: window.location.origin.replace('https://', 'ota.'),
             mqttServer: window.location.origin.replace('https://', 'emqx.'),
-            mqttPort: 8883
-          })
+            mqttPort: 8883,
+          }),
         });
         downloadService.downloadBlob(zipBlob, _id + '_certificate.zip');
       } catch (err) {
@@ -96,6 +140,20 @@ export const ParkingLots = () => {
       try {
         await parkingLotsService.regenerateCertificate(_id);
         toast('success', t('ui.admin.parkingLots.regeneratedSuccessfully'));
+      } catch (err: any) {
+        fromError(err);
+      }
+    },
+    [t, fromError, toast],
+  );
+
+  const sendCommand = useCallback(
+    async (_id: string, command: string) => {
+      try {
+        await parkingLotsService.sendCommand(_id, {
+          command: command,
+        });
+        toast('success', t('ui.admin.parkingLots.commandSentSuccessfully'));
       } catch (err: any) {
         fromError(err);
       }
@@ -174,13 +232,36 @@ export const ParkingLots = () => {
                   }
                   description={
                     <small>
-                      {pl._id}, {pl.lat} - {pl.lng}
+                      {pl._id}, {pl.lat} - {pl.lng},{' '}
+                      {t(
+                        'ui.admin.parkingLots.' +
+                          (pl.lastStatusTimestamp &&
+                          currentTimestamp - pl.lastStatusTimestamp! <= 30000
+                            ? 'online'
+                            : 'offline'),
+                      ).toUpperCase()}
                     </small>
                   }
                 ></CardHeader>
+
                 <CardFooter
                   action={
                     <>
+                      <Menu>
+                        <MenuTrigger disableButtonEnhancement>
+                          <Button appearance="subtle" icon={<MoreVerticalRegular />}></Button>
+                        </MenuTrigger>
+                        <MenuPopover>
+                          <MenuList>
+                            <MenuItem onClick={() => sendCommand(pl._id!, 'otacheck')}>
+                              {t('ui.admin.parkingLots.triggerOtaCheck')}
+                            </MenuItem>
+                            <MenuItem onClick={() => sendCommand(pl._id!, 'reboot')}>
+                              {t('ui.admin.parkingLots.reboot')}
+                            </MenuItem>
+                          </MenuList>
+                        </MenuPopover>
+                      </Menu>
                       <Button
                         onClick={() => downloadCertificates(pl._id!)}
                         appearance="subtle"
@@ -203,13 +284,26 @@ export const ParkingLots = () => {
                       ></ConfirmationButton>
                     </>
                   }
-                ></CardFooter>
+                >
+                  <Accordion collapsible={true}>
+                    <AccordionItem value="1">
+                      <AccordionHeader>{t('ui.admin.parkingLots.status')}</AccordionHeader>
+                      <AccordionPanel>
+                        {extractStatusFields(pl.status).map((v) => (
+                          <div key={v.key}>
+                            {v.key} = {v.value}
+                          </div>
+                        ))}
+                      </AccordionPanel>
+                    </AccordionItem>
+                  </Accordion>
+                </CardFooter>
               </Card>
             ))}
         </div>
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           <Button onClick={() => setAddEditOpen(true)} icon={<AddRegular />}></Button>
-          <Button onClick={loadParkingLots} icon={<ArrowRepeatAllRegular />}></Button>
+          <Button onClick={() => loadParkingLots()} icon={<ArrowRepeatAllRegular />}></Button>
         </div>
       </div>
       <AddEditParkingLotDialog
