@@ -24,7 +24,8 @@
         "status": "Stare",
         "triggerOtaCheck": "Verificare actualizare OTA",
         "reboot": "Repornire",
-        "commandSentSuccessfully": "Comandă trimisă cu succes"
+        "commandSentSuccessfully": "Comandă trimisă cu succes",
+        "resetModem": "Resetare modem"
       },
       "addEditParkingLotDialog": {
         "addParkingLot": "Adăugare parcare",

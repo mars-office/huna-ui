@@ -259,6 +259,9 @@ export const ParkingLots = () => {
                             <MenuItem onClick={() => sendCommand(pl._id!, 'reboot')}>
                               {t('ui.admin.parkingLots.reboot')}
                             </MenuItem>
+                            <MenuItem onClick={() => sendCommand(pl._id!, 'resetmodem')}>
+                              {t('ui.admin.parkingLots.resetModem')}
+                            </MenuItem>
                           </MenuList>
                         </MenuPopover>
                       </Menu>
