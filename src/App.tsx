@@ -37,7 +37,7 @@ export const App = () => {
       !hasTriedSignin
     ) {
       setHasTriedSignin(true);
-      auth.signoutRedirect().catch(e => {
+      auth.signinSilent().catch(e => {
         console.error(e);
         auth.signoutRedirect().then(() => {
           navigate('/login');
