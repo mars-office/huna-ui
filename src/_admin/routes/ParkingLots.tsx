@@ -245,6 +245,9 @@ export const ParkingLots = () => {
                 ></CardHeader>
 
                 <CardFooter
+                  style={{
+                    flexDirection: 'column',
+                  }}
                   action={
                     <>
                       <Menu>
@@ -292,6 +295,7 @@ export const ParkingLots = () => {
                     <AccordionItem value="1">
                       <AccordionHeader>{t('ui.admin.parkingLots.status')}</AccordionHeader>
                       <AccordionPanel>
+                        <div>lastupdate = {pl.lastStatusTimestamp}</div>
                         {extractStatusFields(pl.status).map((v) => (
                           <div key={v.key}>
                             {v.key} = {v.value}
