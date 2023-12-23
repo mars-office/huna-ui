@@ -25,7 +25,8 @@
         "triggerOtaCheck": "Verificare actualizare OTA",
         "reboot": "Repornire",
         "commandSentSuccessfully": "Comandă trimisă cu succes",
-        "resetModem": "Resetare modem"
+        "resetModem": "Resetare modem",
+        "forcedOta": "OTA forțat"
       },
       "addEditParkingLotDialog": {
         "addParkingLot": "Adăugare parcare",

@@ -259,6 +259,9 @@ export const ParkingLots = () => {
                             <MenuItem onClick={() => sendCommand(pl._id!, 'otacheck')}>
                               {t('ui.admin.parkingLots.triggerOtaCheck')}
                             </MenuItem>
+                            <MenuItem onClick={() => sendCommand(pl._id!, 'forcedota')}>
+                              {t('ui.admin.parkingLots.forcedOta')}
+                            </MenuItem>
                             <MenuItem onClick={() => sendCommand(pl._id!, 'reboot')}>
                               {t('ui.admin.parkingLots.reboot')}
                             </MenuItem>

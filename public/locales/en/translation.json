@@ -25,7 +25,8 @@
         "triggerOtaCheck": "OTA update check",
         "reboot": "Reboot",
         "commandSentSuccessfully": "Command sent successfully",
-        "resetModem": "Reset modem"
+        "resetModem": "Reset modem",
+        "forcedOta": "Forced OTA"
       },
       "addEditParkingLotDialog": {
         "addParkingLot": "Add parking lot",
