@@ -12,7 +12,7 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@fluentui/react-components": "^9.43.3",
+    "@fluentui/react-components": "^9.44.0",
     "@fluentui/react-icons": "^2.0.224",
     "axios": "^1.6.3",
     "fflate": "^0.8.1",
