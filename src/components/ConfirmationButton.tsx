@@ -2,45 +2,51 @@ import { Button, ButtonProps } from '@fluentui/react-components';
 import { QuestionCircleRegular } from '@fluentui/react-icons';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import ClickAway from 'react-hook-click-away';
 
 export const ConfirmationButton = (props: ButtonProps) => {
   const { t } = useTranslation();
   const [clicked, setClicked] = useState(false);
+  const [isInitialClick, setIsInitialClick] = useState(true);
 
-  const onFocus = useCallback(() => {
-    if (!clicked) {
-      setClicked(true);
+  const onClickAway = useCallback(() => {
+    if (isInitialClick) {
+      setIsInitialClick(false);
       return;
     }
-  }, [clicked, setClicked]);
-
-  const onBlur = useCallback(() => {
     if (clicked) {
       setClicked(false);
-      return;
+      setIsInitialClick(true);
     }
-  }, [clicked, setClicked]);
+  }, [clicked, setClicked, isInitialClick, setIsInitialClick]);
 
-  const onClick = useCallback(
+  const onInitialClick = useCallback(() => {
+    setClicked(true);
+  }, [setClicked]);
+
+  const onReclick = useCallback(
     (e: any) => {
       e.preventDefault();
       e.stopPropagation();
       setClicked(false);
+      setIsInitialClick(true);
       if (props.onClick) {
         props.onClick(e);
       }
     },
-    [props, setClicked],
+    [props, setClicked, setIsInitialClick],
   );
 
   return (
     <>
       {clicked && (
-        <Button {...props} onClick={onClick} onTouchStart={onClick} autoFocus={true} onBlur={onBlur} icon={<QuestionCircleRegular />}>
-          {t('ui.components.confirmationButton.areYouSure')}
-        </Button>
+        <ClickAway onClickAway={onClickAway}>
+          <Button {...props} onClick={onReclick} icon={<QuestionCircleRegular />}>
+            {t('ui.components.confirmationButton.areYouSure')}
+          </Button>
+        </ClickAway>
       )}
-      {!clicked && <Button {...props} onTouchStart={onFocus} onFocus={onFocus} />}
+      {!clicked && <Button {...props} onClick={onInitialClick} />}
     </>
   );
 };
