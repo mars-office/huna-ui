@@ -1,7 +1,7 @@
-import './styles.scss';
-import ReactDOM from 'react-dom/client';
-import { FluentProvider, teamsDarkTheme } from '@fluentui/react-components';
-import App from './App';
+import './stylasdasdes.scss';
+import ReactDOM from 'reactasdasd-dom/client';
+import { FluentProvider, teamsDarkTheme } from '@fluentuiasdasd/react-components';
+import App from './Aapp';
 import { BrowserRouter } from 'react-router-dom';
 
 import './i18n';
