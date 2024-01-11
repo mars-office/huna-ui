@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 node:aasdlpine as builder
+FROM --platform=linux/amd64 node:alpine as builder
 WORKDIR /app
 
 COPY ./package.json ./package.json
