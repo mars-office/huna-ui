@@ -43,7 +43,7 @@ export const Header = (props: HeaderProps) => {
   const [userProfile, _] = useStore(userProfileStore);
 
   const logout = useCallback(async () => {
-    await auth.signoutRedirect();
+    await auth.removeUser();
     navigate('/');
   }, [auth, navigate]);
 
