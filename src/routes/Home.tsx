@@ -5,7 +5,7 @@ export const Home = () => {
 
   return (
     <div test-id="hello">
-      hello aolo home !!!!!!!!!!!!!!!<br /> <ConfirmationButton onClick={() => alert(1)} icon={<HomeFilled />}></ConfirmationButton>
+      hello aolo home ????<br /> <ConfirmationButton onClick={() => alert(1)} icon={<HomeFilled />}></ConfirmationButton>
     </div>
   );
 };
