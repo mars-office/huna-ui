@@ -21,15 +21,15 @@ serviceAccount:
 podSecurityContext: {}
   # fsGroup: 2000
 
-securityContext: {}
-  # readOnlyRootFilesystem: true
+securityContext:
+  readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
 
 service:
   type: ClusterIP
-  exposedPort: 80
-  containerPort: 80
+  exposedPort: 8080
+  containerPort: 8080
 
 podAnnotations: {}
 podLabels: {}
