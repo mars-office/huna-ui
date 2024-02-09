@@ -42,7 +42,7 @@ export const useToast = () => {
     for (const errorProperty of Object.keys(err.response!.data)) {
       toast(
         'error',
-        err.response.data[errorProperty].map((x: string) => t(x)).join('; '),
+        err?.response?.data ? err.response.data[errorProperty].map((x: string) => t(x)).join('; ') : t('ui.toast.unknownError'),
         t('ui.toast.error') + ' ' + errorProperty,
       );
     }

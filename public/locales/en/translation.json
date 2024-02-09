@@ -4,7 +4,8 @@
       "success": "Success",
       "error": "Error",
       "warn": "Warning",
-      "info": "Info"
+      "info": "Info",
+      "unknownError": "Fatal error"
     },
     "components": {
       "confirmationButton": {
