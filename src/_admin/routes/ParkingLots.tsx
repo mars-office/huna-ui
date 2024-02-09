@@ -80,19 +80,8 @@ export const ParkingLots = () => {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      (async () => {
-        await loadParkingLots(false);
-      })();
-    }, 5000);
-    return () => {
-      clearInterval(interval);
-    };
-  }, [loadParkingLots]);
-
-  // useEffect(() => {
-  //   parkingLotsListDiv.current?.scrollTo({ top: 0 });
-  // }, [parkingLots]);
+    parkingLotsListDiv.current?.scrollTo({ top: 0 });
+  }, [parkingLots]);
 
   const downloadCertificates = useCallback(
     async (_id: string) => {
