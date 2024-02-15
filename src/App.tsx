@@ -17,6 +17,7 @@ import Sidebar from './layout/Sidebar';
 import Loading from './layout/Loading';
 import AdminRoute from './routes/AdminRoute';
 import { Toaster } from '@fluentui/react-components';
+import signalrService from './services/signalr.service';
 
 // Lazy loading
 const Admin = lazy(() => import('./_admin/routes/Admin'));
@@ -61,6 +62,9 @@ export const App = () => {
       if (auth.isAuthenticated && auth.user) {
         const userProfileResult = await usersService.myProfile();
         setUserProfile(userProfileResult);
+        await signalrService.connect();
+      } else {
+        await signalrService.disconnect();
       }
     })();
   }, [auth, setUserProfile]);

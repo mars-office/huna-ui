@@ -67,3 +67,46 @@ export class BehaviourSubject<T> {
     return this._value;
   }
 }
+
+export class Subject<T> {
+  private _state = BehaviourSubjectState.NOT_FIRED;
+  private _subscribers = new Map<Subscription<T>, SubscriberEvent<T>>();
+
+  constructor() {
+  }
+
+  next(newValue: T) {
+    if (this._state === BehaviourSubjectState.COMPLETE) {
+      throw new Error('BehaviourSubject is complete.');
+    }
+    this._state = BehaviourSubjectState.LIVE;
+    this._subscribers.forEach(se => {
+      if (se.onNext) {
+        se.onNext(newValue);
+      }
+    });
+  }
+
+  complete() {
+    this._state = BehaviourSubjectState.COMPLETE;
+    this._subscribers.forEach(se => {
+      if (se.onComplete) {
+        se.onComplete();
+      }
+    });
+  }
+
+  error(err: Error) {
+    this._subscribers.forEach(se => {
+      if (se.onError) {
+        se.onError(err);
+      }
+    });
+  }
+
+  subscribe(se: SubscriberEvent<T>) {
+    const newSubscription = new Subscription(this._subscribers);
+    this._subscribers.set(newSubscription, se);
+    return newSubscription;
+  }
+}
