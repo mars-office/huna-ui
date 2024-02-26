@@ -19,7 +19,7 @@
     "fflate": "^0.8.2",
     "i18next": "^23.9.0",
     "i18next-browser-languagedetector": "^7.2.0",
-    "i18next-http-backend": "^2.4.3",
+    "i18next-http-backend": "^2.5.0",
     "leaflet": "^1.9.4",
     "oidc-client-ts": "^3.0.1",
     "react": "^18.2.0",
