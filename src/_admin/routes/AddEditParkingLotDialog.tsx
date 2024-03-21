@@ -112,6 +112,7 @@ export const AddEditParkingLotDialog = (props: AddEditParkingLotDialogProps) => 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <Input
                   id="name"
+                  tabIndex={-1}
                   value={clone.name}
                   required
                   type="text"
@@ -124,6 +125,7 @@ export const AddEditParkingLotDialog = (props: AddEditParkingLotDialogProps) => 
                 />
                 <Input
                   id="lat"
+                  tabIndex={-1}
                   value={clone.lat.toString()}
                   required
                   type="number"
@@ -132,6 +134,7 @@ export const AddEditParkingLotDialog = (props: AddEditParkingLotDialogProps) => 
                 />
                 <Input
                   id="lng"
+                  tabIndex={-1}
                   value={clone.lng.toString()}
                   required
                   type="number"
