@@ -11,7 +11,7 @@ export const Home = () => {
   }, [toast]);
   return (
     <div test-id="hello">
-      hello aolo home ????<br /> <ConfirmationButton onClick={() => alert(1)} icon={<HomeFilled />}></ConfirmationButton>
+      hehehe<br /> <ConfirmationButton onClick={() => alert(1)} icon={<HomeFilled />}></ConfirmationButton>
     </div>
   );
 };
