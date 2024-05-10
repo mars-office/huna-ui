@@ -7,13 +7,6 @@
       "info": "Info",
       "unknownError": "Fatal error"
     },
-    "components": {
-      "confirmationButton": {
-        "areYouSure": "Are you sure?"
-      }
-    },
-    "admin": {
-    },
     "sidebar": {
       "menu": "Menu",
       "home": "Home",
@@ -31,14 +24,6 @@
     "login": {
       "login": "Login",
       "loginWith": "Login with"
-    }
-  },
-  "api": {
-    "validation": {
-      "invalidField": "Invalid field",
-      "requiredField": "Required field",
-      "notFound": "Not found",
-      "fatalError": "Fatal error"
     }
   }
 }

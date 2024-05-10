@@ -7,14 +7,6 @@
       "info": "Info",
       "unknownError": "Eroare fatală"
     },
-    "components": {
-      "confirmationButton": {
-        "areYouSure": "Sunteți sigur?"
-      }
-    },
-    "admin": {
-
-    },
     "sidebar": {
       "menu": "Meniu",
       "home": "Acasă",
@@ -32,14 +24,6 @@
     "login": {
       "login": "Conectare",
       "loginWith": "Conectare cu"
-    }
-  },
-  "api": {
-    "validation": {
-      "invalidField": "Câmp invalid",
-      "requiredField": "Câmp obligatoriu",
-      "notFound": "Negăsit",
-      "fatalError": "Eroare fatală"
     }
   }
 }
