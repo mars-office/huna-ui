@@ -13,38 +13,14 @@
       }
     },
     "admin": {
-      "parkingLots": {
-        "parkingLots": "Parcări",
-        "deletedSuccessfully": "Ștergere reușită",
-        "regeneratedSuccessfully": "Certificat regenerat cu succes",
-        "addedSuccessfully": "Adăugat cu succes",
-        "editedSuccessfully": "Editat cu succes",
-        "noItems": "Niciun element",
-        "online": "Online",
-        "offline": "Offline",
-        "status": "Stare",
-        "triggerOtaCheck": "Verificare actualizare OTA",
-        "reboot": "Repornire",
-        "commandSentSuccessfully": "Comandă trimisă cu succes",
-        "resetModem": "Resetare modem",
-        "forcedOta": "OTA forțat"
-      },
-      "addEditParkingLotDialog": {
-        "addParkingLot": "Adăugare parcare",
-        "editParkingLot": "Editare parcare",
-        "name": "Nume",
-        "latitude": "Latitudine",
-        "longitude": "Longitudine",
-        "close": "Închidere",
-        "save": "Salvare"
-      }
+
     },
     "sidebar": {
       "menu": "Meniu",
       "home": "Acasă",
       "admin": "Admin",
       "app": "App",
-      "parkingLots": "Parcări"
+      "dashboard": "Dashboard"
     },
     "header": {
       "language": "Limbă",

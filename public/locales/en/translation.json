@@ -13,38 +13,13 @@
       }
     },
     "admin": {
-      "parkingLots": {
-        "parkingLots": "Parking lots",
-        "deletedSuccessfully": "Deleted successfully",
-        "regeneratedSuccessfully": "Certificate regenerated successfully",
-        "addedSuccessfully": "Added successfully",
-        "editedSuccessfully": "Edited successfully",
-        "noItems": "No items",
-        "online": "Online",
-        "offline": "Offline",
-        "status": "Status",
-        "triggerOtaCheck": "OTA update check",
-        "reboot": "Reboot",
-        "commandSentSuccessfully": "Command sent successfully",
-        "resetModem": "Reset modem",
-        "forcedOta": "Forced OTA"
-      },
-      "addEditParkingLotDialog": {
-        "addParkingLot": "Add parking lot",
-        "editParkingLot": "Edit parking lot",
-        "name": "Name",
-        "latitude": "Latitude",
-        "longitude": "Longitude",
-        "close": "Close",
-        "save": "Save"
-      }
     },
     "sidebar": {
       "menu": "Menu",
       "home": "Home",
       "admin": "Admin",
       "app": "App",
-      "parkingLots": "Parking lots"
+      "dashboard": "Dashboard"
     },
     "header": {
       "language": "Language",

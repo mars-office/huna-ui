@@ -10,7 +10,7 @@ import {
   MenuList,
   OverlayDrawer,
 } from '@fluentui/react-components';
-import { Dismiss24Regular, HomeFilled, VehicleCarParkingFilled } from '@fluentui/react-icons';
+import { Dismiss24Regular, HomeFilled, BoardFilled } from '@fluentui/react-icons';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
@@ -79,10 +79,10 @@ export const Sidebar = (props: SidebarProps) => {
                 <NavLink
                   onClick={onCloseClick}
                   end
-                  to="/admin/parkinglots"
+                  to="/admin/dashboard"
                   className={({ isActive }) => (isActive ? 'active' : undefined)}
                 >
-                  <MenuItem icon={<VehicleCarParkingFilled />}>{t('ui.sidebar.parkingLots')}</MenuItem>
+                  <MenuItem icon={<BoardFilled />}>{t('ui.sidebar.dashboard')}</MenuItem>
                 </NavLink>
               </MenuGroup>
             </>

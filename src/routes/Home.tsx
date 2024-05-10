@@ -1,5 +1,3 @@
-import { HomeFilled } from "@fluentui/react-icons";
-import ConfirmationButton from "../components/ConfirmationButton";
 import { useSignalrData } from "../hooks/use-signalr-data";
 import { useToast } from "../hooks/use-toast";
 
@@ -11,7 +9,7 @@ export const Home = () => {
   }, [toast]);
   return (
     <div test-id="hello">
-      hehehe<br /> <ConfirmationButton onClick={() => alert(1)} icon={<HomeFilled />}></ConfirmationButton>
+      hehehe<br /> asdasdasd
     </div>
   );
 };

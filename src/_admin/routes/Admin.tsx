@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
-import ParkingLots from './ParkingLots';
+import Dashboard from './Dashboard';
 
 export const Admin = () => {
   return (
     <Routes>
-      <Route path="parkinglots" element={<ParkingLots />} />
+      <Route path="dashboard" element={<Dashboard />} />
     </Routes>
   );
 };
