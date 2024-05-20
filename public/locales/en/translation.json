@@ -24,6 +24,12 @@
     "login": {
       "login": "Login",
       "loginWith": "Login with"
+    },
+    "update": {
+      "updateDownloaded": "Update downloaded",
+      "reloadToInstallUpdate": "Reload to install update?",
+      "no": "No",
+      "yes": "Yes"
     }
   }
 }

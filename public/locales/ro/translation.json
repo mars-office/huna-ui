@@ -24,6 +24,12 @@
     "login": {
       "login": "Conectare",
       "loginWith": "Conectare cu"
+    },
+    "update": {
+      "updateDownloaded": "Actualizare descărcată",
+      "reloadToInstallUpdate": "Reîncărcați pagina pentru instalarea actualizării?",
+      "no": "Nu",
+      "yes": "Da"
     }
   }
 }

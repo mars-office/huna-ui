@@ -30,6 +30,7 @@ import environment from '../environment';
 import { VERSION } from '../version';
 import { useStore } from '../hooks/use-store';
 import { userProfileStore } from '../stores/user-profile.store';
+import Notifications from './Notifications';
 
 export interface HeaderProps {
   menuClick?: () => void;
@@ -119,56 +120,64 @@ export const Header = (props: HeaderProps) => {
           </Link>
         </div>
 
-        <Menu>
-          <MenuTrigger>
-            <ToolbarButton
-              data-testid="usermenu"
-              aria-label="More"
-              icon={
-                auth.isAuthenticated ? <InprivateAccount28Regular /> : <MoreVertical28Regular />
-              }
-            />
-          </MenuTrigger>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <Notifications />
+          <Menu>
+            <MenuTrigger>
+              <ToolbarButton
+                data-testid="usermenu"
+                aria-label="More"
+                icon={
+                  auth.isAuthenticated ? <InprivateAccount28Regular /> : <MoreVertical28Regular />
+                }
+              />
+            </MenuTrigger>
 
-          <MenuPopover>
-            <MenuList>
-              <MenuGroup>
-                <MenuGroupHeader>
-                  <Text data-testid="userName" size={200}>
-                    {auth.isAuthenticated
-                      ? auth.user?.profile.email + (userProfile?.isAdmin ? ' (admin)' : '')
-                      : t('ui.header.anonymous')}
-                  </Text>
-                </MenuGroupHeader>
-              </MenuGroup>
-              <MenuDivider />
-              <LanguageMenu />
-              {auth.isAuthenticated && (
-                <MenuItem data-testid="settingsButton" onClick={() => navigate('/settings')}>
-                  {t('ui.header.settings')}
+            <MenuPopover>
+              <MenuList>
+                <MenuGroup>
+                  <MenuGroupHeader>
+                    <Text data-testid="userName" size={200}>
+                      {auth.isAuthenticated
+                        ? auth.user?.profile.email + (userProfile?.isAdmin ? ' (admin)' : '')
+                        : t('ui.header.anonymous')}
+                    </Text>
+                  </MenuGroupHeader>
+                </MenuGroup>
+                <MenuDivider />
+                <LanguageMenu />
+                {auth.isAuthenticated && (
+                  <MenuItem data-testid="settingsButton" onClick={() => navigate('/settings')}>
+                    {t('ui.header.settings')}
+                  </MenuItem>
+                )}
+                {!auth.isAuthenticated && (
+                  <MenuItem
+                    data-testid="loginButton"
+                    onClick={() =>
+                      navigate('/login?returnTo=' + encodeURIComponent(location.pathname))
+                    }
+                  >
+                    {t('ui.header.login')}
+                  </MenuItem>
+                )}
+                {auth.isAuthenticated && (
+                  <MenuItem data-testid="logoutButton" onClick={logout}>
+                    {t('ui.header.logout')}
+                  </MenuItem>
+                )}
+                <MenuItem data-testid="versionButton" disabled={true}>
+                  {VERSION}
                 </MenuItem>
-              )}
-              {!auth.isAuthenticated && (
-                <MenuItem
-                  data-testid="loginButton"
-                  onClick={() =>
-                    navigate('/login?returnTo=' + encodeURIComponent(location.pathname))
-                  }
-                >
-                  {t('ui.header.login')}
-                </MenuItem>
-              )}
-              {auth.isAuthenticated && (
-                <MenuItem data-testid="logoutButton" onClick={logout}>
-                  {t('ui.header.logout')}
-                </MenuItem>
-              )}
-              <MenuItem data-testid="versionButton" disabled={true}>
-                {VERSION}
-              </MenuItem>
-            </MenuList>
-          </MenuPopover>
-        </Menu>
+              </MenuList>
+            </MenuPopover>
+          </Menu>
+        </div>
       </Toolbar>
     </>
   );
