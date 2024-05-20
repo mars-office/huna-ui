@@ -101,12 +101,12 @@ export const App = () => {
   }, [auth, hasTriedSignin]);
 
   const installUpdate = useCallback(async () => {
-    needRefresh[1](s => s = false);
+    needRefresh[1](() => false);
     await updateServiceWorker();
   }, [updateServiceWorker, needRefresh[1]]);
 
   const rejectUpdate = useCallback(() => {
-    needRefresh[1](s => s = false);
+    needRefresh[1](() => false);
   }, [needRefresh[1]]);
 
   return (
