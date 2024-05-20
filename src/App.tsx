@@ -20,6 +20,7 @@ import { Toaster } from '@fluentui/react-components';
 import signalrService from './services/signalr.service';
 import {useRegisterSW} from 'virtual:pwa-register/react';
 import UpdateDialog from './layout/UpdateDialog';
+import pushService from './services/push.service';
 
 // Lazy loading
 const Admin = lazy(() => import('./_admin/routes/Admin'));
@@ -66,6 +67,7 @@ export const App = () => {
         const userProfileResult = await usersService.myProfile();
         setUserProfile(userProfileResult);
         await signalrService.connect();
+        await pushService.subscribe();
       } else {
         await signalrService.disconnect();
       }
