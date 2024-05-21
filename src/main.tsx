@@ -8,6 +8,7 @@ import './i18n';
 import enableAuthInterceptor from './services/auth.interceptor';
 import { AuthProvider, AuthProviderProps } from 'react-oidc-context';
 import { WebStorageStateStore } from 'oidc-client-ts';
+import PwaRoot from './PwaRoot';
 
 const authConfig: AuthProviderProps = {
   authority: window.location.protocol + '//dex.' + window.location.hostname,
@@ -39,10 +40,12 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     }}
     theme={teamsDarkTheme}
   >
-    <BrowserRouter>
-      <AuthProvider {...authConfig}>
-        <App />
-      </AuthProvider>
-    </BrowserRouter>
+    <PwaRoot>
+      <BrowserRouter>
+        <AuthProvider {...authConfig}>
+          <App />
+        </AuthProvider>
+      </BrowserRouter>
+    </PwaRoot>
   </FluentProvider>,
 );

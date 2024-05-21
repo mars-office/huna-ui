@@ -18,20 +18,18 @@ import Loading from './layout/Loading';
 import AdminRoute from './routes/AdminRoute';
 import { Toaster } from '@fluentui/react-components';
 import signalrService from './services/signalr.service';
-import {useRegisterSW} from 'virtual:pwa-register/react';
-import UpdateDialog from './layout/UpdateDialog';
 import pushService from './services/push.service';
 
 // Lazy loading
 const Admin = lazy(() => import('./_admin/routes/Admin'));
 
 export const App = () => {
+  console.log('Rendering App.');
   const auth = useAuth();
   const navigate = useNavigate();
   const [hasTriedSignin, setHasTriedSignin] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const {needRefresh, updateServiceWorker} = useRegisterSW();
-  
+
   useEffect(() => {
     if (
       !hasAuthParams() &&
@@ -42,7 +40,7 @@ export const App = () => {
       !hasTriedSignin
     ) {
       setHasTriedSignin(true);
-      auth.signinSilent().catch(e => {
+      auth.signinSilent().catch((e) => {
         console.error(e);
         auth.signoutRedirect().then(() => {
           navigate('/login');
@@ -85,7 +83,6 @@ export const App = () => {
   );
 
   useEffect(() => {
-
     auth.events.addUserLoaded(userLoadedCallback);
     return () => {
       auth.events.removeUserLoaded(userLoadedCallback);
@@ -100,18 +97,9 @@ export const App = () => {
     );
   }, [auth, hasTriedSignin]);
 
-  const installUpdate = useCallback(async () => {
-    needRefresh[1](() => false);
-    await updateServiceWorker();
-  }, [updateServiceWorker, needRefresh[1]]);
-
-  const rejectUpdate = useCallback(() => {
-    needRefresh[1](() => false);
-  }, [needRefresh[1]]);
 
   return (
     <>
-      <UpdateDialog isVisible={needRefresh[0]} onInstall={installUpdate} onReject={rejectUpdate} />
       <Toaster toasterId="toaster" />
       <Sidebar dismissed={() => setSidebarOpen(false)} open={sidebarOpen} />
       <Header menuClick={() => setSidebarOpen((s) => !s)} />
