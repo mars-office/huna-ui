@@ -9,32 +9,29 @@ import {
 } from '@fluentui/react-components';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useRegisterSW } from 'virtual:pwa-register/react';
 
-export interface UpdateDialogProps {
-  isVisible: boolean;
-  onInstall?: () => Promise<void>;
-  onReject?: () => void;
-}
-
-export const UpdateDialog = (props: UpdateDialogProps) => {
+export const PwaUpdate = () => {
+  console.log('Rendering PWA Update...');
+  const {
+    // offlineReady: [offlineReady, setOfflineReady],
+    needRefresh: [needRefresh, setNeedRefresh],
+    updateServiceWorker,
+  } = useRegisterSW();
+  console.log('Needsupdate=', needRefresh);
   const { t } = useTranslation();
 
   const yesClick = useCallback(async () => {
-    if (!props.onInstall) {
-      return;
-    }
-    await props.onInstall();
-  }, [props.onInstall]);
+    setNeedRefresh(false);
+    await updateServiceWorker(true);
+  }, []);
 
   const noClick = useCallback(() => {
-    if (!props.onReject) {
-      return;
-    }
-    props.onReject();
-  }, [props.onReject]);
+    setNeedRefresh(false);
+  }, []);
 
   return (
-    <Dialog modalType="alert" open={props.isVisible}>
+    <Dialog modalType="alert" open={needRefresh}>
       <DialogSurface>
         <DialogBody>
           <DialogTitle>{t('ui.update.updateDownloaded')}</DialogTitle>
@@ -53,4 +50,4 @@ export const UpdateDialog = (props: UpdateDialogProps) => {
   );
 };
 
-export default UpdateDialog;
+export default PwaUpdate;
