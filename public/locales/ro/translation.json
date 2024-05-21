@@ -30,6 +30,9 @@
       "reloadToInstallUpdate": "Reîncărcați pagina pentru instalarea actualizării?",
       "no": "Nu",
       "yes": "Da"
+    },
+    "notifications": {
+      "markAllAsRead": "Marchează toate ca citite"
     }
   }
 }

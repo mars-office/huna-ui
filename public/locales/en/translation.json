@@ -30,6 +30,9 @@
       "reloadToInstallUpdate": "Reload to install update?",
       "no": "No",
       "yes": "Yes"
+    },
+    "notifications": {
+      "markAllAsRead": "Mark all as read"
     }
   }
 }
