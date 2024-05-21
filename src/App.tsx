@@ -24,7 +24,7 @@ import pushService from './services/push.service';
 const Admin = lazy(() => import('./_admin/routes/Admin'));
 
 export const App = () => {
-  console.log('Rendering App.');
+  console.log('Rendering App');
   const auth = useAuth();
   const navigate = useNavigate();
   const [hasTriedSignin, setHasTriedSignin] = useState(false);

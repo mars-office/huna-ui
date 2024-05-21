@@ -40,9 +40,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     }}
     theme={teamsDarkTheme}
   >
+    <PwaUpdate />
     <BrowserRouter>
       <AuthProvider {...authConfig}>
-        <PwaUpdate />
         <App />
       </AuthProvider>
     </BrowserRouter>
