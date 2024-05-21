@@ -7,51 +7,57 @@ import {
   DialogActions,
   Button,
 } from '@fluentui/react-components';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRegisterSW } from 'virtual:pwa-register/react';
-
-
-let checkForUpdateIntervalHandle: any;
+import { registerSW } from 'virtual:pwa-register';
 
 export const PwaUpdate = () => {
+  const [needsRefresh, setNeedsRefresh] = useState(false);
+  const [updateSw, setUpdateSw] = useState<((reloadPage: boolean | undefined) => Promise<void>) | undefined>();
+
+  useEffect(() => {
+    (async () => {
+      const updateFunction = registerSW({
+        onRegisteredSW: (_, r) => {
+          console.log('SW registered.');
+          setTimeout(() => {
+            console.log('SW update check scheduled');
+            setInterval(() => {
+              r?.update();
+            }, 60 * 60 * 1000);
+          }, 5000);
+        },
+        onRegisterError: e => {
+          console.error('SW registration error', e);
+        },
+        onNeedRefresh: () => {
+          setNeedsRefresh(true);
+        }
+      });
+      setUpdateSw(updateFunction);
+    })();
+  }, []);
+
   console.log('Rendering PWA Update...');
-  const {
-    // offlineReady: [offlineReady, setOfflineReady],
-    needRefresh: [needRefresh, setNeedRefresh],
-    updateServiceWorker,
-  } = useRegisterSW({
-    onRegisteredSW: (_, r) => {
-      if (!r) {
-        console.error('PWA registration not found');
-        return;
-      }
-      console.log('SW registered!');
-      if (!checkForUpdateIntervalHandle) {
-        console.log('Setting up scheduled update check.');
-        checkForUpdateIntervalHandle = setInterval(() => {
-          r.update();
-        }, 60*60*1000);
-      }
-    },
-    onRegisterError:(error) => {
-        console.error('PWA registration error', error);
-    },
-  });
-  console.log('Needsupdate=', needRefresh);
+
+  console.log('Needsupdate=', needsRefresh);
+
   const { t } = useTranslation();
 
   const yesClick = useCallback(async () => {
-    setNeedRefresh(false);
-    await updateServiceWorker(true);
-  }, []);
+    setNeedsRefresh(false);
+    if (!updateSw) {
+      return;
+    }
+    await updateSw!(true);
+  }, [setNeedsRefresh, updateSw]);
 
   const noClick = useCallback(() => {
-    setNeedRefresh(false);
-  }, []);
+    setNeedsRefresh(false);
+  }, [setNeedsRefresh]);
 
   return (
-    <Dialog modalType="alert" open={needRefresh}>
+    <Dialog modalType="alert" open={needsRefresh}>
       <DialogSurface>
         <DialogBody>
           <DialogTitle>{t('ui.update.updateDownloaded')}</DialogTitle>
