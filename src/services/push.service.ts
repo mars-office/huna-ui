@@ -7,15 +7,14 @@ export class PushService {
     const permission = await Notification.requestPermission();
     if (permission !== 'granted') {
       console.log('Permission not granted for Notifications');
-      return;
+      return null;
     }
     const registration = await navigator.serviceWorker.ready;
     this._reg = registration;
 
     const existingSubscription = await registration.pushManager.getSubscription();
     if (existingSubscription) {
-      console.log('Subscription already exists');
-      return;
+      return existingSubscription;
     }
 
     const publicVapidKeyResponse = await pushSubscriptionsService.getPublicVapidKey();
@@ -24,10 +23,10 @@ export class PushService {
       applicationServerKey: publicVapidKeyResponse.publicVapidKey,
     });
     const subscriptionJsonString = JSON.stringify(subscription.toJSON());
-    const addResult = await pushSubscriptionsService.addPushSubscription({
+    await pushSubscriptionsService.addPushSubscription({
       json: subscriptionJsonString
     });
-    return addResult._id;
+    return existingSubscription;
   }
 
   async unsubscribe() {

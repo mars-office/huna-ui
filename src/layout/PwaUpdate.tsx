@@ -40,10 +40,6 @@ export const PwaUpdate = () => {
     updateSw = updateFunction;
   }, []);
 
-  console.log('Rendering PWA Update...');
-
-  console.log('Needsupdate=', needsRefresh);
-
   const { t } = useTranslation();
 
   const yesClick = useCallback(async () => {
@@ -51,9 +47,7 @@ export const PwaUpdate = () => {
     if (!updateSw) {
       return;
     }
-    console.log('Updating SW...', updateSw);
     updateSw!(true);
-    console.log('Update SW triggered.');
   }, [setNeedsRefresh]);
 
   const noClick = useCallback(() => {

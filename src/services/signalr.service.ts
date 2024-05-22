@@ -41,6 +41,10 @@ class SignalrService {
     return await this.hubConnection.stop();
   }
 
+  get connectionState() {
+    return this.hubConnection.state;
+  }
+
   listen<T>(eventType: string, cb: (payload: T) => Promise<void>, errorHandler?: ((e: any) => void) | undefined) {
     return this.dataSubject.subscribe({
       onError: err => {

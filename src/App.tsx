@@ -20,6 +20,7 @@ import { Toaster } from '@fluentui/react-components';
 import signalrService from './services/signalr.service';
 import pushService from './services/push.service';
 import { AppTheme } from './models/app-theme';
+import { HubConnectionState } from '@microsoft/signalr';
 
 // Lazy loading
 const Admin = lazy(() => import('./_admin/routes/Admin'));
@@ -30,7 +31,6 @@ export interface AppProps {
 }
 
 export const App = (props: AppProps) => {
-  console.log('Rendering App');
   const auth = useAuth();
   const navigate = useNavigate();
   const [hasTriedSignin, setHasTriedSignin] = useState(false);
@@ -59,7 +59,7 @@ export const App = (props: AppProps) => {
   const [_, setUserStoreUser] = useStore(userStore);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [__, setUserProfile] = useStore(userProfileStore);
+  const [userProfile, setUserProfile] = useStore(userProfileStore);
 
   useEffect(() => {
     setUserStoreUser(!auth.user ? undefined : auth.user);
@@ -68,15 +68,20 @@ export const App = (props: AppProps) => {
   useEffect(() => {
     (async () => {
       if (auth.isAuthenticated && auth.user) {
-        const userProfileResult = await usersService.myProfile();
-        setUserProfile(userProfileResult);
-        await signalrService.connect();
+        if (!userProfile) {
+          const userProfileResult = await usersService.myProfile();
+          setUserProfile(userProfileResult);
+        }
+        if (signalrService.connectionState === HubConnectionState.Disconnected) {
+          await signalrService.connect();
+        }
         await pushService.subscribe();
       } else {
         await signalrService.disconnect();
+        setUserProfile(undefined);
       }
     })();
-  }, [auth, setUserProfile]);
+  }, [auth, setUserProfile, userProfile]);
 
   const userLoadedCallback = useCallback(
     (u: User) => {
@@ -103,12 +108,15 @@ export const App = (props: AppProps) => {
     );
   }, [auth, hasTriedSignin]);
 
-
   return (
     <>
       <Toaster toasterId="toaster" />
       <Sidebar dismissed={() => setSidebarOpen(false)} open={sidebarOpen} />
-      <Header appTheme={props.appTheme} onSwitchTheme={props.onSwitchTheme} menuClick={() => setSidebarOpen((s) => !s)} />
+      <Header
+        appTheme={props.appTheme}
+        onSwitchTheme={props.onSwitchTheme}
+        menuClick={() => setSidebarOpen((s) => !s)}
+      />
       <div
         style={{
           flex: '1 1 auto',
