@@ -1,12 +1,16 @@
 import {
-  Card,
-  CardHeader,
+  Caption1,
+  Caption2,
   Link,
   Menu,
+  MenuGroupHeader,
   MenuOpenChangeData,
   MenuOpenEvent,
   MenuPopover,
   MenuTrigger,
+  MessageBar,
+  MessageBarBody,
+  MessageBarTitle,
   ToastIntent,
   ToolbarButton,
 } from '@fluentui/react-components';
@@ -18,6 +22,7 @@ import { AlertBadgeRegular, AlertRegular } from '@fluentui/react-icons';
 import { useTranslation } from 'react-i18next';
 import { useToast } from '../hooks/use-toast';
 import { useSignalrData } from '../hooks/use-signalr-data';
+import { toLocaleDateString } from '../helpers/date.helper';
 
 export const Notifications = () => {
   const { isAuthenticated } = useAuth();
@@ -90,18 +95,30 @@ export const Notifications = () => {
     }
   }, [setUnreadCount, notifications, setNotifications, setMenuOpen, toast]);
 
-  // const markAsRead = useCallback(async (n: NotificationDto) => {
-  //   try {
-  //     await notificationsService.markAsRead(n._id!);
-  //     n.readAt = new Date().toISOString();
-  //     const newNotifications = [...notifications];
-  //     setNotifications([...newNotifications]);
-  //     setUnreadCount(unreadCount - 1);
-  //     setMenuOpen(false);
-  //   } catch (err: any) {
-  //     toast.fromError(err);
-  //   }
-  // }, [setUnreadCount, unreadCount, notifications, setNotifications, setMenuOpen, toast]);
+  const markAsRead = useCallback(
+    async (n: NotificationDto) => {
+      try {
+        await notificationsService.markAsRead(n._id!);
+        n.readAt = new Date().toISOString();
+        const newNotifications = [...notifications];
+        setNotifications([...newNotifications]);
+        setUnreadCount(unreadCount - 1);
+        setMenuOpen(false);
+      } catch (err: any) {
+        toast.fromError(err);
+      }
+    },
+    [setUnreadCount, unreadCount, notifications, setNotifications, setMenuOpen, toast],
+  );
+
+  const notificationClicked = useCallback(
+    async (n: NotificationDto) => {
+      if (!n.readAt) {
+        await markAsRead(n);
+      }
+    },
+    [markAsRead],
+  );
 
   return (
     <Menu open={menuOpen} onOpenChange={onMenuOpenChange}>
@@ -112,25 +129,63 @@ export const Notifications = () => {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
+          gap: '0.5rem',
+          maxHeight: '70vh',
         }}
       >
-        {notifications.map((n) => (
-          <Card key={n._id!}>
-            <CardHeader
-              header={
-                <>
-                  {n.title} - {new Date(Date.parse(n.issuedAt)).toLocaleString()}
-                </>
-              }
-            />
-            {n.message}
-          </Card>
-        ))}
+        <MenuGroupHeader>{t('ui.notifications.notifications')}</MenuGroupHeader>
+        <div
+          style={{
+            flex: '1 1 auto',
+            overflow: 'auto',
+            minHeight: '0',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.3rem',
+          }}
+        >
+          {notifications.length === 0 && (
+            <MessageBar>
+              <MessageBarBody>
+                <Caption2>{t('ui.notifications.noNotifications')}</Caption2>
+              </MessageBarBody>
+            </MessageBar>
+          )}
+          {notifications.map((n) => (
+            <MessageBar
+              onClick={() => notificationClicked(n)}
+              key={n._id!}
+              intent={n.severity}
+              layout="multiline"
+              style={{
+                cursor: 'pointer',
+                filter: !n.readAt ? 'grayscale(0%)' : 'grayscale(70%)',
+                minHeight: 'initial',
+              }}
+            >
+              <MessageBarBody>
+                <MessageBarTitle
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
+                >
+                  <Caption1 style={{ fontWeight: !n.readAt ? 'bold' : '' }}>{n.title}</Caption1>
+                  <Caption2 italic>{toLocaleDateString(n.issuedAt)}</Caption2>
+                </MessageBarTitle>
+                <Caption2>{n.message}</Caption2>
+              </MessageBarBody>
+            </MessageBar>
+          ))}
+        </div>
         {unreadCount > 0 && (
-          <Link onClick={markAllAsRead} style={{ fontSize: '9px' }}>
-            {t('ui.notifications.markAllAsRead')}
-          </Link>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <Link onClick={markAllAsRead}>
+              <Caption2>{t('ui.notifications.markAllAsRead')}</Caption2>
+            </Link>
+          </div>
         )}
       </MenuPopover>
     </Menu>

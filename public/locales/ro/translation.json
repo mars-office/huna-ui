@@ -32,7 +32,9 @@
       "yes": "Da"
     },
     "notifications": {
-      "markAllAsRead": "Marchează toate ca citite"
+      "markAllAsRead": "Marchează toate ca citite",
+      "noNotifications": "Nicio notificare",
+      "notifications": "Notificări"
     }
   }
 }

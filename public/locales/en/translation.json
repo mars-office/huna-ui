@@ -32,7 +32,9 @@
       "yes": "Yes"
     },
     "notifications": {
-      "markAllAsRead": "Mark all as read"
+      "markAllAsRead": "Mark all as read",
+      "noNotifications": "No notifications",
+      "notifications": "Notifications"
     }
   }
 }
