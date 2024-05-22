@@ -128,7 +128,7 @@ export const Header = (props: HeaderProps) => {
         <MenuPopover>
           <MenuList>
             <MenuGroup>
-              <MenuGroupHeader>{t('ui.header.language')}</MenuGroupHeader>
+              <MenuGroupHeader>{t('ui.header.theme')}</MenuGroupHeader>
               <MenuItemRadio value="auto" name="theme">
                   {t('ui.theme.auto')}
               </MenuItemRadio>
