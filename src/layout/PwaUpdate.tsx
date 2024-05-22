@@ -11,9 +11,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { registerSW } from 'virtual:pwa-register';
 
+let updateSw: ((reloadPage: boolean | undefined) => Promise<void>) | undefined;
+
 export const PwaUpdate = () => {
   const [needsRefresh, setNeedsRefresh] = useState(false);
-  const [updateSw, setUpdateSw] = useState<((reloadPage: boolean | undefined) => Promise<void>) | undefined>();
 
   useEffect(() => {
     (async () => {
@@ -34,7 +35,7 @@ export const PwaUpdate = () => {
           setNeedsRefresh(true);
         }
       });
-      setUpdateSw(updateFunction);
+      updateSw = updateFunction;
     })();
   }, []);
 
@@ -49,10 +50,10 @@ export const PwaUpdate = () => {
     if (!updateSw) {
       return;
     }
-    console.log('Updating SW...');
+    console.log('Updating SW...', updateSw);
     updateSw!(true);
     console.log('Update SW triggered.');
-  }, [setNeedsRefresh, updateSw]);
+  }, [setNeedsRefresh]);
 
   const noClick = useCallback(() => {
     setNeedsRefresh(false);
