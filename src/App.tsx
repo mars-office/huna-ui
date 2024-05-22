@@ -23,7 +23,12 @@ import pushService from './services/push.service';
 // Lazy loading
 const Admin = lazy(() => import('./_admin/routes/Admin'));
 
-export const App = () => {
+export interface AppProps {
+  onSwitchTheme: (theme: 'light' | 'dark') => void;
+  useDarkTheme: boolean;
+}
+
+export const App = (props: AppProps) => {
   console.log('Rendering App');
   const auth = useAuth();
   const navigate = useNavigate();
@@ -102,7 +107,7 @@ export const App = () => {
     <>
       <Toaster toasterId="toaster" />
       <Sidebar dismissed={() => setSidebarOpen(false)} open={sidebarOpen} />
-      <Header menuClick={() => setSidebarOpen((s) => !s)} />
+      <Header useDarkTheme={props.useDarkTheme} onSwitchTheme={props.onSwitchTheme} menuClick={() => setSidebarOpen((s) => !s)} />
       <div
         style={{
           flex: '1 1 auto',

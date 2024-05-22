@@ -19,7 +19,8 @@
       "login": "Login",
       "logout": "Logout",
       "anonymous": "Anonymous",
-      "settings": "Settings"
+      "settings": "Settings",
+      "theme": "Theme"
     },
     "login": {
       "login": "Login",
@@ -35,6 +36,10 @@
       "markAllAsRead": "Mark all as read",
       "noNotifications": "No notifications",
       "notifications": "Notifications"
+    },
+    "theme": {
+      "light": "Light",
+      "dark": "Dark"
     }
   }
 }

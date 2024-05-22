@@ -19,7 +19,8 @@
       "login": "Conectare",
       "logout": "Deconectare",
       "anonymous": "Anonim",
-      "settings": "Setări"
+      "settings": "Setări",
+      "theme": "Temă"
     },
     "login": {
       "login": "Conectare",
@@ -35,6 +36,10 @@
       "markAllAsRead": "Marchează toate ca citite",
       "noNotifications": "Nicio notificare",
       "notifications": "Notificări"
+    },
+    "theme": {
+      "light": "Luminoasă",
+      "dark": "Întunecată"
     }
   }
 }

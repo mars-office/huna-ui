@@ -35,6 +35,8 @@ import pushService from '../services/push.service';
 
 export interface HeaderProps {
   menuClick?: () => void;
+  onSwitchTheme: (theme: 'light' | 'dark') => void;
+  useDarkTheme: boolean;
 }
 
 export const Header = (props: HeaderProps) => {
@@ -59,6 +61,25 @@ export const Header = (props: HeaderProps) => {
       language: [i18n.language],
     };
   }, [i18n.language]);
+
+  const checkedThemes: Record<string, string[]> = useMemo(() => {
+    return {
+      theme: [props.useDarkTheme ? 'dark' : 'light'],
+    };
+  }, [props.useDarkTheme]);
+
+  const onThemeChange: MenuProps['onCheckedValueChange'] = useCallback(
+    (_: MenuCheckedValueChangeEvent, data: MenuCheckedValueChangeData) => {
+      if (!data.checkedItems) {
+        return;
+      }
+      if (data.checkedItems[0] === 'dark' && props.useDarkTheme) {
+        return;
+      }
+      props.onSwitchTheme(data.checkedItems[0] as ('light' | 'dark'));
+    },
+    [props.onSwitchTheme],
+  );
 
   const onMenuClicked = useCallback(() => {
     if (props.menuClick) {
@@ -101,6 +122,30 @@ export const Header = (props: HeaderProps) => {
       </Menu>
     );
   }, [t, checkedLanguages, onLanguageChange]);
+
+  const ThemeMenu = useCallback(() => {
+    return (
+      <Menu onCheckedValueChange={onThemeChange} checkedValues={checkedThemes}>
+        <MenuTrigger>
+          <MenuItem>{t('ui.header.theme')}</MenuItem>
+        </MenuTrigger>
+
+        <MenuPopover>
+          <MenuList>
+            <MenuGroup>
+              <MenuGroupHeader>{t('ui.header.language')}</MenuGroupHeader>
+              <MenuItemRadio value="light" name="theme">
+                  {t('ui.theme.light')}
+              </MenuItemRadio>
+              <MenuItemRadio value="dark" name="theme">
+                  {t('ui.theme.dark')}
+              </MenuItemRadio>
+            </MenuGroup>
+          </MenuList>
+        </MenuPopover>
+      </Menu>
+    );
+  }, [t, checkedThemes, onThemeChange]);
 
   return (
     <>
@@ -153,6 +198,7 @@ export const Header = (props: HeaderProps) => {
                 </MenuGroup>
                 <MenuDivider />
                 <LanguageMenu />
+                <ThemeMenu />
                 {auth.isAuthenticated && (
                   <MenuItem data-testid="settingsButton" onClick={() => navigate('/settings')}>
                     {t('ui.header.settings')}
