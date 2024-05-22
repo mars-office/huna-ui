@@ -1,15 +1,9 @@
 import { DependencyList, useEffect } from "react";
 import signalrService from "../services/signalr.service";
 
-export const useSignalrData = (cb: (data: any) => Promise<void>, deps?: DependencyList | undefined) => {
+export const useSignalrData = <T>(eventType: string, cb: (data: T) => Promise<void>, errorHandler?: ((e: any) => void) | undefined, deps?: DependencyList | undefined) => {
   useEffect(() => {
-    const subscription = signalrService.dataReceived.subscribe({
-      onNext: d => {
-        (async () => {
-          await cb(d);
-        })();
-      }
-    });
+    const subscription = signalrService.listen<T>(eventType, cb, errorHandler);
     return () => {
       subscription.unsubscribe();
     }

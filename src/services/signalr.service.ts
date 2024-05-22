@@ -1,10 +1,11 @@
 import {HubConnectionBuilder, HubConnection, HubConnectionState} from '@microsoft/signalr';
 import { userStore } from '../stores/user.store';
 import { Subject } from '../helpers/behaviour-subject';
+import { SignalrMessage } from '../dto/signalr-message';
 
 class SignalrService {
   private hubConnection: HubConnection;
-  private dataSubject = new Subject<any>();
+  private dataSubject = new Subject<SignalrMessage<any>>();
 
   constructor() {
     this.hubConnection = new HubConnectionBuilder()
@@ -40,8 +41,22 @@ class SignalrService {
     return await this.hubConnection.stop();
   }
 
-  get dataReceived() {
-    return this.dataSubject;
+  listen<T>(eventType: string, cb: (payload: T) => Promise<void>, errorHandler?: ((e: any) => void) | undefined) {
+    return this.dataSubject.subscribe({
+      onError: err => {
+        if (errorHandler) {
+          errorHandler(err);
+        }
+      },
+      onNext: sm => {
+        if (sm.type.toLowerCase() !== eventType.toLowerCase()) {
+          return;
+        }
+        (async () => {
+          await cb(sm.payload as T);
+        })();
+      }
+    });
   }
 }
 

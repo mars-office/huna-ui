@@ -7,6 +7,7 @@ import {
   MenuOpenEvent,
   MenuPopover,
   MenuTrigger,
+  ToastIntent,
   ToolbarButton,
 } from '@fluentui/react-components';
 import { useCallback, useEffect, useState } from 'react';
@@ -16,6 +17,7 @@ import notificationsService from '../services/notifications.service';
 import { AlertBadgeRegular, AlertRegular } from '@fluentui/react-icons';
 import { useTranslation } from 'react-i18next';
 import { useToast } from '../hooks/use-toast';
+import { useSignalrData } from '../hooks/use-signalr-data';
 
 export const Notifications = () => {
   const { isAuthenticated } = useAuth();
@@ -50,6 +52,26 @@ export const Notifications = () => {
     })();
   }, [isAuthenticated]);
 
+  const showNotificationToast = useCallback(
+    (n: NotificationDto) => {
+      toast.toast(n.severity as ToastIntent, n.message, n.title);
+    },
+    [toast],
+  );
+
+  useSignalrData<NotificationDto>(
+    'Huna.Notifications.Contracts.NotificationDto',
+    async (n) => {
+      setNotifications([n, ...notifications]);
+      setUnreadCount(unreadCount + 1);
+      showNotificationToast(n);
+    },
+    (e) => {
+      toast.fromError(e);
+    },
+    [toast, notifications, setNotifications, unreadCount, setUnreadCount, showNotificationToast],
+  );
+
   const markAllAsRead = useCallback(async () => {
     try {
       await notificationsService.markAllAsRead();
@@ -66,7 +88,20 @@ export const Notifications = () => {
     } catch (err: any) {
       toast.fromError(err);
     }
-  }, [setUnreadCount, notifications, setNotifications, setMenuOpen]);
+  }, [setUnreadCount, notifications, setNotifications, setMenuOpen, toast]);
+
+  // const markAsRead = useCallback(async (n: NotificationDto) => {
+  //   try {
+  //     await notificationsService.markAsRead(n._id!);
+  //     n.readAt = new Date().toISOString();
+  //     const newNotifications = [...notifications];
+  //     setNotifications([...newNotifications]);
+  //     setUnreadCount(unreadCount - 1);
+  //     setMenuOpen(false);
+  //   } catch (err: any) {
+  //     toast.fromError(err);
+  //   }
+  // }, [setUnreadCount, unreadCount, notifications, setNotifications, setMenuOpen, toast]);
 
   return (
     <Menu open={menuOpen} onOpenChange={onMenuOpenChange}>
@@ -82,7 +117,13 @@ export const Notifications = () => {
       >
         {notifications.map((n) => (
           <Card key={n._id!}>
-            <CardHeader header={<>{n.title} - {new Date(Date.parse(n.issuedAt)).toLocaleString()}</>} />
+            <CardHeader
+              header={
+                <>
+                  {n.title} - {new Date(Date.parse(n.issuedAt)).toLocaleString()}
+                </>
+              }
+            />
             {n.message}
           </Card>
         ))}
