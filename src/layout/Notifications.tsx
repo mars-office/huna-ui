@@ -103,12 +103,11 @@ export const Notifications = () => {
         const newNotifications = [...notifications];
         setNotifications([...newNotifications]);
         setUnreadCount(unreadCount - 1);
-        setMenuOpen(false);
       } catch (err: any) {
         toast.fromError(err);
       }
     },
-    [setUnreadCount, unreadCount, notifications, setNotifications, setMenuOpen, toast],
+    [setUnreadCount, unreadCount, notifications, setNotifications, toast],
   );
 
   const notificationClicked = useCallback(
@@ -116,8 +115,9 @@ export const Notifications = () => {
       if (!n.readAt) {
         await markAsRead(n);
       }
+      setMenuOpen(false);
     },
-    [markAsRead],
+    [markAsRead, setMenuOpen],
   );
 
   return (
