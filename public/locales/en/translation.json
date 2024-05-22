@@ -39,7 +39,8 @@
     },
     "theme": {
       "light": "Light",
-      "dark": "Dark"
+      "dark": "Dark",
+      "auto": "Auto"
     }
   }
 }

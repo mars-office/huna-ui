@@ -32,11 +32,12 @@ import { useStore } from '../hooks/use-store';
 import { userProfileStore } from '../stores/user-profile.store';
 import Notifications from './Notifications';
 import pushService from '../services/push.service';
+import { AppTheme } from '../models/app-theme';
 
 export interface HeaderProps {
   menuClick?: () => void;
-  onSwitchTheme: (theme: 'light' | 'dark') => void;
-  useDarkTheme: boolean;
+  onSwitchTheme: (theme: AppTheme) => void;
+  appTheme: AppTheme;
 }
 
 export const Header = (props: HeaderProps) => {
@@ -64,19 +65,16 @@ export const Header = (props: HeaderProps) => {
 
   const checkedThemes: Record<string, string[]> = useMemo(() => {
     return {
-      theme: [props.useDarkTheme ? 'dark' : 'light'],
+      theme: [props.appTheme],
     };
-  }, [props.useDarkTheme]);
+  }, [props.appTheme]);
 
   const onThemeChange: MenuProps['onCheckedValueChange'] = useCallback(
     (_: MenuCheckedValueChangeEvent, data: MenuCheckedValueChangeData) => {
       if (!data.checkedItems) {
         return;
       }
-      if (data.checkedItems[0] === 'dark' && props.useDarkTheme) {
-        return;
-      }
-      props.onSwitchTheme(data.checkedItems[0] as ('light' | 'dark'));
+      props.onSwitchTheme(data.checkedItems[0] as AppTheme);
     },
     [props.onSwitchTheme],
   );
@@ -90,9 +88,6 @@ export const Header = (props: HeaderProps) => {
   const onLanguageChange: MenuProps['onCheckedValueChange'] = useCallback(
     (_: MenuCheckedValueChangeEvent, data: MenuCheckedValueChangeData) => {
       if (!data.checkedItems) {
-        return;
-      }
-      if (data.checkedItems[0] === i18n.language) {
         return;
       }
       i18n.changeLanguage(data.checkedItems[0]);
@@ -134,6 +129,9 @@ export const Header = (props: HeaderProps) => {
           <MenuList>
             <MenuGroup>
               <MenuGroupHeader>{t('ui.header.language')}</MenuGroupHeader>
+              <MenuItemRadio value="auto" name="theme">
+                  {t('ui.theme.auto')}
+              </MenuItemRadio>
               <MenuItemRadio value="light" name="theme">
                   {t('ui.theme.light')}
               </MenuItemRadio>

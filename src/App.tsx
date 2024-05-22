@@ -19,13 +19,14 @@ import AdminRoute from './routes/AdminRoute';
 import { Toaster } from '@fluentui/react-components';
 import signalrService from './services/signalr.service';
 import pushService from './services/push.service';
+import { AppTheme } from './models/app-theme';
 
 // Lazy loading
 const Admin = lazy(() => import('./_admin/routes/Admin'));
 
 export interface AppProps {
-  onSwitchTheme: (theme: 'light' | 'dark') => void;
-  useDarkTheme: boolean;
+  onSwitchTheme: (theme: AppTheme) => void;
+  appTheme: AppTheme;
 }
 
 export const App = (props: AppProps) => {
@@ -107,7 +108,7 @@ export const App = (props: AppProps) => {
     <>
       <Toaster toasterId="toaster" />
       <Sidebar dismissed={() => setSidebarOpen(false)} open={sidebarOpen} />
-      <Header useDarkTheme={props.useDarkTheme} onSwitchTheme={props.onSwitchTheme} menuClick={() => setSidebarOpen((s) => !s)} />
+      <Header appTheme={props.appTheme} onSwitchTheme={props.onSwitchTheme} menuClick={() => setSidebarOpen((s) => !s)} />
       <div
         style={{
           flex: '1 1 auto',

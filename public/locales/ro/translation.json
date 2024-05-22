@@ -39,7 +39,8 @@
     },
     "theme": {
       "light": "Luminoasă",
-      "dark": "Întunecată"
+      "dark": "Întunecată",
+      "auto": "Auto"
     }
   }
 }

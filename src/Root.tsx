@@ -1,10 +1,12 @@
 import { AuthProvider, AuthProviderProps } from 'react-oidc-context';
 import { WebStorageStateStore } from 'oidc-client-ts';
 import PwaUpdate from './layout/PwaUpdate';
-import { FluentProvider, teamsDarkTheme, teamsLightTheme } from '@fluentui/react-components';
+import { FluentProvider, Theme, teamsDarkTheme, teamsLightTheme } from '@fluentui/react-components';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
+import { usePrefersDarkMode } from './hooks/use-prefers-dark-mode';
+import { AppTheme } from './models/app-theme';
 
 const authConfig: AuthProviderProps = {
   authority: window.location.protocol + '//dex.' + window.location.hostname,
@@ -26,28 +28,22 @@ const authConfig: AuthProviderProps = {
 
 
 export const Root = () => {
-  const [useDarkTheme, setUseDarkTheme] = useState(false);
+  const [appTheme, setAppTheme] = useState<AppTheme>(localStorage.getItem('appTheme') ? (localStorage.getItem('appTheme') as AppTheme) : 'auto');
+  const [fluentTheme, setFluentTheme] = useState<Theme>(teamsLightTheme);
+  const prefersDarkMode = usePrefersDarkMode();
 
   useEffect(() => {
-    const useDarkThemeLocalStorage = localStorage.getItem('useDarkTheme');
-    if (useDarkThemeLocalStorage && useDarkThemeLocalStorage === 'yes') {
-      setUseDarkTheme(true);
+    if (appTheme === 'auto') {
+      setFluentTheme(prefersDarkMode ? teamsDarkTheme : teamsLightTheme);
+      return;
     }
-  }, []);
+    setFluentTheme(appTheme === 'light' ? teamsLightTheme : teamsDarkTheme);
+  }, [appTheme, prefersDarkMode]);
 
-  const themeSwitched = useCallback((theme: 'light' | 'dark') => {
-    if (theme === 'light') {
-      if (useDarkTheme) {
-        localStorage.setItem('useDarkTheme', 'no');
-        setUseDarkTheme(false);
-      }
-    } else {
-      if (!useDarkTheme) {
-        localStorage.setItem('useDarkTheme', 'yes');
-        setUseDarkTheme(true);
-      }
-    }
-  }, [useDarkTheme, setUseDarkTheme]);
+  const themeSwitched = useCallback((theme: AppTheme) => {
+    setAppTheme(theme);
+    localStorage.setItem('appTheme', theme);
+  }, [setAppTheme]);
 
   return <>
     <FluentProvider
@@ -57,12 +53,12 @@ export const Root = () => {
       display: 'flex',
       flexDirection: 'column',
     }}
-    theme={useDarkTheme ? teamsDarkTheme : teamsLightTheme}
+    theme={fluentTheme}
   >
     <PwaUpdate />
     <BrowserRouter>
       <AuthProvider {...authConfig}>
-        <App useDarkTheme={useDarkTheme} onSwitchTheme={themeSwitched} />
+        <App appTheme={appTheme} onSwitchTheme={themeSwitched} />
       </AuthProvider>
     </BrowserRouter>
   </FluentProvider>
