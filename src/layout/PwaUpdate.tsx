@@ -49,7 +49,9 @@ export const PwaUpdate = () => {
     if (!updateSw) {
       return;
     }
-    await updateSw!(true);
+    console.log('Updating SW...');
+    updateSw!(true);
+    console.log('Update SW triggered.');
   }, [setNeedsRefresh, updateSw]);
 
   const noClick = useCallback(() => {
