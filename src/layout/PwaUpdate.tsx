@@ -17,26 +17,27 @@ export const PwaUpdate = () => {
   const [needsRefresh, setNeedsRefresh] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      const updateFunction = registerSW({
-        onRegisteredSW: (_, r) => {
-          console.log('SW registered.');
-          setTimeout(() => {
-            console.log('SW update check scheduled');
-            setInterval(() => {
+    const updateFunction = registerSW({
+      onRegisteredSW: (_, r) => {
+        console.log('SW registered.');
+        setTimeout(() => {
+          console.log('SW update check scheduled');
+          setInterval(
+            () => {
               r?.update();
-            }, 60 * 60 * 1000);
-          }, 5000);
-        },
-        onRegisterError: e => {
-          console.error('SW registration error', e);
-        },
-        onNeedRefresh: () => {
-          setNeedsRefresh(true);
-        }
-      });
-      updateSw = updateFunction;
-    })();
+            },
+            60 * 60 * 1000,
+          );
+        }, 5000);
+      },
+      onRegisterError: (e) => {
+        console.error('SW registration error', e);
+      },
+      onNeedRefresh: () => {
+        setNeedsRefresh(true);
+      },
+    });
+    updateSw = updateFunction;
   }, []);
 
   console.log('Rendering PWA Update...');
