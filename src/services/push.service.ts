@@ -1,7 +1,6 @@
 import pushSubscriptionsService from "./push-subscriptions.service";
 
 export class PushService {
-  private _reg: ServiceWorkerRegistration | undefined;
 
   async subscribe() {
     const permission = await Notification.requestPermission();
@@ -10,7 +9,6 @@ export class PushService {
       return null;
     }
     const registration = await navigator.serviceWorker.ready;
-    this._reg = registration;
 
     const existingSubscription = await registration.pushManager.getSubscription();
     if (existingSubscription) {
@@ -30,10 +28,11 @@ export class PushService {
   }
 
   async unsubscribe() {
-    if (!this._reg) {
+    const registration = await navigator.serviceWorker.ready;
+    if (!registration) {
       return;
     }
-    const existingSubscription = await this._reg.pushManager.getSubscription();
+    const existingSubscription = await registration.pushManager.getSubscription();
     if (!existingSubscription) {
       return;
     }
