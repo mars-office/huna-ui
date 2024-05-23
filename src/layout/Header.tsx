@@ -31,7 +31,6 @@ import { VERSION } from '../version';
 import { useStore } from '../hooks/use-store';
 import { userProfileStore } from '../stores/user-profile.store';
 import Notifications from './Notifications';
-import pushService from '../services/push.service';
 import { AppTheme } from '../models/app-theme';
 
 export interface HeaderProps {
@@ -48,7 +47,6 @@ export const Header = (props: HeaderProps) => {
   const [userProfile, _] = useStore(userProfileStore);
 
   const logout = useCallback(async () => {
-    await pushService.unsubscribe();
     await auth.removeUser();
     navigate('/');
   }, [auth, navigate]);

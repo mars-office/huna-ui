@@ -20,7 +20,6 @@ import { Toaster } from '@fluentui/react-components';
 import signalrService from './services/signalr.service';
 import pushService from './services/push.service';
 import { AppTheme } from './models/app-theme';
-import { HubConnectionState } from '@microsoft/signalr';
 
 // Lazy loading
 const Admin = lazy(() => import('./_admin/routes/Admin'));
@@ -59,29 +58,60 @@ export const App = (props: AppProps) => {
   const [_, setUserStoreUser] = useStore(userStore);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [userProfile, setUserProfile] = useStore(userProfileStore);
+  const [__, setUserProfile] = useStore(userProfileStore);
 
   useEffect(() => {
+    if (auth.isLoading) {
+      return;
+    }
     setUserStoreUser(!auth.user ? undefined : auth.user);
   }, [auth.user, setUserStoreUser]);
 
   useEffect(() => {
+    if (auth.isLoading) {
+      return;
+    }
     (async () => {
       if (auth.isAuthenticated && auth.user) {
-        if (!userProfile) {
-          const userProfileResult = await usersService.myProfile();
-          setUserProfile(userProfileResult);
-        }
-        if (signalrService.connectionState === HubConnectionState.Disconnected) {
-          await signalrService.connect();
-        }
-        await pushService.subscribe();
+        console.log('Reading user profile...');
+        const userProfileResult = await usersService.myProfile();
+        setUserProfile(userProfileResult);
       } else {
-        await signalrService.disconnect();
+        console.log('Unloading user profile...');
         setUserProfile(undefined);
       }
     })();
-  }, [auth, setUserProfile, userProfile]);
+  }, [auth, setUserProfile]);
+
+  useEffect(() => {
+    if (auth.isLoading) {
+      return;
+    }
+    (async () => {
+      if (auth.isAuthenticated && auth.user) {
+        console.log('Connecting to SignalR...');
+        await signalrService.connect();
+      } else {
+        console.log('Disconnecting from SignalR...');
+        await signalrService.disconnect();
+      }
+    })();
+  }, [auth]);
+
+  useEffect(() => {
+    if (auth.isLoading) {
+      return;
+    }
+    (async () => {
+      if (auth.isAuthenticated && auth.user) {
+        console.log('Setting up push subscription...');
+        await pushService.subscribe();
+      } else {
+        console.log('Removing push subscription...');
+        await pushService.unsubscribe();
+      }
+    })();
+  }, [auth]);
 
   const userLoadedCallback = useCallback(
     (u: User) => {
@@ -101,6 +131,9 @@ export const App = (props: AppProps) => {
   }, [auth, userLoadedCallback]);
 
   const canDisplayContent = useMemo(() => {
+    if (auth.isLoading) {
+      return false;
+    }
     return (
       (!auth.user && !auth.isAuthenticated) ||
       (auth.user && !auth.isAuthenticated && hasTriedSignin) ||
