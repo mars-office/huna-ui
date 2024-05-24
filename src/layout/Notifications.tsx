@@ -23,6 +23,7 @@ import { useTranslation } from 'react-i18next';
 import { ToastRefWithSettings, useToast } from '../hooks/use-toast';
 import { useSignalrData } from '../hooks/use-signalr-data';
 import { toLocaleDateString } from '../helpers/date.helper';
+import { useNavigate } from 'react-router-dom';
 
 export const Notifications = () => {
   const { isAuthenticated } = useAuth();
@@ -36,6 +37,7 @@ export const Notifications = () => {
   >([]);
   const [prevScrollTop, setPrevScrollTop] = useState(0);
   const [debounceTimeout, setDebounceTimeout] = useState<any | null>(null);
+  const navigate = useNavigate();
 
   const onMenuOpenChange = useCallback(
     (_: MenuOpenEvent, data: MenuOpenChangeData) => {
@@ -128,6 +130,9 @@ export const Notifications = () => {
         async () => {
           await markAsRead(n);
           toast.dismiss(ref.toastId);
+          if (n.url) {
+            navigate(n.url);
+          }
         },
         async () => {
           await markAsRead(n);
@@ -142,7 +147,7 @@ export const Notifications = () => {
       );
       setVisibleToasts([...visibleToasts, { n: n, toastRef: ref }]);
     },
-    [toast, markAsRead, setVisibleToasts, visibleToasts],
+    [toast, markAsRead, setVisibleToasts, visibleToasts, navigate],
   );
 
   useEffect(() => {
@@ -155,6 +160,9 @@ export const Notifications = () => {
         async () => {
           await markAsRead(vt.n);
           toast.dismiss(vt.toastRef.toastId);
+          if (vt.n.url) {
+            navigate(vt.n.url);
+          }
         },
         async () => {
           await markAsRead(vt.n);
@@ -168,7 +176,7 @@ export const Notifications = () => {
         },
       );
     }
-  }, [visibleToasts, setVisibleToasts, markAsRead, toast]);
+  }, [visibleToasts, setVisibleToasts, markAsRead, toast, navigate]);
 
   useSignalrData<NotificationDto>(
     'Huna.Notifications.Contracts.NotificationDto',

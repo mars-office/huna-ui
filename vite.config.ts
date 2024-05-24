@@ -15,7 +15,7 @@ export default defineConfig({
         globPatterns: ['**/*.{js,mjs,css,html,ico,png,svg,ttf,otf,woff,woff2,jsx,tsx,ts,json,dll,jpg,jpeg,gif,bmp,webp,webm,tiff,avi,mp4,mp3,aac}'],
         navigateFallbackDenylist: [/^\/api/],
         importScripts: ['/service-worker/push.js'],
-        clientsClaim: true
+        clientsClaim: true,
       },
       manifest: {
         name: 'huna2',
