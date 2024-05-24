@@ -20,7 +20,7 @@ import { NotificationDto } from '../dto/notification.dto';
 import notificationsService from '../services/notifications.service';
 import { AlertBadgeRegular, AlertRegular } from '@fluentui/react-icons';
 import { useTranslation } from 'react-i18next';
-import { useToast } from '../hooks/use-toast';
+import { ToastRefWithSettings, useToast } from '../hooks/use-toast';
 import { useSignalrData } from '../hooks/use-signalr-data';
 import { toLocaleDateString } from '../helpers/date.helper';
 
@@ -31,6 +31,9 @@ export const Notifications = () => {
   const { t } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
   const toast = useToast();
+  const [visibleToasts, setVisibleToasts] = useState<
+    { toastRef: ToastRefWithSettings; n: NotificationDto }[]
+  >([]);
 
   const onMenuOpenChange = useCallback(
     (_: MenuOpenEvent, data: MenuOpenChangeData) => {
@@ -57,12 +60,71 @@ export const Notifications = () => {
     })();
   }, [isAuthenticated]);
 
+  const markAsRead = useCallback(
+    async (n: NotificationDto) => {
+      try {
+        await notificationsService.markAsRead(n._id!);
+        n.readAt = new Date().toISOString();
+        const newNotifications = [...notifications];
+        setNotifications([...newNotifications]);
+        setUnreadCount(unreadCount - 1);
+      } catch (err: any) {
+        toast.fromError(err);
+      }
+    },
+    [setUnreadCount, unreadCount, notifications, setNotifications, toast],
+  );
+
   const showNotificationToast = useCallback(
     (n: NotificationDto) => {
-      toast.toast(n.severity as ToastIntent, n.message, n.title);
+      const ref = toast.toast(
+        n.severity as ToastIntent,
+        n.message,
+        n.title,
+        async () => {
+          await markAsRead(n);
+          toast.dismiss(ref.toastId);
+        },
+        async () => {
+          await markAsRead(n);
+        },
+        () => {
+          visibleToasts.splice(
+            visibleToasts.findIndex((z) => z.toastRef.toastId === ref.toastId),
+            1,
+          );
+          setVisibleToasts([...visibleToasts]);
+        },
+      );
+      setVisibleToasts([...visibleToasts, { n: n, toastRef: ref }]);
     },
-    [toast],
+    [toast, markAsRead, setVisibleToasts, visibleToasts],
   );
+
+  useEffect(() => {
+    for (const vt of visibleToasts) {
+      toast.updateToastInPlace(
+        vt.toastRef.toastId,
+        vt.toastRef.toastType,
+        vt.toastRef.message,
+        vt.toastRef.title,
+        async () => {
+          await markAsRead(vt.n);
+          toast.dismiss(vt.toastRef.toastId);
+        },
+        async () => {
+          await markAsRead(vt.n);
+        },
+        () => {
+          visibleToasts.splice(
+            visibleToasts.findIndex((z) => z.toastRef.toastId === vt.toastRef.toastId),
+            1,
+          );
+          setVisibleToasts([...visibleToasts]);
+        },
+      );
+    }
+  }, [visibleToasts, setVisibleToasts, markAsRead, toast]);
 
   useSignalrData<NotificationDto>(
     'Huna.Notifications.Contracts.NotificationDto',
@@ -94,21 +156,6 @@ export const Notifications = () => {
       toast.fromError(err);
     }
   }, [setUnreadCount, notifications, setNotifications, setMenuOpen, toast]);
-
-  const markAsRead = useCallback(
-    async (n: NotificationDto) => {
-      try {
-        await notificationsService.markAsRead(n._id!);
-        n.readAt = new Date().toISOString();
-        const newNotifications = [...notifications];
-        setNotifications([...newNotifications]);
-        setUnreadCount(unreadCount - 1);
-      } catch (err: any) {
-        toast.fromError(err);
-      }
-    },
-    [setUnreadCount, unreadCount, notifications, setNotifications, toast],
-  );
 
   const notificationClicked = useCallback(
     async (n: NotificationDto) => {
