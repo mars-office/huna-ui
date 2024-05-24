@@ -14,7 +14,7 @@ import {
   ToastIntent,
   ToolbarButton,
 } from '@fluentui/react-components';
-import { useCallback, useEffect, useState } from 'react';
+import { UIEvent, useCallback, useEffect, useState } from 'react';
 import { useAuth } from 'react-oidc-context';
 import { NotificationDto } from '../dto/notification.dto';
 import notificationsService from '../services/notifications.service';
@@ -34,6 +34,8 @@ export const Notifications = () => {
   const [visibleToasts, setVisibleToasts] = useState<
     { toastRef: ToastRefWithSettings; n: NotificationDto }[]
   >([]);
+  const [prevScrollTop, setPrevScrollTop] = useState(0);
+  const [debounceTimeout, setDebounceTimeout] = useState<any | null>(null);
 
   const onMenuOpenChange = useCallback(
     (_: MenuOpenEvent, data: MenuOpenChangeData) => {
@@ -59,6 +61,45 @@ export const Notifications = () => {
       }
     })();
   }, [isAuthenticated]);
+
+  const onNotificationListScroll = useCallback(
+    (e: UIEvent<HTMLDivElement>) => {
+      const element = e.target as HTMLDivElement;
+      const currentScrollTop = element.scrollTop;
+      const isScrollingDown = currentScrollTop > prevScrollTop;
+      const tolerance = 1; // Tolerance value to account for fractional differences
+      const isAtEnd =
+        Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) <= tolerance;
+      if (isScrollingDown && isAtEnd) {
+        if (debounceTimeout) {
+          clearTimeout(debounceTimeout);
+        }
+        const newDebounceTimeout = setTimeout(() => {
+          (async () => {
+            console.log('Loading more notifications...');
+            const notifBatch = await notificationsService.getNotifications(
+              notifications.length,
+              50,
+            );
+            if (notifBatch.length) {
+              setNotifications([...notifications, ...notifBatch]);
+            }
+          })();
+        }, 500);
+
+        setDebounceTimeout(newDebounceTimeout);
+      }
+      setPrevScrollTop(currentScrollTop);
+    },
+    [
+      notifications,
+      setNotifications,
+      prevScrollTop,
+      setPrevScrollTop,
+      debounceTimeout,
+      setDebounceTimeout,
+    ],
+  );
 
   const markAsRead = useCallback(
     async (n: NotificationDto) => {
@@ -190,6 +231,7 @@ export const Notifications = () => {
             flexDirection: 'column',
             gap: '0.3rem',
           }}
+          onScroll={onNotificationListScroll}
         >
           {notifications.length === 0 && (
             <MessageBar>
