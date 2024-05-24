@@ -1,6 +1,7 @@
-import { ToastIntent, useId, useToastController } from '@fluentui/react-components';
+import { ToastIntent, useToastController } from '@fluentui/react-components';
 import { useTranslation } from 'react-i18next';
 import ToastContent from '../layout/ToastContent';
+import {v4} from 'uuid';
 
 export interface ToastRefWithSettings {
   toastId: string;
@@ -66,7 +67,7 @@ export const useToast = () => {
     onClick?: (() => void) | (() => Promise<void>),
     afterClose?: (() => void) | (() => Promise<void>),
   ) => {
-    const toastId = useId('toast');
+    const toastId = v4();
     dispatchToast(
       <ToastContent
         message={message}
