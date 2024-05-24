@@ -85,7 +85,7 @@ export const Notifications = () => {
               setNotifications([...notifications, ...notifBatch]);
             }
           })();
-        }, 500);
+        }, 300);
 
         setDebounceTimeout(newDebounceTimeout);
       }
@@ -103,6 +103,9 @@ export const Notifications = () => {
 
   const markAsRead = useCallback(
     async (n: NotificationDto) => {
+      if (n.readAt) {
+        return;
+      }
       try {
         await notificationsService.markAsRead(n._id!);
         n.readAt = new Date().toISOString();
