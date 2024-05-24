@@ -15,7 +15,9 @@ export const ToastContent = (props: ToastContentProps) => {
   const {t} = useTranslation();
 
   return (
-    <Toast onClick={props.onClick}>
+    <Toast style={{
+      cursor: props.onClick ? 'pointer' : 'initial'
+    }} onClick={props.onClick}>
       <ToastTitle
         action={
           <Button
