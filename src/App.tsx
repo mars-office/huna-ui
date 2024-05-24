@@ -20,6 +20,7 @@ import { Toaster } from '@fluentui/react-components';
 import signalrService from './services/signalr.service';
 import pushService from './services/push.service';
 import { AppTheme } from './models/app-theme';
+import environment from './environment';
 
 // Lazy loading
 const Admin = lazy(() => import('./_admin/routes/Admin'));
@@ -143,7 +144,14 @@ export const App = (props: AppProps) => {
 
   return (
     <>
-      <Toaster toasterId="toaster" />
+      <Toaster
+        limit={5}
+        position="bottom-end"
+        pauseOnHover={true}
+        pauseOnWindowBlur={true}
+        timeout={environment.toast.timeout}
+        toasterId="toaster"
+      />
       <Sidebar dismissed={() => setSidebarOpen(false)} open={sidebarOpen} />
       <Header
         appTheme={props.appTheme}

@@ -1,55 +1,119 @@
-import {
-  Button,
-  Toast,
-  ToastBody,
-  ToastIntent,
-  ToastTitle,
-  ToastTrigger,
-  useToastController,
-} from '@fluentui/react-components';
-import environment from '../environment';
+import { ToastIntent, useId, useToastController } from '@fluentui/react-components';
 import { useTranslation } from 'react-i18next';
-import { DismissRegular } from '@fluentui/react-icons';
+import ToastContent from '../layout/ToastContent';
+
+export interface ToastRefWithSettings {
+  toastId: string;
+  toastType: ToastIntent;
+  message: string;
+  title?: string;
+  onClick?: (() => void) | (() => Promise<void>);
+  afterClose?: (() => void) | (() => Promise<void>);
+}
 
 export const useToast = () => {
   const { t } = useTranslation();
-  const { dispatchToast } = useToastController('toaster');
-  const toast = (toastType: ToastIntent, message: string, title: string | undefined = undefined) => {
+  const { dispatchToast, dismissToast, updateToast, dismissAllToasts } = useToastController('toaster');
+
+  const dismiss = (toastId: string) => {
+    dismissToast(toastId);
+  }
+
+  const dismissAll = () => {
+    dismissAllToasts();
+  }
+
+  const updateToastInPlace = (
+    toastId: string,
+    toastType: ToastIntent,
+    message: string,
+    title?: string | undefined,
+    onClick?: (() => void) | (() => Promise<void>),
+    afterClose?: (() => void) | (() => Promise<void>),
+  ) => {
+    updateToast({
+      toastId: toastId,
+      intent: toastType,
+      content: (
+        <ToastContent
+          message={message}
+          title={title}
+          onClick={onClick}
+          onClose={() => {
+            dismiss(toastId);
+            if (afterClose) {
+              afterClose();
+            }
+          }}
+          toastType={toastType}
+        />
+      ),
+    });
+    return {
+      message,
+      toastId,
+      toastType,
+      title,
+      onClick,
+      afterClose
+    } as ToastRefWithSettings;
+  };
+
+  const toast = (
+    toastType: ToastIntent,
+    message: string,
+    title?: string | undefined,
+    onClick?: (() => void) | (() => Promise<void>),
+    afterClose?: (() => void) | (() => Promise<void>),
+  ) => {
+    const toastId = useId('toast');
     dispatchToast(
-      <Toast>
-        <ToastTitle
-          action={
-            <ToastTrigger>
-              <Button appearance="subtle" icon={<DismissRegular />} />
-            </ToastTrigger>
+      <ToastContent
+        message={message}
+        title={title}
+        onClick={onClick}
+        onClose={() => {
+          dismiss(toastId);
+          if (afterClose) {
+            afterClose();
           }
-        >
-          {title || t('ui.toast.' + toastType)}
-        </ToastTitle>
-        <ToastBody>{message}</ToastBody>
-      </Toast>,
+        }}
+        toastType={toastType}
+      />,
       {
         intent: toastType,
-        timeout: environment.toast.timeout,
-        position: 'bottom-end',
-        pauseOnWindowBlur: true,
-        pauseOnHover: true,
+        toastId: toastId,
       },
     );
+    return {
+      toastId,
+      toastType,
+      onClick,
+      afterClose,
+      message,
+      title,
+    } as ToastRefWithSettings;
   };
 
   const fromError = (err: any) => {
+    const results: ToastRefWithSettings[] = [];
     for (const errorProperty of Object.keys(err.response!.data)) {
-      toast(
+      results.push(toast(
         'error',
-        err?.response?.data ? err.response.data[errorProperty].map((x: string) => t(x)).join('; ') : t('ui.toast.unknownError'),
+        err?.response?.data
+          ? err.response.data[errorProperty].map((x: string) => t(x)).join('; ')
+          : t('ui.toast.unknownError'),
         t('ui.toast.error') + ' ' + errorProperty,
-      );
+      ));
     }
-  }
+    return results;
+  };
 
   return {
     toast,
-    fromError
+    fromError,
+    updateToastInPlace,
+    dismiss,
+    dismissAll
   };
 };
