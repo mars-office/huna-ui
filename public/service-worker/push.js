@@ -25,10 +25,7 @@ self.addEventListener('push', function (e) {
 self.addEventListener(
   'notificationclick',
   function (event) {
-    console.log('Notification clicked');
-    console.log(event);
     event.notification.close();
-    if (event.notification.data.url) {
       event.waitUntil(
         clients
           .matchAll({
@@ -39,13 +36,14 @@ self.addEventListener(
             console.log('Window clients', windowClients);
             if (windowClients && windowClients.length > 0) {
               windowClients[0].focus();
+              if (event.notification.data.url) {
+                windowClients[0].navigate(event.notification.data.url);
+              }
               return;
             }
-            const url = event.notification.data.url;
-            return clients.openWindow(url);
+            return clients.openWindow(event.notification.data.url || self.location.origin);
           }),
       );
-    }
   },
   false,
 );
