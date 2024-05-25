@@ -32,6 +32,7 @@ import { useStore } from '../hooks/use-store';
 import { userProfileStore } from '../stores/user-profile.store';
 import Notifications from './Notifications';
 import { AppTheme } from '../models/app-theme';
+import pushService from '../services/push.service';
 
 export interface HeaderProps {
   menuClick?: () => void;
@@ -47,6 +48,12 @@ export const Header = (props: HeaderProps) => {
   const [userProfile, _] = useStore(userProfileStore);
 
   const logout = useCallback(async () => {
+    try {
+      await pushService.unsubscribe();
+    } catch (err: any) {
+      // ignored
+      console.error(err);
+    }
     await auth.removeUser();
     navigate('/');
   }, [auth, navigate]);

@@ -108,9 +108,6 @@ export const App = (props: AppProps) => {
       if (auth.isAuthenticated && auth.user) {
         console.log('Setting up push subscription...');
         await pushService.subscribe();
-      } else {
-        console.log('Removing push subscription...');
-        await pushService.unsubscribe();
       }
     })();
   }, [auth]);
