@@ -35,7 +35,8 @@
     "notifications": {
       "markAllAsRead": "Marchează toate ca citite",
       "noNotifications": "Nicio notificare",
-      "notifications": "Notificări"
+      "notifications": "Notificări",
+      "pleaseWait": "Vă rugăm așteptați"
     },
     "theme": {
       "light": "Luminoasă",

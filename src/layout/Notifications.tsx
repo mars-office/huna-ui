@@ -24,10 +24,14 @@ import { ToastRefWithSettings, useToast } from '../hooks/use-toast';
 import { useSignalrData } from '../hooks/use-signalr-data';
 import { toLocaleDateString } from '../helpers/date.helper';
 import { useNavigate } from 'react-router-dom';
+import globalEventsService from '../services/global-events.service';
+import { ConfirmNotification } from '../models/confirm-notification';
+import { Subscription } from '../helpers/behaviour-subject';
 
 export const Notifications = () => {
   const { isAuthenticated } = useAuth();
   const [notifications, setNotifications] = useState<NotificationDto[]>([]);
+  const [loadingStopped, setLoadingStopped] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const { t } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -54,7 +58,9 @@ export const Notifications = () => {
           setUnreadCount(unreadCountResponse.count);
           const notificationsResponse = await notificationsService.getNotifications(0, 50);
           setNotifications(notificationsResponse);
+          setLoadingStopped(true);
         } catch (err: any) {
+          setLoadingStopped(true);
           toast.fromError(err);
         }
       } else {
@@ -113,7 +119,9 @@ export const Notifications = () => {
         n.readAt = new Date().toISOString();
         const newNotifications = [...notifications];
         setNotifications([...newNotifications]);
-        setUnreadCount(unreadCount - 1);
+        if (unreadCount > 0) {
+          setUnreadCount(unreadCount - 1);
+        }
       } catch (err: any) {
         toast.fromError(err);
       }
@@ -218,6 +226,38 @@ export const Notifications = () => {
     },
     [markAsRead, setMenuOpen],
   );
+
+  useEffect(() => {
+    let subscription: Subscription<ConfirmNotification> | undefined;
+    if (loadingStopped) {
+      subscription = globalEventsService.subscribe<ConfirmNotification>('confirmNotification', {
+        onNext: (data, s) => {
+          if (!data) {
+            return;
+          }
+          const foundNotification = notifications.find((x) => x._id === data._id);
+          if (foundNotification) {
+            globalEventsService.clear('confirmNotification');
+            if (s) {
+              s.unsubscribe();
+            }
+            (async () => {
+              await markAsRead(foundNotification);
+            })();
+          }
+          navigate(data.returnTo || '/');
+        },
+        onError: (e) => {
+          toast.fromError(e);
+        },
+      });
+    }
+    return () => {
+      if (subscription) {
+        subscription.unsubscribe();
+      }
+    };
+  }, [markAsRead, loadingStopped]);
 
   return (
     <Menu open={menuOpen} onOpenChange={onMenuOpenChange}>

@@ -21,6 +21,7 @@ import signalrService from './services/signalr.service';
 import pushService from './services/push.service';
 import { AppTheme } from './models/app-theme';
 import environment from './environment';
+import FromNotification from './layout/FromNotification';
 
 // Lazy loading
 const Admin = lazy(() => import('./_admin/routes/Admin'));
@@ -175,6 +176,14 @@ export const App = (props: AppProps) => {
               element={
                 <ProtectedRoute>
                   <Settings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="fromNotification/:id"
+              element={
+                <ProtectedRoute>
+                  <FromNotification />
                 </ProtectedRoute>
               }
             />

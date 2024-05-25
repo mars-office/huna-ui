@@ -13,8 +13,7 @@ self.addEventListener('push', function (e) {
         .showNotification(dto.title, {
           body: dto.message,
           icon: '/images/logo.svg',
-          data: dto.data,
-          url: dto.url
+          data: dto
         })
         .catch(function (err) {
           console.error('Push notification error', err);
@@ -26,23 +25,27 @@ self.addEventListener('push', function (e) {
 self.addEventListener(
   'notificationclick',
   function (event) {
-    const closedNotification = event.notification.close();
-    event.waitUntil(
-      clients.matchAll({
-        type: 'window',
-        includeUncontrolled: true
-      })
-      .then(windowClients => {
-        const url = closedNotification.data.url;
-        const matchingClient = windowClients.find(wc =>
-          wc.url === url);
-        if (matchingClient) {
-          return matchingClient.focus();
-        } else {
-          return clients.openWindow(urlToOpen);
-        }
-      })
-    );
+    console.log('Notification clicked');
+    console.log(event);
+    event.notification.close();
+    if (event.notification.data.url) {
+      event.waitUntil(
+        clients
+          .matchAll({
+            type: 'window',
+            includeUncontrolled: true,
+          })
+          .then((windowClients) => {
+            console.log('Window clients', windowClients);
+            if (windowClients && windowClients.length > 0) {
+              windowClients[0].focus();
+              return;
+            }
+            const url = event.notification.data.url;
+            return clients.openWindow(url);
+          }),
+      );
+    }
   },
   false,
 );

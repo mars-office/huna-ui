@@ -35,7 +35,8 @@
     "notifications": {
       "markAllAsRead": "Mark all as read",
       "noNotifications": "No notifications",
-      "notifications": "Notifications"
+      "notifications": "Notifications",
+      "pleaseWait": "Please wait"
     },
     "theme": {
       "light": "Light",

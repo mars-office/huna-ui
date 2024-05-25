@@ -16,7 +16,7 @@ export class Subscription<T> {
   }
 }
 
-export type SubscriberEvent<T> = {onNext?: (v: T) => void, onError?: (v: Error) => void, onComplete?: () => void};
+export type SubscriberEvent<T> = {onNext?: (v: T, subscription?: Subscription<T>) => void, onError?: (v: Error, s?: Subscription<T>) => void, onComplete?: (s?: Subscription<T>) => void};
 
 export class BehaviourSubject<T> {
   private _value: T;
@@ -33,26 +33,26 @@ export class BehaviourSubject<T> {
     }
     this._state = BehaviourSubjectState.LIVE;
     this._value = newValue;
-    this._subscribers.forEach(se => {
+    this._subscribers.forEach((se, s) => {
       if (se.onNext) {
-        se.onNext(this._value);
+        se.onNext(this._value, s);
       }
     });
   }
 
   complete() {
     this._state = BehaviourSubjectState.COMPLETE;
-    this._subscribers.forEach(se => {
+    this._subscribers.forEach((se, s) => {
       if (se.onComplete) {
-        se.onComplete();
+        se.onComplete(s);
       }
     });
   }
 
   error(err: Error) {
-    this._subscribers.forEach(se => {
+    this._subscribers.forEach((se, s) => {
       if (se.onError) {
-        se.onError(err);
+        se.onError(err, s);
       }
     });
   }
@@ -60,6 +60,9 @@ export class BehaviourSubject<T> {
   subscribe(se: SubscriberEvent<T>) {
     const newSubscription = new Subscription(this._subscribers);
     this._subscribers.set(newSubscription, se);
+    if (se.onNext) {
+      se.onNext(this._value, newSubscription);
+    }
     return newSubscription;
   }
 
