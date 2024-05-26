@@ -22,6 +22,7 @@ export default defineConfig({
         short_name: 'huna',
         description: 'huna2',
         theme_color: '#ffffff',
+        display: 'standalone',
         icons: [
           {
             src: '/images/android-chrome-192x192.png',
