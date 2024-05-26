@@ -3,7 +3,11 @@ import pushSubscriptionsService from "./push-subscriptions.service";
 export class PushService {
 
   async subscribe() {
-    await Notification.requestPermission();
+    const permission = await Notification.requestPermission();
+    if (permission !== 'granted') {
+      console.warn('Permission not granted for Notifications');
+      return null;
+    }
     const registration = await navigator.serviceWorker.ready;
 
     const existingSubscription = await registration.pushManager.getSubscription();
