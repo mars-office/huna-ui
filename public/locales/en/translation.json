@@ -47,6 +47,12 @@
     "tos": {
       "termsOfService": "Terms of Service",
       "privacyPolicy": "Privacy Policy"
+    },
+    "requestPushNotifications": {
+      "allowPushNotifications": "Allow push notifications?",
+      "allowAppToSendPushNotifications": "Allow the app to send you push notifications?",
+      "no": "No",
+      "yes": "Yes"
     }
   }
 }

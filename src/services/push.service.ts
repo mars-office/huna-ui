@@ -24,7 +24,7 @@ export class PushService {
     await pushSubscriptionsService.addPushSubscription({
       json: subscriptionJsonString
     });
-    return existingSubscription;
+    return subscription;
   }
 
   async unsubscribe() {

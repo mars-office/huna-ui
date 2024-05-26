@@ -47,6 +47,12 @@
     "tos": {
       "termsOfService": "Termeni și condiții",
       "privacyPolicy": "Politică de confidențialitate"
+    },
+    "requestPushNotifications": {
+      "allowPushNotifications": "Permiteți notificări push?",
+      "allowAppToSendPushNotifications": "Permiteți aplicației să vă trimită notificări de tip push?",
+      "no": "Nu",
+      "yes": "Da"
     }
   }
 }
