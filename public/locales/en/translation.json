@@ -20,7 +20,8 @@
       "logout": "Logout",
       "anonymous": "Anonymous",
       "settings": "Settings",
-      "theme": "Theme"
+      "theme": "Theme",
+      "tos": "Terms of Service"
     },
     "login": {
       "login": "Login",
@@ -42,6 +43,10 @@
       "light": "Light",
       "dark": "Dark",
       "auto": "Auto"
+    },
+    "tos": {
+      "termsOfService": "Terms of Service",
+      "privacyPolicy": "Privacy Policy"
     }
   }
 }

@@ -22,6 +22,7 @@ import pushService from './services/push.service';
 import { AppTheme } from './models/app-theme';
 import environment from './environment';
 import FromNotification from './layout/FromNotification';
+import Tos from './routes/Tos';
 
 // Lazy loading
 const Admin = lazy(() => import('./_admin/routes/Admin'));
@@ -168,6 +169,7 @@ export const App = (props: AppProps) => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="login" element={<Login />} />
+            <Route path="tos" element={<Tos />} />
             <Route
               path="settings"
               element={

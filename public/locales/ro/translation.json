@@ -20,7 +20,8 @@
       "logout": "Deconectare",
       "anonymous": "Anonim",
       "settings": "Setări",
-      "theme": "Temă"
+      "theme": "Temă",
+      "tos": "Termeni și condiții"
     },
     "login": {
       "login": "Conectare",
@@ -42,6 +43,10 @@
       "light": "Luminoasă",
       "dark": "Întunecată",
       "auto": "Auto"
+    },
+    "tos": {
+      "termsOfService": "Termeni și condiții",
+      "privacyPolicy": "Politică de confidențialitate"
     }
   }
 }

@@ -222,6 +222,9 @@ export const Header = (props: HeaderProps) => {
                     {t('ui.header.logout')}
                   </MenuItem>
                 )}
+                <MenuItem data-testid="tosButton" onClick={() => navigate('/tos')}>
+                  {t('ui.header.tos')}
+                </MenuItem>
                 <MenuItem data-testid="versionButton" disabled={true}>
                   {VERSION}
                 </MenuItem>
