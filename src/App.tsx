@@ -111,7 +111,7 @@ export const App = (props: AppProps) => {
       if (auth.isAuthenticated && auth.user) {
         console.log('Setting up push subscription...');
         try {
-          await pushService.subscribe();
+          await pushService.subscribe(true, new Date());
         } catch (error: any) {
           console.error(error);
           setPushSubscriptionFailed(true);
