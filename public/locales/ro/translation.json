@@ -24,7 +24,7 @@
     },
     "login": {
       "login": "Conectare",
-      "loginWith": "Conectare cu"
+      "loginWithIdp": "Autentificare folosind server-ul aplicației"
     },
     "update": {
       "updateDownloaded": "Actualizare descărcată",

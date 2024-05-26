@@ -1,35 +1,44 @@
-import { Button, Text } from "@fluentui/react-components";
-import { useAuth } from "react-oidc-context";
-import { useCallback } from "react";
-import { useTranslation } from "react-i18next";
-import { useSearchParams } from "react-router-dom";
+import { CompoundButton, Title1 } from '@fluentui/react-components';
+import { useAuth } from 'react-oidc-context';
+import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router-dom';
+import { PersonLockFilled } from '@fluentui/react-icons';
 
 export const Login = () => {
-    const auth = useAuth();
-    const [searchParams] = useSearchParams();
-    const {t} = useTranslation();
+  const auth = useAuth();
+  const [searchParams] = useSearchParams();
+  const { t } = useTranslation();
 
-    const login = useCallback(async (provider: string) => {
-        await auth.signinRedirect({
-            extraQueryParams: {
-                connector_id: provider
-            },
-            state: {
-                returnTo: searchParams.get('returnTo') || '/'
-            }
-        });
-    }, [auth, searchParams]);
+  const login = useCallback(async () => {
+    await auth.signinRedirect({
+      state: {
+        returnTo: searchParams.get('returnTo') || '/',
+      },
+    });
+  }, [auth, searchParams]);
+  
 
-    return <div style={{
+  return (
+    <div
+      style={{
         display: 'flex',
         flexDirection: 'column',
         gap: '1rem',
-    }}>
-        <Text as="h2" size={800}>{t('ui.login.login')} </Text>
-        <Button onClick={() => login('google')}>{t('ui.login.loginWith')} Google</Button>
-        <Button onClick={() => login('facebook')}>{t('ui.login.loginWith')}  Facebook</Button>
-        <Button onClick={() => login('microsoft')}>{t('ui.login.loginWith')}  Microsoft</Button>
+      }}
+    >
+      <Title1>{t('ui.login.login')}</Title1>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <CompoundButton appearance='primary'
+          icon={<PersonLockFilled />}
+          secondaryContent={t('ui.login.loginWithIdp')}
+          onClick={() => login()}
+        >
+          {t('ui.login.login')}
+        </CompoundButton>
+      </div>
     </div>
-}
+  );
+};
 
 export default Login;

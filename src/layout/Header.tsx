@@ -19,8 +19,8 @@ import {
 } from '@fluentui/react-components';
 import {
   MoreVertical28Regular,
-  InprivateAccount28Regular,
   NavigationRegular,
+  PersonFilled,
 } from '@fluentui/react-icons';
 import { useAuth } from 'react-oidc-context';
 import { useCallback, useMemo } from 'react';
@@ -183,7 +183,7 @@ export const Header = (props: HeaderProps) => {
                 data-testid="usermenu"
                 aria-label="More"
                 icon={
-                  auth.isAuthenticated ? <InprivateAccount28Regular /> : <MoreVertical28Regular />
+                  auth.isAuthenticated ? <PersonFilled /> : <MoreVertical28Regular />
                 }
               />
             </MenuTrigger>
