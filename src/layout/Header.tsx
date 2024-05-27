@@ -49,11 +49,15 @@ export const Header = (props: HeaderProps) => {
 
   const logout = useCallback(async () => {
     try {
-      await pushService.unsubscribe();
+      const existingSubscription = await pushService.getExistingSubscription();
+      if (existingSubscription) {
+        await pushService.unsubscribe();
+      }
     } catch (err: any) {
       // ignored
       console.error(err);
     }
+    localStorage.removeItem('pushAllowed');
     await auth.removeUser();
     navigate('/');
   }, [auth, navigate]);

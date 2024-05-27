@@ -53,6 +53,11 @@
       "allowAppToSendPushNotifications": "Allow the app to send you push notifications?",
       "no": "No",
       "yes": "Yes"
+    },
+    "settings": {
+      "pushNotifications": "Push notifications",
+      "enabled": "Enabled",
+      "settings": "Settings"
     }
   }
 }

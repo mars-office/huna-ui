@@ -38,7 +38,7 @@ export const App = (props: AppProps) => {
   const navigate = useNavigate();
   const [hasTriedSignin, setHasTriedSignin] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [pushSubscriptionFailed, setPushSubscriptionFailed] = useState(false);
+  const [pushSubscriptionDialogVisible, setPushSubscriptionDialogVisible] = useState(false);
 
   useEffect(() => {
     if (
@@ -109,30 +109,39 @@ export const App = (props: AppProps) => {
     }
     (async () => {
       if (auth.isAuthenticated && auth.user) {
-        console.log('Setting up push subscription...');
-        try {
-          await pushService.subscribe(true, new Date());
-        } catch (error: any) {
-          console.error(error);
-          setPushSubscriptionFailed(true);
+        const existingPushSubscription = await pushService.getExistingSubscription();
+        if (!existingPushSubscription) {
+          const pushAllowed = localStorage.getItem('pushAllowed');
+          if (!pushAllowed) {
+            const hasPermissionFromBrowser = await pushService.hasPermission();
+            if (!hasPermissionFromBrowser) {
+              setPushSubscriptionDialogVisible(true);
+            } else {
+              await pushService.subscribe();
+              localStorage.setItem('pushAllowed', 'yes');
+            }
+          }
         }
       }
     })();
-  }, [auth, setPushSubscriptionFailed]);
+  }, [auth, setPushSubscriptionDialogVisible]);
+
 
   const requestPushNotifications = useCallback(async () => {
+    localStorage.setItem('pushAllowed', 'yes');
     try {
       await pushService.subscribe();
     } catch (err: any) {
       // ignored
       console.error(err);
     }
-    setPushSubscriptionFailed(false);
-  }, [setPushSubscriptionFailed]);
+    setPushSubscriptionDialogVisible(false);
+  }, [setPushSubscriptionDialogVisible]);
 
   const denyPushNotifications = useCallback(() => {
-    setPushSubscriptionFailed(false);
-  }, [setPushSubscriptionFailed]);
+    localStorage.setItem('pushAllowed', 'no');
+    setPushSubscriptionDialogVisible(false);
+  }, [setPushSubscriptionDialogVisible]);
 
   const userLoadedCallback = useCallback(
     (u: User) => {
@@ -164,7 +173,7 @@ export const App = (props: AppProps) => {
 
   return (
     <>
-      <RequestPushNotifications yesClick={requestPushNotifications} noClick={denyPushNotifications} isOpen={pushSubscriptionFailed} />
+      <RequestPushNotifications yesClick={requestPushNotifications} noClick={denyPushNotifications} isOpen={pushSubscriptionDialogVisible} />
       <Toaster
         limit={5}
         position="bottom-end"

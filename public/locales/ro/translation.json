@@ -53,6 +53,11 @@
       "allowAppToSendPushNotifications": "Permiteți aplicației să vă trimită notificări de tip push?",
       "no": "Nu",
       "yes": "Da"
+    },
+    "settings": {
+      "pushNotifications": "Notificări push",
+      "enabled": "Activ",
+      "settings": "Setări"
     }
   }
 }
