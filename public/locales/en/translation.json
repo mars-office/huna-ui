@@ -37,7 +37,8 @@
       "markAllAsRead": "Mark all as read",
       "noNotifications": "No notifications",
       "notifications": "Notifications",
-      "pleaseWait": "Please wait"
+      "pleaseWait": "Please wait",
+      "loadMore": "Load more"
     },
     "theme": {
       "light": "Light",
