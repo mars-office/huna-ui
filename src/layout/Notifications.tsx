@@ -188,12 +188,15 @@ export const Notifications = () => {
 
   const notificationClicked = useCallback(
     async (n: NotificationDto) => {
+      if (n.url) {
+        navigate(n.url);
+      }
       if (!n.readAt) {
         await markAsRead(n);
       }
       setMenuOpen(false);
     },
-    [markAsRead, setMenuOpen],
+    [markAsRead, setMenuOpen, navigate],
   );
 
   useEffect(() => {
