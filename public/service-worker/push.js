@@ -41,7 +41,12 @@ self.addEventListener(
               }
               return;
             }
-            return clients.openWindow(event.notification.data.url || self.location.origin);
+            return clients.openWindow(self.location.origin).then(wc => {
+              wc.focus();
+              if (event.notification.data.url) {
+                wc.navigate(event.notification.data.url);
+              }
+            });
           }),
       );
   },
