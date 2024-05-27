@@ -307,16 +307,18 @@ export const Notifications = () => {
               </MessageBarBody>
             </MessageBar>
           ))}
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            <Link autoFocus={false} tabIndex={-1} onClick={loadMore}>
-              <Caption2>{t('ui.notifications.loadMore')}</Caption2>
-            </Link>
-          </div>
+          {notifications && notifications.length > 0 && (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <Link autoFocus={false} tabIndex={-1} onClick={loadMore}>
+                <Caption2>{t('ui.notifications.loadMore')}</Caption2>
+              </Link>
+            </div>
+          )}
         </div>
         {unreadCount > 0 && (
           <div
