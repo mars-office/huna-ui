@@ -11,16 +11,6 @@ export class PushService {
     return permission === 'granted';
   }
 
-  async setOnPushNotificationReceivedListener<T>(cb: (event: MessageEvent<T>) => void) {
-    await navigator.serviceWorker.ready;
-    navigator.serviceWorker.addEventListener("message", cb);
-  }
-
-  async removeOnPushNotificationReceivedListener<T>(cb: (data: MessageEvent<T>) => void) {
-    await navigator.serviceWorker.ready;
-    navigator.serviceWorker.removeEventListener('message', cb);
-  }
-
   async subscribe() {
     try {
       const permission = await Notification.requestPermission();

@@ -27,7 +27,6 @@ import { useNavigate } from 'react-router-dom';
 import globalEventsService from '../services/global-events.service';
 import { ConfirmNotification } from '../models/confirm-notification';
 import { Subscription } from '../helpers/behaviour-subject';
-import pushService from '../services/push.service';
 
 export const Notifications = () => {
   const { isAuthenticated } = useAuth();
@@ -231,27 +230,6 @@ export const Notifications = () => {
       }
     };
   }, [markAsRead, loadingStopped]);
-
-  useEffect(() => {
-    const listener = (me: MessageEvent<NotificationDto>) => {
-      const n = me.data;
-      console.log('Received app side', n);
-      (async () => {
-        await markAsRead(n);
-        if (n.url) {
-          navigate(n.url);
-        }
-      })();
-    };
-    (async () => {
-      await pushService.setOnPushNotificationReceivedListener<NotificationDto>(listener);
-    })();
-    return () => {
-      (async () => {
-        await pushService.removeOnPushNotificationReceivedListener(listener);
-      })();
-    };
-  }, [markAsRead, navigate]);
 
   return (
     <Menu open={menuOpen} onOpenChange={onMenuOpenChange}>
