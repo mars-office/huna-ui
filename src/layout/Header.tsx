@@ -32,12 +32,12 @@ import { useStore } from '../hooks/use-store';
 import { userProfileStore } from '../stores/user-profile.store';
 import Notifications from './Notifications';
 import { AppTheme } from '../models/app-theme';
-import pushService from '../services/push.service';
 
 export interface HeaderProps {
   menuClick?: () => void;
   onSwitchTheme: (theme: AppTheme) => void;
   appTheme: AppTheme;
+  logout: () => Promise<void>;
 }
 
 export const Header = (props: HeaderProps) => {
@@ -47,20 +47,6 @@ export const Header = (props: HeaderProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [userProfile, _] = useStore(userProfileStore);
 
-  const logout = useCallback(async () => {
-    try {
-      const existingSubscription = await pushService.getExistingSubscription();
-      if (existingSubscription) {
-        await pushService.unsubscribe();
-      }
-    } catch (err: any) {
-      // ignored
-      console.error(err);
-    }
-    localStorage.removeItem('pushAllowed');
-    await auth.removeUser();
-    navigate('/');
-  }, [auth, navigate]);
 
   const location = useLocation();
 
@@ -222,7 +208,7 @@ export const Header = (props: HeaderProps) => {
                   </MenuItem>
                 )}
                 {auth.isAuthenticated && (
-                  <MenuItem data-testid="logoutButton" onClick={logout}>
+                  <MenuItem data-testid="logoutButton" onClick={props.logout}>
                     {t('ui.header.logout')}
                   </MenuItem>
                 )}

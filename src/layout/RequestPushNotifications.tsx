@@ -7,28 +7,68 @@ import {
   DialogActions,
   Button,
 } from '@fluentui/react-components';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from 'react-oidc-context';
+import pushService from '../services/push.service';
 
-export interface RequestPushNotificationsProps {
-  isOpen: boolean;
-  yesClick: () => Promise<void>,
-  noClick: () => void
-}
-
-export const RequestPushNotifications = (props: RequestPushNotificationsProps) => {
+export const RequestPushNotifications = () => {
   const { t } = useTranslation();
+  const [pushSubscriptionDialogVisible, setPushSubscriptionDialogVisible] = useState(false);
+  const auth = useAuth();
+
+  useEffect(() => {
+    if (auth.isLoading) {
+      return;
+    }
+    (async () => {
+      if (auth.isAuthenticated && auth.user) {
+        const existingPushSubscription = await pushService.getExistingSubscription();
+        if (!existingPushSubscription) {
+          const pushAllowed = localStorage.getItem('pushAllowed');
+          if (!pushAllowed) {
+            const hasPermissionFromBrowser = await pushService.hasPermission();
+            if (!hasPermissionFromBrowser) {
+              setPushSubscriptionDialogVisible(true);
+            } else {
+              await pushService.subscribe();
+              localStorage.setItem('pushAllowed', 'yes');
+            }
+          }
+        }
+      }
+    })();
+  }, [auth, setPushSubscriptionDialogVisible]);
+
+  const requestPushNotifications = useCallback(async () => {
+    localStorage.setItem('pushAllowed', 'yes');
+    try {
+      await pushService.subscribe();
+    } catch (err: any) {
+      // ignored
+      console.error(err);
+    }
+    setPushSubscriptionDialogVisible(false);
+  }, [setPushSubscriptionDialogVisible]);
+
+  const denyPushNotifications = useCallback(() => {
+    localStorage.setItem('pushAllowed', 'no');
+    setPushSubscriptionDialogVisible(false);
+  }, [setPushSubscriptionDialogVisible]);
 
   return (
-    <Dialog modalType="alert" open={props.isOpen}>
+    <Dialog modalType="alert" open={pushSubscriptionDialogVisible}>
       <DialogSurface>
         <DialogBody>
           <DialogTitle>{t('ui.requestPushNotifications.allowPushNotifications')}</DialogTitle>
-          <DialogContent>{t('ui.requestPushNotifications.allowAppToSendPushNotifications')}</DialogContent>
+          <DialogContent>
+            {t('ui.requestPushNotifications.allowAppToSendPushNotifications')}
+          </DialogContent>
           <DialogActions>
-            <Button onClick={props.noClick} appearance="secondary">
+            <Button onClick={denyPushNotifications} appearance="secondary">
               {t('ui.requestPushNotifications.no')}
             </Button>
-            <Button onClick={props.yesClick} appearance="primary">
+            <Button onClick={requestPushNotifications} appearance="primary">
               {t('ui.requestPushNotifications.yes')}
             </Button>
           </DialogActions>
