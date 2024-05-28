@@ -166,7 +166,7 @@ export const Header = (props: HeaderProps) => {
             alignItems: 'center',
           }}
         >
-          <Notifications />
+          {auth.isAuthenticated && <Notifications />}
           <Menu>
             <MenuTrigger>
               <ToolbarButton
