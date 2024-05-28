@@ -25,6 +25,8 @@ self.addEventListener('push', function (e) {
 self.addEventListener(
   'notificationclick',
   function (event) {
+    event.preventDefault();
+    let newUrl = event.notification.data.url ? event.notification.data.url : self.location.origin;
     event.notification.close();
     event.waitUntil(
       clients
@@ -41,9 +43,7 @@ self.addEventListener(
             }
             return;
           }
-          return clients.openWindow(event.notification.data.url ? event.notification.data.url : self.location.origin).then(w => {
-            w.focus();
-          });
+          return clients.openWindow(newUrl);
         }),
     );
   },
