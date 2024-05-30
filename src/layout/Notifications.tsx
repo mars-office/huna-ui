@@ -270,7 +270,7 @@ export const Notifications = () => {
               layout="multiline"
               style={{
                 cursor: 'pointer',
-                filter: !n.readAt ? 'grayscale(0%)' : 'grayscale(70%)',
+                filter: !n.readAt ? 'grayscale(0%)' : 'grayscale(70%) opacity(0.7)',
                 minHeight: 'initial',
               }}
             >
