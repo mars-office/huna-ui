@@ -2,7 +2,7 @@ import { WebStorageStateStore } from "oidc-client-ts";
 import { AuthProviderProps } from "react-oidc-context";
 
 export const authConfig: AuthProviderProps = {
-  authority: window.location.protocol + '//dex.' + window.location.hostname,
+  authority: window.location.protocol + '//idp.' + window.location.hostname,
   client_id: 'ui',
   redirect_uri: window.location.origin + '/',
   scope: 'openid offline_access profile email',
