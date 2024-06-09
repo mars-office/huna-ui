@@ -60,6 +60,11 @@
       "pushNotifications": "Push notifications",
       "enabled": "Enabled",
       "settings": "Settings"
+    },
+    "admin": {
+      "notificationsAdmin": {
+        "userEmails": "User emails"
+      }
     }
   }
 }

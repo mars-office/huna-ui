@@ -60,6 +60,11 @@
       "pushNotifications": "Notificări push",
       "enabled": "Activ",
       "settings": "Setări"
+    },
+    "admin": {
+      "notificationsAdmin": {
+        "userEmails": "Email-uri utilizatori"
+      }
     }
   }
 }
