@@ -63,7 +63,17 @@
     },
     "admin": {
       "notificationsAdmin": {
-        "userEmails": "Email-uri utilizatori"
+        "userEmails": "Email-uri utilizatori",
+        "deliveryTypes": "Tipuri de livrare",
+        "title": "Titlu",
+        "message": "Mesaj",
+        "severity": "Severitate",
+        "send": "Trimite",
+        "sendNotifications": "Trimite notificările imediat",
+        "notificationsSent": "Notificările au fost trimise",
+        "sent": "Trimise",
+        "data": "Date",
+        "url": "URL"
       }
     }
   }

@@ -63,7 +63,17 @@
     },
     "admin": {
       "notificationsAdmin": {
-        "userEmails": "User emails"
+        "userEmails": "User emails",
+        "deliveryTypes": "Delivery types",
+        "title": "Title",
+        "message": "Message",
+        "severity": "Severity",
+        "send": "Send",
+        "sendNotifications": "Send notifications immediately",
+        "notificationsSent": "Notifications were sent",
+        "sent": "Sent",
+        "data": "Data",
+        "url": "URL"
       }
     }
   }

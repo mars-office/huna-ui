@@ -14,7 +14,6 @@
   "dependencies": {
     "@fluentui/react-components": "^9.54.0",
     "@fluentui/react-icons": "^2.0.242",
-    "@hookform/resolvers": "^3.6.0",
     "@microsoft/signalr": "^8.0.0",
     "axios": "^1.7.2",
     "i18next": "^23.11.5",
@@ -23,12 +22,10 @@
     "oidc-client-ts": "^3.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-hook-form": "^7.51.5",
     "react-i18next": "^14.1.2",
     "react-oidc-context": "^3.1.0",
     "react-router-dom": "^6.23.1",
-    "uuid": "^9.0.1",
-    "yup": "^1.4.0"
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.5",
