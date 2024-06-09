@@ -285,7 +285,7 @@ export const Notifications = () => {
               </MessageBarBody>
             </MessageBar>
           ))}
-          {notifications && notifications.length > 0 && (
+          {notifications && notifications.length >= 50 && (
             <div
               style={{
                 display: 'flex',
