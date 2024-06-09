@@ -12,7 +12,8 @@
       "home": "Home",
       "admin": "Admin",
       "app": "App",
-      "dashboard": "Dashboard"
+      "dashboard": "Dashboard",
+      "notificationsAdmin": "Notifications Admin"
     },
     "header": {
       "language": "Language",

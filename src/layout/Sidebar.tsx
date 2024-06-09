@@ -10,7 +10,7 @@ import {
   MenuList,
   OverlayDrawer,
 } from '@fluentui/react-components';
-import { Dismiss24Regular, HomeFilled, BoardFilled } from '@fluentui/react-icons';
+import { Dismiss24Regular, HomeFilled, BoardFilled, ServiceBellRegular } from '@fluentui/react-icons';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
@@ -83,6 +83,14 @@ export const Sidebar = (props: SidebarProps) => {
                   className={({ isActive }) => (isActive ? 'active' : undefined)}
                 >
                   <MenuItem icon={<BoardFilled />}>{t('ui.sidebar.dashboard')}</MenuItem>
+                </NavLink>
+                <NavLink
+                  onClick={onCloseClick}
+                  end
+                  to="/admin/notifications"
+                  className={({ isActive }) => (isActive ? 'active' : undefined)}
+                >
+                  <MenuItem icon={<ServiceBellRegular />}>{t('ui.sidebar.notificationsAdmin')}</MenuItem>
                 </NavLink>
               </MenuGroup>
             </>

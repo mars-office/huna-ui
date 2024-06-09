@@ -12,7 +12,8 @@
       "home": "Acasă",
       "admin": "Admin",
       "app": "App",
-      "dashboard": "Tablou de bord"
+      "dashboard": "Tablou de bord",
+      "notificationsAdmin": "Admin notificări"
     },
     "header": {
       "language": "Limbă",
