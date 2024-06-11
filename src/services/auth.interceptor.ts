@@ -5,7 +5,7 @@ export const enableAuthInterceptor = () => {
   axios.interceptors.request.use(
     (request) => {
       const token = userStore.value?.access_token;
-      if (token) {
+      if (token && !request.url!.toLowerCase().startsWith('/api/opa/')) {
         request.headers['Authorization'] = `Bearer ${token}`;
       }
       return request;

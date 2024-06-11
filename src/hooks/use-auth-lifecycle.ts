@@ -42,7 +42,7 @@ export const useAuthLifecycle = () => {
       return;
     }
     setUserStoreUser(!auth.user ? undefined : auth.user);
-  }, [auth.user, setUserStoreUser]);
+  }, [auth.user, setUserStoreUser, auth.isLoading]);
 
   useEffect(() => {
     if (auth.isLoading) {
@@ -51,7 +51,7 @@ export const useAuthLifecycle = () => {
     (async () => {
       if (auth.isAuthenticated && auth.user) {
         console.log('Reading user profile...');
-        const userProfileResult = await usersService.myProfile();
+        const userProfileResult = await usersService.myProfile(auth.user!.access_token);
         setUserProfile(userProfileResult);
       } else {
         console.log('Unloading user profile...');
