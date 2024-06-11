@@ -17,7 +17,7 @@ export const usersService = {
         }
       }
     };
-    const opaResponse = (await axios.post<OpaResponse<OpaAuthzResponseDto>>('/api/opa/v1/data/com/huna/authz', dto)).data;
+    const opaResponse = (await axios.post<OpaResponse<OpaAuthzResponseDto>>('/api/opa/authz', dto)).data;
     return {...opaResponse.result!.user, isAdmin: opaResponse.result!.is_admin} as UserProfileDto;
   }
 };
