@@ -1,9 +1,6 @@
 :8080 {
-	root * /srv
 	encode gzip
-	try_files {path} /index.html
-	file_server
-
+	
 	@opa {
     path /api/opa/v1/data/com/huna/public_authz
   }
@@ -14,4 +11,8 @@
     header_up X-Forwarded-For {http.request.remote}
     header_up X-Forwarded-Proto {http.request.scheme}
   }
+
+	root * /srv
+	try_files {path} /index.html
+	file_server
 }
