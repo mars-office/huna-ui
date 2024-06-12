@@ -1,13 +1,15 @@
 :8080 {
-	encode gzip
+	handle_path /api/opa/v1/data/com/huna/public_authz* {
+		rewrite * /v1/data/com/huna/public_authz
+		reverse_proxy localhost:8181 {
+			method POST
+		}
+	}
 
-	@opa {
-    path /api/opa/v1/data/com/huna/public_authz*
-  }
-  rewrite @opa /v1/data/com/huna/public_authz
-  reverse_proxy @opa http://localhost:8181
-
-	root * /srv
-	try_files {path} /index.html
-	file_server
+	handle {
+		encode gzip
+		root * /srv
+		try_files {path} /index.html
+		file_server
+	}
 }
