@@ -44,6 +44,12 @@ export default defineConfig({
   server: {
     port: 3000,
     host: '0.0.0.0',
+    proxy: {
+      '/api/opa/v1/data/com/huna/public_authz': {
+        target: 'http://localhost:8181',
+        rewrite: p => p.replace('/api/opa/', '/')
+      }
+    }
   },
   build: {
     chunkSizeWarningLimit: 2048,

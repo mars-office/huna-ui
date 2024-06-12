@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from './use-store';
 import { userStore } from '../stores/user.store';
 import { userProfileStore } from '../stores/user-profile.store';
-import usersService from '../services/users.service';
+import opaService from '../services/opa.service';
 import { User } from 'oidc-client-ts';
 import pushService from '../services/push.service';
 
@@ -51,7 +51,7 @@ export const useAuthLifecycle = () => {
     (async () => {
       if (auth.isAuthenticated && auth.user) {
         console.log('Reading user profile...');
-        const userProfileResult = await usersService.myProfile(auth.user!.access_token);
+        const userProfileResult = await opaService.publicAuthz(auth.user!.access_token);
         setUserProfile(userProfileResult);
       } else {
         console.log('Unloading user profile...');

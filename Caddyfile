@@ -3,4 +3,15 @@
 	encode gzip
 	try_files {path} /index.html
 	file_server
+
+	@opa {
+    path /api/opa/v1/data/com/huna/public_authz
+  }
+  rewrite @opa /v1/data/com/huna/public_authz
+  reverse_proxy @opa http://localhost:8181 {
+    header_up Host {http.reverse_proxy.upstream.hostport}
+    header_up X-Real-IP {http.request.remote}
+    header_up X-Forwarded-For {http.request.remote}
+    header_up X-Forwarded-Proto {http.request.scheme}
+  }
 }
