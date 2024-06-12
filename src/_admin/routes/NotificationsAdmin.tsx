@@ -13,6 +13,7 @@ import {
   TagPickerInput,
   TagPickerList,
   TagPickerOnOptionSelectData,
+  Title1,
   useTagPickerFilter,
 } from '@fluentui/react-components';
 import { useTranslation } from 'react-i18next';
@@ -123,6 +124,7 @@ export const NotificationsAdmin = () => {
         gap: '0.5rem',
       }}
     >
+      <Title1>{t('ui.admin.notificationsAdmin.notificationsAdmin')}</Title1>
       <TagPicker selectedOptions={request.toUserEmails} onOptionSelect={onUserEmailsSelect}>
         <TagPickerControl expandIcon={<></>}>
           <TagPickerGroup>

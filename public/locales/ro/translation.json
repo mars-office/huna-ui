@@ -73,7 +73,8 @@
         "notificationsSent": "Notificările au fost trimise",
         "sent": "Trimise",
         "data": "Date",
-        "url": "URL"
+        "url": "URL",
+        "notificationsAdmin": "Admin notificări"
       }
     }
   }

@@ -73,7 +73,8 @@
         "notificationsSent": "Notifications were sent",
         "sent": "Sent",
         "data": "Data",
-        "url": "URL"
+        "url": "URL",
+        "notificationsAdmin": "Notifications admin"
       }
     }
   }

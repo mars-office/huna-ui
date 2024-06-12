@@ -41,6 +41,14 @@ export const Notifications = () => {
   >([]);
   const navigate = useNavigate();
 
+  const navigateOrRedirect = useCallback((url: string) => {
+    if (url.toLowerCase().startsWith('http://') || url.toLowerCase().startsWith('https://')) {
+      location.href = url;
+      return;
+    }
+    navigate(url);
+  }, [navigate]);
+
   const onMenuOpenChange = useCallback(
     (_: MenuOpenEvent, data: MenuOpenChangeData) => {
       setMenuOpen(data.open);
@@ -108,7 +116,7 @@ export const Notifications = () => {
           await markAsRead(n);
           toast.dismiss(ref.toastId);
           if (n.url) {
-            navigate(n.url);
+            navigateOrRedirect(n.url);
           }
         },
         async () => {
@@ -124,7 +132,7 @@ export const Notifications = () => {
       );
       setVisibleToasts([...visibleToasts, { n: n, toastRef: ref }]);
     },
-    [toast, markAsRead, setVisibleToasts, visibleToasts, navigate],
+    [toast, markAsRead, setVisibleToasts, visibleToasts, navigateOrRedirect],
   );
 
   useEffect(() => {
@@ -138,7 +146,7 @@ export const Notifications = () => {
           await markAsRead(vt.n);
           toast.dismiss(vt.toastRef.toastId);
           if (vt.n.url) {
-            navigate(vt.n.url);
+            navigateOrRedirect(vt.n.url);
           }
         },
         async () => {
@@ -153,7 +161,7 @@ export const Notifications = () => {
         },
       );
     }
-  }, [visibleToasts, setVisibleToasts, markAsRead, toast, navigate]);
+  }, [visibleToasts, setVisibleToasts, markAsRead, toast, navigateOrRedirect]);
 
   useSignalrData<NotificationDto>(
     'Huna.Notifications.Contracts.NotificationDto',
@@ -189,14 +197,14 @@ export const Notifications = () => {
   const notificationClicked = useCallback(
     async (n: NotificationDto) => {
       if (n.url) {
-        navigate(n.url);
+        navigateOrRedirect(n.url);
       }
       if (!n.readAt) {
         await markAsRead(n);
       }
       setMenuOpen(false);
     },
-    [markAsRead, setMenuOpen, navigate],
+    [markAsRead, setMenuOpen, navigateOrRedirect],
   );
 
   useEffect(() => {
@@ -217,7 +225,7 @@ export const Notifications = () => {
               await markAsRead(foundNotification);
             })();
           }
-          navigate(data.returnTo || '/');
+          navigateOrRedirect(data.returnTo || '/');
         },
         onError: (e) => {
           toast.fromError(e);
