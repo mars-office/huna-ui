@@ -76,6 +76,11 @@
         "url": "URL",
         "notificationsAdmin": "Notifications admin"
       }
+    },
+    "components": {
+      "trimmedText": {
+        "more": "more"
+      }
     }
   }
 }

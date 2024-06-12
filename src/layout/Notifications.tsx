@@ -27,6 +27,7 @@ import { useNavigate } from 'react-router-dom';
 import globalEventsService from '../services/global-events.service';
 import { ConfirmNotification } from '../models/confirm-notification';
 import { Subscription } from '../helpers/behaviour-subject';
+import TrimmedText from '../components/TrimmedText';
 
 export const Notifications = () => {
   const { isAuthenticated } = useAuth();
@@ -237,7 +238,7 @@ export const Notifications = () => {
         subscription.unsubscribe();
       }
     };
-  }, [markAsRead, loadingStopped]);
+  }, [markAsRead, notifications, toast, navigateOrRedirect, loadingStopped]);
 
   return (
     <Menu open={menuOpen} onOpenChange={onMenuOpenChange}>
@@ -289,7 +290,7 @@ export const Notifications = () => {
                   <Caption1 style={{ fontWeight: !n.readAt ? 'bold' : '' }}>{n.title}</Caption1>
                   <Caption2 italic>{toLocaleDateString(n.issuedAt)}</Caption2>
                 </MessageBarTitle>
-                <Caption2>{n.message}</Caption2>
+                <Caption2><TrimmedText text={n.message}></TrimmedText></Caption2>
               </MessageBarBody>
             </MessageBar>
           ))}

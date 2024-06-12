@@ -76,6 +76,11 @@
         "url": "URL",
         "notificationsAdmin": "Admin notificări"
       }
+    },
+    "components": {
+      "trimmedText": {
+        "more": "mai mult"
+      }
     }
   }
 }
