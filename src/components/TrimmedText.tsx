@@ -19,7 +19,7 @@ export const TrimmedText = (props: TrimmedTextProps) => {
       ) : (
         <>
           {props.text.substring(0, maxCharCount)}{' '}
-          <Link onClick={(e) => {
+          <Link autoFocus={false} tabIndex={-1} onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             setIsVisible(true);
