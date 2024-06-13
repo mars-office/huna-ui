@@ -11,7 +11,7 @@ class SignalrService {
     this.hubConnection = new HubConnectionBuilder()
       .withAutomaticReconnect({
         nextRetryDelayInMilliseconds() {
-            return 1000;
+            return 5000;
         },
       })
       .withKeepAliveInterval(15000)
