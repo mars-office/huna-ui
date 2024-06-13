@@ -9,7 +9,11 @@ class SignalrService {
 
   constructor() {
     this.hubConnection = new HubConnectionBuilder()
-      .withAutomaticReconnect()
+      .withAutomaticReconnect({
+        nextRetryDelayInMilliseconds() {
+            return 1000;
+        },
+      })
       .withKeepAliveInterval(15000)
       .withServerTimeout(30000)
       .withUrl('/api/signalr/mainHub', {
