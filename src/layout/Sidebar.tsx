@@ -26,7 +26,7 @@ export const Sidebar = (props: SidebarProps) => {
   const { t } = useTranslation();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [userProfile, _] = useStore(userProfileStore);
+  const [userProfile] = useStore(userProfileStore);
 
   const onOpenChange = useCallback(
     (open: boolean) => {
@@ -71,7 +71,7 @@ export const Sidebar = (props: SidebarProps) => {
             </NavLink>
           </MenuGroup>
 
-          {userProfile?.isAdmin && (
+          {userProfile.data?.isAdmin && (
             <>
               <MenuDivider />
               <MenuGroup>

@@ -9,7 +9,6 @@ import NotFound from './routes/NotFound';
 import ProtectedRoute from './routes/ProtectedRoute';
 import Sidebar from './layout/Sidebar';
 import Loading from './layout/Loading';
-import AdminRoute from './routes/AdminRoute';
 import { Toaster } from '@fluentui/react-components';
 import { AppTheme } from './models/app-theme';
 import environment from './environment';
@@ -83,12 +82,10 @@ export const App = (props: AppProps) => {
             <Route
               path="admin/*"
               element={
-                <ProtectedRoute>
-                  <AdminRoute>
-                    <Suspense fallback={<Loading />}>
-                      <Admin />
-                    </Suspense>
-                  </AdminRoute>
+                <ProtectedRoute adminRequired={true}>
+                  <Suspense fallback={<Loading />}>
+                    <Admin />
+                  </Suspense>
                 </ProtectedRoute>
               }
             />

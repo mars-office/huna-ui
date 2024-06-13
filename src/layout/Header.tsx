@@ -71,7 +71,7 @@ export const Header = (props: HeaderProps) => {
       }
       props.onSwitchTheme(data.checkedItems[0] as AppTheme);
     },
-    [props.onSwitchTheme],
+    [props],
   );
 
   const onMenuClicked = useCallback(() => {
@@ -184,7 +184,7 @@ export const Header = (props: HeaderProps) => {
                   <MenuGroupHeader>
                     <Text data-testid="userName" size={200}>
                       {auth.isAuthenticated
-                        ? auth.user?.profile.email + (userProfile?.isAdmin ? ' (admin)' : '')
+                        ? auth.user?.profile.email + (userProfile.data?.isAdmin ? ' (admin)' : '')
                         : t('ui.header.anonymous')}
                     </Text>
                   </MenuGroupHeader>

@@ -49,13 +49,28 @@ export const useAuthLifecycle = () => {
       return;
     }
     (async () => {
-      if (auth.isAuthenticated && auth.user) {
-        console.log('Reading user profile...');
-        const userProfileResult = await opaService.publicAuthz(auth.user!.access_token);
-        setUserProfile(userProfileResult);
-      } else {
-        console.log('Unloading user profile...');
-        setUserProfile(undefined);
+      try {
+        if (auth.isAuthenticated && auth.user) {
+          console.log('Reading user profile...');
+          const userProfileResult = await opaService.publicAuthz(auth.user!.access_token);
+          setUserProfile({
+            isLoading: false,
+            data: userProfileResult
+          });
+        } else {
+          console.log('Unloading user profile...');
+          setUserProfile({
+            isLoading: false,
+            data: undefined
+          });
+        }
+      } catch (err: any) {
+        // ignored
+        console.error(err);
+        setUserProfile({
+          isLoading: false,
+          data: undefined
+        });
       }
     })();
   }, [auth, setUserProfile]);
